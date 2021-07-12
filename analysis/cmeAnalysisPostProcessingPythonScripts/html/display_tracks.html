@@ -1,0 +1,2884 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.1" />
+<title>display_tracks API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>display_tracks</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python"># Cyna Shirazinejad, Drubin/Barnes Lab, last modified 9/23/20
+# 
+# tools for displaying track attributes from cmeAnalysis
+
+from generate_index_dictionary import return_index_dictionary
+from return_track_attributes import (return_track_lifetime, 
+                                     return_track_amplitude_one_channel, 
+                                     return_puncta_x_position_whole_track,
+                                     return_puncta_y_position_whole_track,
+                                     return_distance_traveled_from_origin,
+                                     return_distance_between_two_channel,
+                                     return_track_amplitude,
+                                     return_track_category,
+                                     return_is_CCP,
+                                     return_frames_in_track)
+                                     
+import numpy as np
+import scipy.io as sio
+import matplotlib.pyplot as plt
+from matplotlib.pyplot import figure
+from ipywidgets import interact, interactive, fixed, interact_manual, FloatSlider
+import ipywidgets as widgets
+import warnings
+import matplotlib
+import itk
+import os
+import imageio
+index_dictionary = return_index_dictionary()
+from IPython.display import display
+import random
+import scipy.interpolate as interpolate
+
+
+
+            
+def fit_cohorts(tracks, 
+                class_indices, 
+                figsize, 
+                plot_shape, 
+                num_stds = 0.25, 
+                cohorts=[[0,20],[21,40],[41,60],[61,80],[81,100],[101,120],[121,140],[141,160],[161,180],[181,200],[201,220],[221,240]], 
+                filename = &#39;&#39;):
+    &#34;&#34;&#34;
+    Display lifetime-binned cohorts of tracks separated by different class labels
+    
+    Args:
+        tracks (ndarray): numpy array of cmeAnalysis&#39; ProcessedTracks.mat 
+        class_indices (list of lists): each internal list contains indices for tracks in a designated class
+        figsize (tuple): figure size for all subplots
+        plot_shape (tuple): size of each subplot
+        num_stds (float, optional): number of standard deviations of intensity for plotting intensity traces
+        cohorts (list of lists, optional): each internal list contains the upper and lower bounds of lifetimes for each cohort
+        filename (string, optional): location for plots to be saved
+        
+    Returns:
+        None
+        
+    &#34;&#34;&#34;
+    print(&#39;fitting to the following cohorts: &#39; + str(cohorts))
+    print()
+    f = figure(dpi=300,figsize=figsize)
+    subplot_index = 1
+    warnings.filterwarnings(&#34;ignore&#34;)
+
+    class_intensities = []
+    
+    for i,class_tmp in enumerate(class_indices): # iterate through each class of labels
+    
+        class_intensities_current = []
+        
+        ax = f.add_subplot(plot_shape[0], plot_shape[1], subplot_index)
+        ax.set_title(&#39;class: &#39; + str(i))
+        
+        for cohort in cohorts: # gather intensities for each cohort for all members of current class
+            
+            cohort_temp_class = []
+            
+            for j in range(len(tracks)):
+                
+                if j in class_tmp and return_track_attributes.return_track_lifetime(tracks,j) &gt;= cohort[0] and return_track_lifetime(tracks,j) &lt; cohort[1]: # find tracks within bounds
+
+                    ch0 = return_track_amplitude_one_channel(tracks, j, 0)
+                    ch1 = return_track_amplitude_one_channel(tracks, j, 1)
+
+                    t0, c0, k0 = interpolate.splrep(np.arange(len(ch0)), ch0, k=3) # cubic B-spline iterpolation of intensities
+                    t1, c1, k1 = interpolate.splrep(np.arange(len(ch1)), ch1, k=3)
+
+                    spline0 = interpolate.BSpline(t0, c0, k0, extrapolate=False)
+                    spline1 = interpolate.BSpline(t1, c1, k1, extrapolate=False)
+
+                    splined_amps_ch0 = spline0(np.linspace(0,len(ch0),cohort[1])) # interpolate intensity to match ceiling of lifetime cohort
+                    splined_amps_ch1 = spline1(np.linspace(0,len(ch1),cohort[1]))
+
+                    cohort_temp_class.append([splined_amps_ch0, splined_amps_ch1])
+            
+            if cohort_temp_class != []:
+                        
+                average_cohort_class = np.nan_to_num(np.nanmean(cohort_temp_class,axis=0,dtype=np.float64)) # calculate average and std of intensity in class cohort
+                std_cohort_class = num_stds*np.nan_to_num(np.nanstd(cohort_temp_class,axis=0,dtype=np.float64))
+                ax.plot(np.linspace(0,cohort[1],cohort[1]), 
+                        average_cohort_class[0,:],
+                        &#39;m&#39;, 
+                        label=str(&#39;Cohort: &#39; + str(cohort) + &#39; s members: &#39; + str(len(cohort_temp_class))))
+                ax.plot(np.linspace(0,cohort[1],cohort[1]), 
+                        average_cohort_class[1,:],
+                        &#39;g&#39;)
+                ax.fill_between(np.linspace(0,cohort[1],cohort[1]), 
+                                average_cohort_class[0,:]-std_cohort_class[0,:], 
+                                average_cohort_class[0,:]+std_cohort_class[0,:], 
+                                color=&#39;m&#39;, 
+                                alpha=0.2)
+                ax.fill_between(np.linspace(0,cohort[1],cohort[1]), 
+                                average_cohort_class[1,:]-std_cohort_class[1,:], 
+                                average_cohort_class[1,:]+std_cohort_class[1,:], 
+                                color=&#39;g&#39;, 
+                                alpha=0.2)
+                ax.title.set_text(&#39;number of members in class &#39; + str(i) + &#39;: &#39; + str(len(class_tmp)))
+                ax.set_xlabel(&#39;time (s)&#39;)
+                ax.set_ylabel(&#39;fluorescence intensity&#39;)
+                ax.legend()
+        
+        subplot_index += 1
+                
+                        
+    if filename != &#39;&#39;: # save the plot
+        
+        f.savefig(filename)
+        
+    plt.show()
+
+def load_tracks(track_path):
+    &#34;&#34;&#34;Return a Python structure of the tracks, sorted from decreasing lifetime, from the ProcessedTracks.mat output of cmeAnalysis, with keys designated track indices&#34;&#34;&#34;
+    return sort_tracks_descending_lifetimes(sio.loadmat(track_path)) # sort the tracks by descending lifetime order
+
+def load_tracks_no_sort(track_path):
+    &#34;&#34;&#34;Return a dictionary of the tracks from the ProcessedTracks.mat output of cmeAnalysis, with keys designated track indices&#34;&#34;&#34;
+    return sio.loadmat(track_path)[&#39;tracks&#39;][0] # convert the MATLAB structure to a Python one
+
+def sort_tracks_descending_lifetimes(tracks):
+    &#34;&#34;&#34;Sort tracks in descending lifetime order&#34;&#34;&#34;
+    index_dictionary = return_index_dictionary()
+    
+    tracks = tracks[&#39;tracks&#39;][0] # get just the data for the tracks
+                                            
+    tracks = zip(tracks, range(len(tracks))) # save each track with its original index
+    # sort the tracks in descending lifetime, preserving each track&#39;s individual index
+    tracks = sorted(tracks, key=lambda track: track[0][index_dictionary[&#39;index_lifetime_s&#39;]][0][0], reverse=True) 
+    
+    (tracks, indices) = zip(*tracks) 
+    
+    return tracks
+
+def return_check_box_value(make_gif,
+                           lower_frame_bound,
+                           upper_frame_bound,
+                           window_size,
+                           tracks,
+                           raw_tiff_list,
+                           track_number,
+                           channel_colors,
+                           display_channels,
+                           frame_names,
+                           gif_name,
+                           folder_name,
+                           dpi,
+                           subplot_padding):
+    &#34;&#34;&#34;Make a gif of the current visualized state&#34;&#34;&#34;
+    print(&#39;Enter the upper and lower bounds of frames for the generated gif&#39;)
+    print(&#39;The folder name and gif name by default will be appended by &#34;track_number_frame_START_to_END&#34;&#39;)
+    if make_gif: # if the gif making checkbox is selected, make a gif
+        print(&#39;creating gif&#39;)
+        play_through_tracks(tracks,
+                            raw_tiff_list,
+                            track_number,
+                            channel_colors,
+                            lower_frame_bound,
+                            upper_frame_bound,
+                            window_size,
+                            display_channels,
+                            frame_names,
+                            gif_name,
+                            folder_name,
+                            dpi,
+                            subplot_padding)
+
+
+def load_itk_image(image_path):
+    &#34;&#34;&#34;Load a fluorescent multiframe image as an array&#34;&#34;&#34;
+    image = itk.imread(image_path) # read an image
+
+    image = itk.array_view_from_image(image) # and convert it into an array
+    
+    return image
+
+def collect_plots_to_make_per_track(display_intensity,
+                                    display_movement,
+                                    display_distance_traveled,
+                                    display_separation):
+    &#34;&#34;&#34;Designate the plot(s) to make from user selection(s)&#34;&#34;&#34;
+    display_attributes = []
+
+    if display_intensity:
+        
+        display_attributes.append(&#39;display_intensity&#39;)
+    
+    if display_movement:
+        
+        display_attributes.append(&#39;display_movement&#39;)
+        
+    if display_distance_traveled:
+        
+        display_attributes.append(&#39;display_distance_traveled&#39;)
+        
+    if display_separation:
+        
+        display_attributes.append(&#39;display_separation&#39;)
+
+    return display_attributes
+
+def display_intensity_subplot(ax_current,
+                              tracks,
+                              track_number,
+                              channel_colors,
+                              display_channels):
+    &#34;&#34;&#34;Plot intensity over time for all channels in a track&#34;&#34;&#34;
+    for channel_number in display_channels:
+
+        ax_current.plot(return_track_amplitude_one_channel(tracks,
+                                                    track_number,
+                                                    channel_number),
+                        color=channel_colors[channel_number],
+                        label=&#39;ch&#39; + str(channel_number))
+
+    ax_current.set(xlabel=&#39;frames&#39;, ylabel=&#39;au fluorescence intensity&#39;)
+    ax_current.legend()
+    
+    
+
+def display_movement_subplot(ax_current,
+                              tracks,
+                              track_number,
+                              channel_colors,
+                              display_channnels):
+    &#34;&#34;&#34;Plot x(t), y(t) in pixels for all designated channels in a track&#34;&#34;&#34;            
+    marker_channel = [&#39;v&#39;,&#39;^&#39;,&#39;&lt;&#39;,&#39;&gt;&#39;]
+    for channel_number in display_channnels:
+        # plot whole channel&#39;s trace
+        ax_current.plot(return_puncta_x_position_whole_track(tracks,
+                                                      track_number,
+                                                      channel_number),
+                        return_puncta_y_position_whole_track(tracks,
+                                                      track_number,
+                                                      channel_number),
+                        color=channel_colors[channel_number],
+                        label=&#39;ch&#39; + str(channel_number),
+                        alpha = 0.5)  
+        # signify the beginning of channel&#39;s track
+        ax_current.plot(return_puncta_x_position_whole_track(tracks,
+                                                      track_number,
+                                                      channel_number)[0],
+                        return_puncta_y_position_whole_track(tracks,
+                                                      track_number,
+                                                      channel_number)[0],
+                        color=channel_colors[channel_number],
+                        label=&#39;ch&#39; + str(channel_number) + &#39; start&#39;,
+                        marker=marker_channel[channel_number],
+                        markerSize = 10,
+                        alpha = 0.7)
+        # signify the end of a channel&#39;s track
+        ax_current.plot(return_puncta_x_position_whole_track(tracks,
+                                                      track_number,
+                                                      channel_number)[-1],
+                        return_puncta_y_position_whole_track(tracks,
+                                                      track_number,
+                                                      channel_number)[-1],
+                        color=channel_colors[channel_number],
+                        label=&#39;ch&#39; + str(channel_number) + &#39; end&#39;,
+                        marker=marker_channel[channel_number],
+                        markerSize = 20,
+                        alpha = 0.7)
+
+
+    ax_current.set(xlabel=&#39;x position (pixel)&#39;, ylabel=&#39;y position (pixel)&#39;)
+    ax_current.legend()
+
+    
+def distance_travelled_subplot(ax_current,
+                               tracks,
+                               track_number,
+                               channel_colors,
+                               display_channels):
+    
+    &#34;&#34;&#34;Plot distance travelled (in pixels) from origin of track for all channels in a track&#34;&#34;&#34;   
+    for channel_number in display_channels:
+        
+        ax_current.plot(return_distance_traveled_from_origin(tracks,
+                                                              track_number,
+                                                              channel_number),
+                                                              color=channel_colors[channel_number],
+                                                              label=&#39;ch&#39; + str(channel_number))   
+        
+    ax_current.set(xlabel=&#39;frames&#39;,ylabel=&#39;distance from channel origin (pixels)&#39;)
+    ax_current.legend()
+    
+def distance_separated_between_channels_subplot(ax_current,
+                                                tracks,
+                                                track_number,
+                                                channel_colors,
+                                                first_separation_channel,
+                                                second_separation_channel,
+                                                display_channels):
+    &#34;&#34;&#34;Plot distance between (in pixels) the fitted centers of two designated channels in a track&#34;&#34;&#34;  
+    for channel_number in display_channels:
+                
+        ax_current.plot(return_distance_between_two_channel(tracks,
+                                                            track_number,
+                                                            first_separation_channel,
+                                                            second_separation_channel),
+                                                            color=channel_colors[channel_number])
+    
+    ax_current.set(xlabel=&#39;frames&#39;,ylabel=&#39;distance between designated channels (pixels)&#39;)    
+    
+    
+def display_one_track(tracks, 
+                      track_number, 
+                      dpi, 
+                      fig_size, 
+                      channel_colors, 
+                      display_channels,
+                      display_intensity,
+                      display_movement,
+                      display_distance_traveled,
+                      display_separation,
+                      show_frames,
+                      create_gif,
+                      raw_frames,
+                      first_separation_channel,
+                      second_separation_channel):
+    &#34;&#34;&#34;
+    Visualize a single track&#39;s designated features by user input
+    
+    Args:
+        tracks (dictionary (with track indices as keys) or ndarray): tracks outputted by ProcessedTracks.mat
+        track_number (int): index of track for display
+        dpi (int): dpi for matplotlib figure
+        fig_size (tuple): size of matplotlib figure
+        channel_colors (list): colors for plotting traces corresponding to each displayed channel
+        display_channels (list): channels to display from tracks
+        display_intensity (boolean): display intensity vs. time 
+        display_movement (boolean): display (x(t),y(t)) in pixels
+        display_distance_traveled (boolean): display distance traveled from origin of track
+        display_separation (boolean): display separation between two channels&#39; fitted center vs. time 
+        show_frames (boolean): show raw data centered around track
+        create_gif (boolean): create gif of raw data separated by channels and intensity vs. time for designated chnanels 
+        raw_frames (list of strings): list of strings of pathnames for raw data channels (must contain all channels for tracks)
+        first_separation_channel (int): index of first channel for separation display
+        second_separation_channel (int): index of second chnanel for separation display
+        
+    Returns:
+        None
+    
+    &#34;&#34;&#34;
+    fig=figure(num=None, figsize=fig_size, dpi=dpi, facecolor=&#39;w&#39;, edgecolor=&#39;k&#39;)
+
+    num_channels_in_track = len(return_track_amplitude(tracks,track_number))
+
+    print(&#39;The TrackID of the following track is: &#39; + str(track_number))
+
+    
+    display_attributes = collect_plots_to_make_per_track(display_intensity,
+                                                         display_movement,
+                                                         display_distance_traveled,
+                                                         display_separation)
+
+    marker_channel = [&#39;v&#39;,&#39;^&#39;,&#39;&lt;&#39;,&#39;&gt;&#39;]
+    
+    index_subplot = 1 # the index of the first subplot of plot size (1*n) where n = len(display_attributes)
+    number_channels_in_track = len(return_track_amplitude(tracks, track_number))
+    
+    for i in range(len(display_attributes)):
+        
+        ax_current = fig.add_subplot(1,len(display_attributes),index_subplot)
+        
+        if display_attributes[i]==&#39;display_intensity&#39;:
+            
+            display_intensity_subplot(ax_current,
+                              tracks,
+                              track_number,
+                              channel_colors,
+                              display_channels)
+            
+        elif display_attributes[i]==&#39;display_movement&#39;:    
+            
+            display_movement_subplot(ax_current,
+                                  tracks,
+                                  track_number,
+                                  channel_colors,
+                                  display_channels)    
+
+        elif display_attributes[i]==&#39;display_distance_traveled&#39;:
+            
+            distance_travelled_subplot(ax_current,
+                                       tracks,
+                                       track_number,
+                                       channel_colors,
+                                       display_channels)
+
+        elif display_attributes[i]==&#39;display_separation&#39;:   
+            
+            distance_separated_between_channels_subplot(ax_current,
+                                                    tracks,
+                                                    track_number,
+                                                    channel_colors,
+                                                    first_separation_channel,
+                                                    second_separation_channel,
+                                                    display_channels)
+        index_subplot+=1
+    
+    track_category=return_track_category(tracks, track_number)
+    track_is_ccp=return_is_CCP(tracks, track_number)
+    print(f&#39;The category of this track track is: {track_category}&#39;)   
+    if track_is_ccp:
+        print(&#39;This track was categorized as a CCP by cmeAnalysis&#39;)
+    else:
+        print(&#39;This track was not categorized as a CCP by cmeAnalysis&#39;)
+    plt.show()  
+    
+    if show_frames: # if user selects to see raw frames overlaid with puncta fits
+
+        interact_through_tracks_IDs(tracks,
+                                    raw_frames,
+                                    track_number,
+                                    channel_colors,
+                                    create_gif,
+                                    display_channels)
+    
+
+
+        
+def play_through_tracks(tracks,raw_images,track_number,channel_colors,l,u,window_size,display_channels, frame_names, gif_name,folder_name,dpi, subplot_padding):
+    &#34;&#34;&#34;Create a folder for raw data gif frames and construct gif&#34;&#34;&#34;
+    
+    fig=plt.figure(num=None, figsize=(50,10), dpi=40, facecolor=&#39;w&#39;, edgecolor=&#39;k&#39;)   
+    folder_name = folder_name+&#39;_track_number_&#39;+str(track_number)+&#39;_frame_&#39;+str(l)+&#39;_to_&#39;+str(u)
+    list_of_frames = []
+
+    if not os.path.exists(folder_name):
+        os.mkdir(folder_name)
+    else:
+        raise Exception(&#39;Folder exists in current directory&#39;)
+
+    for frame in range(l,u+1):
+        
+        interact_through_frames_of_track_save_figure(tracks,
+                                                     raw_images,
+                                                     track_number,
+                                                     frame,
+                                                     window_size,
+                                                     channel_colors,
+                                                     dpi,
+                                                     display_channels,
+                                                     folder_name,
+                                                     frame_names,
+                                                     subplot_padding)
+
+    print(folder_name)
+
+    image_list = []
+    
+    for i in range(l,u+1):
+        
+        image_list.append(imageio.imread(folder_name+&#39;/&#39;+frame_names+str(i)+&#39;.png&#39;))
+
+    print(&#39;completed frame generation; building gif&#39;)
+    imageio.mimwrite(folder_name+&#39;/&#39;+gif_name + &#39;_track_number_&#39; + str(track_number)+&#39;_frame_&#39;+str(l)+&#39;_to_&#39;+str(u)+&#39;.gif&#39;, image_list,fps=3)
+    print(&#39;gif generation complete&#39;)
+
+        
+def interact_through_tracks_IDs(tracks,raw_images,track_number,channel_colors, create_gif, display_channels):
+    &#34;&#34;&#34;Set up widgets to interact through a track&#39;s frames and display raw data&#34;&#34;&#34;
+    len_current_track = len(return_track_amplitude_one_channel(tracks,track_number,0))
+    print(&#39;The length of the current track: {}&#39;.format(len_current_track))
+
+    interact(interact_through_frames_of_track,
+             raw_images=fixed(raw_images),
+             track_number=fixed(track_number),
+             tracks=fixed(tracks),
+             frames=widgets.IntSlider(min=0,max=len_current_track-1,step=1,value=0,continuous_update=False),
+             window_size=widgets.IntSlider(min=-10,max=30,step=1,value=10),
+             subplot_padding=widgets.IntSlider(min=20,max=100,step=1,value=25),
+             channel_colors=fixed(channel_colors),
+             dpi=widgets.IntSlider(value=50,min=0,max=1000,step=1,description=&#39;dpi of raw images:&#39;,disabled=False),
+             create_gif=fixed(create_gif),
+             display_channels=fixed(display_channels))
+
+# 
+def interact_through_frames_of_track_save_figure(tracks,
+                                                 raw_images, 
+                                                 track_number,
+                                                 frames,
+                                                 window_size, 
+                                                 channel_colors, 
+                                                 dpi, 
+                                                 display_channels,
+                                                 folder_name,
+                                                 frame_names,
+                                                 subplot_padding):
+    &#34;&#34;&#34;Display raw frames interactively and prompt user for gif-saving options&#34;&#34;&#34;
+    print(&#39;Current frame: &#39; + str(frames))
+    warnings.filterwarnings(&#34;ignore&#34;)
+    num_channels = len(return_track_amplitude(tracks,track_number))
+    fig, axes = plt.subplots(1, len(display_channels)+2, figsize=(40,5),gridspec_kw = {&#39;wspace&#39;:0.1, &#39;hspace&#39;:0.1}, dpi=dpi)
+    index_subplot = 0
+    colors=[&#39;Reds&#39;,&#39;Greens&#39;,&#39;Blues&#39;]
+    color_puncta = channel_colors
+    track_x_positions = []
+    track_y_positions = []
+    frames_in_track = return_frames_in_track(tracks,track_number)-1
+    min_x = np.min(return_puncta_x_position_whole_track(tracks,track_number,0))
+    max_x = np.max(return_puncta_x_position_whole_track(tracks,track_number,0))
+    min_y = np.min(return_puncta_y_position_whole_track(tracks,track_number,0))
+    max_y = np.max(return_puncta_y_position_whole_track(tracks,track_number,0))
+    for i in range(num_channels):
+
+        track_x_positions.append(return_puncta_x_position_whole_track(tracks,track_number,i)-0.5)
+        track_y_positions.append(return_puncta_y_position_whole_track(tracks,track_number,i)-0.5)
+        if np.min(return_puncta_x_position_whole_track(tracks,track_number,i))&lt;min_x:
+            min_x = np.min(return_puncta_x_position_whole_track(tracks,track_number,i))
+        if np.max(return_puncta_x_position_whole_track(tracks,track_number,i))&gt;max_x:
+            max_x = np.max(return_puncta_x_position_whole_track(tracks,track_number,i))
+        if np.min(return_puncta_y_position_whole_track(tracks,track_number,i))&lt;min_y:
+            min_y = np.min(return_puncta_y_position_whole_track(tracks,track_number,i))
+        if np.max(return_puncta_y_position_whole_track(tracks,track_number,i))&gt;max_y:
+            max_y = np.max(return_puncta_y_position_whole_track(tracks,track_number,i))
+    diff_x = max_x-min_x
+    diff_y = max_y-min_y
+    avg_x = (max_x+min_x)/2
+    avg_y = (max_y+min_y)/2
+    diff_greatest = int(np.max([diff_x,diff_y])/2+window_size)
+
+    lower_x_lim = np.max([0,int(avg_x-diff_greatest)])
+    lower_y_lim = np.max([0,int(avg_y-diff_greatest)])
+    upper_x_lim = np.min([511,int(avg_x+diff_greatest)])
+    upper_y_lim = np.min([511,int(avg_y+diff_greatest)])
+    
+    
+    for i in display_channels:
+
+        frame = load_itk_image(raw_images[i])[frames_in_track[frames],:,:][lower_y_lim:upper_y_lim,lower_x_lim:upper_x_lim]
+        
+        axes[index_subplot].imshow(frame,cmap=&#39;Greys&#39;)
+        axes[index_subplot].title.set_text(&#39;Ch&#39;+str(i))
+        axes[index_subplot].set_xlabel(&#39;pixels&#39;)
+        axes[index_subplot].set_ylabel(&#39;pixels&#39;)
+        for j in display_channels:
+
+            axes[index_subplot].plot(track_x_positions[j][frames]-lower_x_lim,track_y_positions[j][frames]-lower_y_lim,marker=&#39;X&#39;,markerSize=2,color=color_puncta[j],label=&#39;Ch&#39;+str(j))
+        
+        axes[index_subplot].legend()
+        index_subplot+=1 
+        
+
+    
+    for i in display_channels:
+        
+        frame = load_itk_image(raw_images[i])[frames_in_track[frames],:,:][lower_y_lim:upper_y_lim,lower_x_lim:upper_x_lim]
+
+        axes[index_subplot].imshow(frame,cmap=colors[i],alpha=0.6)
+        axes[index_subplot].plot(track_x_positions[i][frames]-lower_x_lim,track_y_positions[i][frames]-lower_y_lim,marker=&#39;x&#39;,markerSize=2,label=&#39;Ch&#39;+str(j),color=color_puncta[i])      
+
+
+    display_overlay_string=&#39;overlay, &#39;
+    for i in range(num_channels):
+        if i in display_channels:
+            display_overlay_string+=&#39;Ch&#39;+str(i)+&#39;:&#39;+str(colors[i])+&#39; &#39;
+    axes[index_subplot].title.set_text(display_overlay_string)
+    axes[index_subplot].set_xlabel(&#39;pixels&#39;)
+    axes[index_subplot].set_ylabel(&#39;pixels&#39;)
+    axes[index_subplot].legend()
+
+    index_subplot += 1
+
+    for i in display_channels:
+        
+        axes[index_subplot].plot(return_track_amplitude_one_channel(tracks,track_number,i),color=channel_colors[i],label=&#39;Ch&#39;+str(i))
+
+    axes[index_subplot].axvline(frames,label=&#39;current frame&#39;)
+    axes[index_subplot].legend(loc=1)
+    axes[index_subplot].set_xlabel(&#39;frames&#39;)
+    axes[index_subplot].set_ylabel(&#39;au fluorescence intensity&#39;)
+    axes[index_subplot].title.set_text(&#39;fluorescence intensity over time frame = &#39; + str(frames))
+
+    fig.tight_layout()
+    plt.savefig(folder_name + &#39;/&#39;+ frame_names +str(frames))
+    
+
+def interact_through_frames_of_track(tracks,
+                                     raw_images, 
+                                     track_number,
+                                     frames,
+                                     window_size, 
+                                     channel_colors, 
+                                     dpi, 
+                                     create_gif, 
+                                     display_channels,
+                                     subplot_padding):
+    &#34;&#34;&#34;Interact through a track&#39;s frames and display raw data&#34;&#34;&#34;
+    print(&#39;Current frame: &#39; + str(frames))
+    warnings.filterwarnings(&#34;ignore&#34;)
+    num_channels = len(return_track_amplitude(tracks,track_number))
+    fig, axes = plt.subplots(1, len(display_channels)+2, figsize=(subplot_padding,5),gridspec_kw = {&#39;wspace&#39;:0.1, &#39;hspace&#39;:0.1}, dpi=dpi)
+    index_subplot = 0
+    colors=[&#39;Reds&#39;,&#39;Greens&#39;,&#39;Blues&#39;]
+    color_puncta = channel_colors
+    track_x_positions = []
+    track_y_positions = []
+    frames_in_track = return_frames_in_track(tracks,track_number)-1
+    min_x = np.min(return_puncta_x_position_whole_track(tracks,track_number,0))
+    max_x = np.max(return_puncta_x_position_whole_track(tracks,track_number,0))
+    min_y = np.min(return_puncta_y_position_whole_track(tracks,track_number,0))
+    max_y = np.max(return_puncta_y_position_whole_track(tracks,track_number,0))
+    for i in range(num_channels):
+
+        track_x_positions.append(return_puncta_x_position_whole_track(tracks,track_number,i)-0.5)
+        track_y_positions.append(return_puncta_y_position_whole_track(tracks,track_number,i)-0.5)
+        if np.min(return_puncta_x_position_whole_track(tracks,track_number,i))&lt;min_x:
+            min_x = np.min(return_puncta_x_position_whole_track(tracks,track_number,i))
+        if np.max(return_puncta_x_position_whole_track(tracks,track_number,i))&gt;max_x:
+            max_x = np.max(return_puncta_x_position_whole_track(tracks,track_number,i))
+        if np.min(return_puncta_y_position_whole_track(tracks,track_number,i))&lt;min_y:
+            min_y = np.min(return_puncta_y_position_whole_track(tracks,track_number,i))
+        if np.max(return_puncta_y_position_whole_track(tracks,track_number,i))&gt;max_y:
+            max_y = np.max(return_puncta_y_position_whole_track(tracks,track_number,i))
+    diff_x = max_x-min_x
+    diff_y = max_y-min_y
+    avg_x = (max_x+min_x)/2
+    avg_y = (max_y+min_y)/2
+    diff_greatest = int(np.max([diff_x,diff_y])/2+window_size)
+
+    lower_x_lim = np.max([0,int(avg_x-diff_greatest)])
+    lower_y_lim = np.max([0,int(avg_y-diff_greatest)])
+    upper_x_lim = np.min([511,int(avg_x+diff_greatest)])
+    upper_y_lim = np.min([511,int(avg_y+diff_greatest)])
+    
+    
+    for i in display_channels:
+
+        frame = load_itk_image(raw_images[i])[frames_in_track[frames],:,:][lower_y_lim:upper_y_lim,lower_x_lim:upper_x_lim]
+
+        axes[index_subplot].imshow(frame,cmap=&#39;Greys&#39;)
+        axes[index_subplot].title.set_text(&#39;Ch&#39;+str(i))
+        axes[index_subplot].set_xlabel(&#39;pixels&#39;)
+        axes[index_subplot].set_ylabel(&#39;pixels&#39;)
+        for j in display_channels:
+            axes[index_subplot].plot(track_x_positions[j][frames]-lower_x_lim,track_y_positions[j][frames]-lower_y_lim,marker=&#39;X&#39;,markerSize=2,color=color_puncta[j],label=&#39;Ch&#39;+str(j))
+        
+        axes[index_subplot].legend()
+        index_subplot+=1 
+    
+    for i in display_channels:
+        frame = load_itk_image(raw_images[i])[frames_in_track[frames],:,:][lower_y_lim:upper_y_lim,lower_x_lim:upper_x_lim]
+
+        axes[index_subplot].imshow(frame,cmap=colors[i],alpha=0.6)
+        axes[index_subplot].plot(track_x_positions[i][frames]-lower_x_lim,track_y_positions[i][frames]-lower_y_lim,marker=&#39;x&#39;,markerSize=2,label=&#39;Ch&#39;+str(j),color=color_puncta[i])      
+
+    display_overlay_string=&#39;overlay, &#39;
+    for i in range(num_channels):
+        if i in display_channels:
+            display_overlay_string+=&#39;Ch&#39;+str(i)+&#39;:&#39;+str(colors[i])+&#39; &#39;
+    axes[index_subplot].title.set_text(display_overlay_string)
+    axes[index_subplot].set_xlabel(&#39;pixels&#39;)
+    axes[index_subplot].set_ylabel(&#39;pixels&#39;)
+    axes[index_subplot].legend()
+    index_subplot += 1
+    for i in display_channels:
+        
+        axes[index_subplot].plot(return_track_amplitude_one_channel(tracks,track_number,i),color=channel_colors[i],label=&#39;Ch&#39;+str(i))
+
+    axes[index_subplot].axvline(frames,label=&#39;current frame&#39;)
+    axes[index_subplot].legend(loc=1)
+    axes[index_subplot].set_xlabel(&#39;frames&#39;)
+    axes[index_subplot].set_ylabel(&#39;au fluorescence intensity&#39;)
+    axes[index_subplot].title.set_text(&#39;fluorescence intensity over time, frame = &#39; + str(frames))
+
+    fig.tight_layout()
+    fig.show()        
+    
+    if create_gif: # if user selects to turn frames into a saved gif
+        len_current_track = len(return_track_amplitude_one_channel(tracks,track_number,0))
+        w = widgets.Checkbox(value=False, description=&#39;Click to create GIF&#39;)
+        lower_bound=widgets.BoundedIntText(value=0,
+                                           min=0,
+                                           max=len(return_track_amplitude_one_channel(tracks,track_number,0))-2,
+                                           step=1,
+                                           description=&#39;lower:&#39;,
+                                           style={&#39;width&#39;: &#39;max-content&#39;},
+                                           disabled=False)
+
+        upper_bound=widgets.BoundedIntText(value=len(return_track_amplitude_one_channel(tracks,track_number,0)),
+                                           min=1,
+                                           max=len(return_track_amplitude_one_channel(tracks,track_number,0))-1,
+                                           step=1,
+                                           description=&#39;upper:&#39;,
+                                           style={&#39;width&#39;: &#39;max-content&#39;}, 
+                                           disabled=False)
+
+
+        frame_names=widgets.Textarea(value=&#39;frame_&#39;,
+                             placeholder=&#39;frame_&#39;,
+                             description=&#39;frame name prefix:&#39;,
+                             disabled=False)
+        gif_name=widgets.Textarea(value=&#39;gif&#39;,
+                             placeholder=&#39;gif&#39;,
+                             description=&#39;gif name:&#39;,
+                             disabled=False)
+
+        folder_name=widgets.Textarea(value=&#39;saved_pngs&#39;,
+                                  placeholder=&#39;saved_pngs&#39;,
+                                  description=&#39;Folder name:&#39;,
+                                  disabled=False)
+        interact(return_check_box_value,
+                 make_gif=w,
+                 lower_frame_bound=lower_bound,
+                 upper_frame_bound=upper_bound,
+                 frame_names=frame_names,
+                 gif_name=gif_name,
+                 folder_name=folder_name,
+                 window_size=fixed(window_size),
+                 tracks=fixed(tracks),
+                 raw_tiff_list=fixed(raw_images),
+                 track_number=fixed(track_number),
+                 channel_colors=fixed(channel_colors),
+                 display_channels=fixed(display_channels),
+                 dpi=fixed(dpi),
+                 subplot_padding=fixed(subplot_padding))   
+
+def track_within_bounds(tracks, track_number, minimum_lifetime, maximum_lifetime, track_category, number_of_channels):
+    &#34;&#34;&#34;Check if a track satisfies the user-defined conditions&#34;&#34;&#34;
+    if return_track_category(tracks, track_number) in track_category and \
+       len(return_track_x_position(tracks, track_number)) == number_of_channels and \
+       return_track_lifetime(tracks, track_number) &gt;= minimum_lifetime and \
+       return_track_lifetime(tracks, track_number) &lt;= maximum_lifetime:
+
+        return True
+
+    else:
+
+        return False
+
+    
+def display_tracks_for_selection(tracks):
+    &#34;&#34;&#34;Display shuffled tracks for manual user selection of tracks indices to keep for further analysis&#34;&#34;&#34;
+    indices = list(range(len(tracks)))
+    random.shuffle(indices)
+    print(&#39;Tracks have been randomly shuffled&#39;)
+    print()
+    print(&#39;The total number of tracks to sort through: &#39; + str(len(tracks)))
+    print()
+    
+    indices_to_keep = []    
+
+    
+    output_selection = interactive(select_track_option,
+                                   i=widgets.SelectionSlider(description=&#39;Track ID:&#39;,   options=indices, value = indices[0]),
+                                   tracks=fixed(tracks),
+                                   indices_to_keep=fixed(indices_to_keep))
+    display(output_selection)
+    
+    
+    return output_selection.result
+
+def select_track_option(tracks, i, indices_to_keep):
+    &#34;&#34;&#34;Configure options for manual selection of tracks&#34;&#34;&#34;
+    selection_widget = widgets.ToggleButton(
+                                            value=False,
+                                            description=&#39;Click to keep&#39;,
+                                            disabled=False,
+                                            button_style=&#39;&#39;, # &#39;success&#39;, &#39;info&#39;, &#39;warning&#39;, &#39;danger&#39; or &#39;&#39;
+                                            tooltip=&#39;Description&#39;,
+                                            icon=&#39;check&#39;
+                                            )
+    
+    deselection_widget = widgets.ToggleButton(
+                                            value=False,
+                                            description=&#39;Click to remove&#39;,
+                                            disabled=False,
+                                            button_style=&#39;&#39;, # &#39;success&#39;, &#39;info&#39;, &#39;warning&#39;, &#39;danger&#39; or &#39;&#39;
+                                            tooltip=&#39;Description&#39;,
+                                            icon=&#39;check&#39;
+                                            )
+    
+    output_selection = interactive(iterate_through_selectable_tracks,
+                                   selection=selection_widget,
+                                   deselection=deselection_widget,
+                                   i=fixed(i),
+                                   tracks=fixed(tracks),
+                                   indices_to_keep=fixed(indices_to_keep))
+    display(output_selection)
+    
+    return output_selection.result
+
+def iterate_through_selectable_tracks(tracks, i, selection, deselection, indices_to_keep):
+    &#34;&#34;&#34;Plot each track for manual track selection&#34;&#34;&#34;
+    channel_colors = [&#39;m&#39;, &#39;g&#39;]
+    
+    for channel_number in [0,1]:
+
+        plt.plot(return_track_amplitude_one_channel(tracks,
+                                                    i,
+                                                    channel_number),
+                        color=channel_colors[channel_number],
+                        label=&#39;ch&#39; + str(channel_number))
+
+        plt.xlabel(&#39;frames&#39;)
+        plt.ylabel(&#39;au fluorescence intensity&#39;)
+        plt.legend()
+    
+    plt.show()
+
+    if selection:
+        
+        indices_to_keep.append(i)
+        
+    if deselection:
+        
+        indices_to_keep.remove(i)
+        
+    print(&#39;selected IDs:&#39; + str(indices_to_keep))
+    
+    return indices_to_keep
+    
+    
+    
+def display_tracks(tracks, 
+                   minimum_lifetime=0, 
+                   maximum_lifetime=np.Inf, 
+                   track_category=[1, 2, 3, 4, 5, 6, 7, 8], 
+                   ch_min_int_threshold=[-np.Inf], 
+                   number_of_channels=2, 
+                   display_channels=[0],
+                   interact_through_tracks=True,
+                   display_all=False, 
+                   only_ccps=False, 
+                   display_intensity=True,
+                   display_movement=False,
+                   display_distance_traveled=False,
+                   show_frames=False,
+                   create_gif=False,
+                   raw_frames=[],
+                   display_separation=False,
+                   first_separation_channel=0,
+                   second_separation_channel=0,
+                   constraints_overlap_ccps=False, 
+                   dpi=300, 
+                   fig_size=(3, 2), 
+                   channel_colors=[&#39;g&#39;]):
+    
+    &#34;&#34;&#34;
+    Display track features for all tracks in a Python-coverted ProcessedTracks.mat
+    
+    Args:
+        tracks (dictionary (with track indices as keys) or ndarray): tracks outputted by ProcessedTracks.mat
+        minimum_lifetime (int, optional): minimum lifetime of tracks to display
+        maximum_lifetime (int, optional): maximum lifetime of tracks to display 
+        track_category (list, optional): category of tracks to display as designated by ProcessedTracks.mat
+        ch_min_int_threshold (list, optiona): minimum intensity threshold for each channel necessary to display
+        number_of_channels (int, optional): number of channels in tracks
+        display_channels (list, optional): channels from tracks to display 
+        interact_through_tracks (boolean, optional): display widgets for interactively loading tracks one at a time by track index
+        display_all (boolean, optional): display all tracks without any constraints applied
+        only_ccps (boolean, optional): display only tracks designated as &#39;CCPs&#39; by cmeAnalysis
+        display_intensity (boolean, optional): display intensity vs. time 
+        display_movement (boolean, optional): display (x(t),y(t)) in pixels
+        display_distance_traveled (boolean, optional): display distance traveled from origin of track
+        show_frames (boolean, optional): show raw data centered around track
+        create_gif (boolean, optional): create gif of raw data separated by channels and intensity vs. time for designated chnanels 
+        raw_frames (list of strings, optional): list of strings of pathnames for raw data channels (must contain all channels for tracks)        
+        display_separation (boolean, optional): display separation between two channels&#39; fitted center vs. time 
+        first_separation_channel (int, optional): index of first channel for separation display
+        second_separation_channel (int, optional): index of second chnanel for separation display
+        contraints_overlap_ccps (boolean, optional): display tracks designated as &#39;CCPs&#39; and meet designated criteria
+        dpi (int, optional): dpi for matplotlib figure
+        fig_size (tuple, optional): size of matplotlib figure
+        channel_colors (list, optional): colors for plotting traces corresponding to each displayed channel
+ 
+
+     Returns:
+         None
+
+    &#34;&#34;&#34;
+    
+    
+    number_of_tracks = len(tracks)
+
+    print()
+    print(&#39;The total number of tracks: &#39; + str(number_of_tracks))
+    print()
+
+    indices_to_display = []
+    number_of_ccps_total = 0
+    number_of_ccps_condition_bound = 0
+
+    for i in range(0, number_of_tracks):
+
+        if display_all:
+
+            indices_to_display.append(i)
+
+
+            number_of_ccps_condition_bound += 1
+
+
+        elif only_ccps:
+
+            if return_is_CCP(tracks, i):
+
+                number_of_ccps_condition_bound += 1
+
+                indices_to_display.append(i)
+
+        elif constraints_overlap_ccps:
+
+            if track_within_bounds(tracks, i, minimum_lifetime, maximum_lifetime, track_category, number_of_channels) and \
+               return_is_CCP(tracks, i):
+
+                number_of_ccps_condition_bound += 1
+
+                indices_to_display.append(i)
+
+
+#         check if current track is within defined bounds
+        elif track_within_bounds(tracks, i, minimum_lifetime, maximum_lifetime, track_category, number_of_channels):
+
+            num_channels_in_track = len(return_track_amplitude(tracks, i))
+
+            if num_channels_in_track &gt; len(channel_colors):
+
+                raise Exception(&#39;length of &#34;channel_colors&#34; must be equal to &#34;number_of_channels&#34;&#39;)
+
+            if len(ch_min_int_threshold) == 1:
+
+                temp = 0
+
+                for j in range(num_channels_in_track):
+
+                    if max(return_track_amplitude(tracks, i)[j]) &gt; ch_min_int_threshold[0]:
+
+                        temp += 1
+
+                if temp == num_channels_in_track:
+
+                    number_of_ccps_condition_bound += 1
+
+                    indices_to_display.append(i)
+
+            elif len(ch_min_int_threshold) == num_channels_in_track:
+
+                temp = 0
+
+                for j in range(num_channels_in_track):
+
+                    if max(return_track_amplitude(tracks, i)[j]) &gt; ch_min_int_threshold[j]:
+
+                        temp += 1
+
+                if temp == num_channels_in_track:
+
+                    number_of_ccps_condition_bound += 1
+
+                    indices_to_display.append(i)
+            else:
+
+                raise Exception(&#39;length of &#34;ch_min_int_threshold&#34; must be equal to maximum number of channels in experiment OR set to default ([0])&#39;)
+
+
+        if return_is_CCP(tracks, i) == 1:
+
+            number_of_ccps_total += 1
+
+    if not display_all:
+        print(&#39;The total number of ccps identified by cmeAnalysis: &#39; + str(number_of_ccps_total))
+        print()
+    print(&#39;The total number of tracks to be displayed within defined bounds: &#39; + str(number_of_ccps_condition_bound))
+    print()
+    print()
+
+    if interact_through_tracks:
+        
+        interact(display_one_track,
+             tracks=fixed(tracks),
+             track_number = widgets.SelectionSlider(description=&#39;Track ID:&#39;,   options=indices_to_display, value = indices_to_display[0]), 
+             dpi=fixed(dpi), 
+             fig_size=fixed(fig_size), 
+             channel_colors=fixed(channel_colors),
+             display_channels=fixed(display_channels),
+             display_intensity=fixed(display_intensity),
+             display_movement=fixed(display_movement),
+             display_distance_traveled=fixed(display_distance_traveled),
+             display_separation=fixed(display_separation),
+             show_frames=fixed(show_frames),
+             create_gif=fixed(create_gif),
+             raw_frames=fixed(raw_frames),
+             first_separation_channel=fixed(first_separation_channel),
+             second_separation_channel=fixed(second_separation_channel))
+            
+        
+    else:
+        for track_ID in indices_to_display:
+
+            display_one_track(tracks, 
+                              track_ID, 
+                              dpi, 
+                              fig_size, 
+                              display_channels,
+                              channel_colors, 
+                              display_intensity,
+                              display_movement,
+                              display_distance_traveled,
+                              display_separation,
+                              show_frames,
+                              create_gif,
+                              raw_frames,
+                              first_separation_channel,
+                              second_separation_channel)
+    
+
+
+def remove_tracks_by_criteria(tracks, 
+                              minimum_lifetime=0, 
+                              maximum_lifetime=np.Inf, 
+                              track_category=[1, 2, 3, 4, 5, 6, 7, 8], 
+                              ch_min_int_threshold=[-np.Inf], 
+                              number_of_channels=2, 
+                              keep_all=False, 
+                              only_ccps=False, 
+                              constraints_overlap_ccps=False):    
+    tracks_return = []
+    new_index = 0
+    for i in range(0, len(tracks)):
+
+        if keep_all:
+            
+
+            tracks_return.append(tracks[i])
+    
+        elif only_ccps:
+
+            if return_is_CCP(tracks, i) == 1:
+
+                tracks_return.append(tracks[i])
+                
+        elif constraints_overlap_ccps:
+
+            if track_within_bounds(tracks, i, minimum_lifetime, maximum_lifetime, track_category, number_of_channels) and \
+               return_is_CCP(tracks, i) == 1:
+                
+                tracks_return.append(tracks[i])
+
+
+
+        elif track_within_bounds(tracks, i, minimum_lifetime, maximum_lifetime, track_category, number_of_channels):
+
+            num_channels_in_track = len(return_track_amplitude(tracks, i))
+
+
+            if len(ch_min_int_threshold) == 1:
+            
+                temp = 0
+
+                for j in range(num_channels_in_track):
+
+                    if max(return_track_amplitude_one_channel(tracks, i, j)) &gt; ch_min_int_threshold[0]:
+                        
+                        temp += 1
+
+                if temp == num_channels_in_track:
+
+                    tracks_return.append(tracks[i])
+    
+            elif len(ch_min_int_threshold) == num_channels_in_track:
+
+                temp = 0
+
+                for j in range(num_channels_in_track):
+
+                    if max(return_track_amplitude_one_channel(tracks, i, j)) &gt; ch_min_int_threshold[j]:
+
+                        temp += 1
+
+                if temp == num_channels_in_track:
+
+
+                    tracks_return.append(tracks[i])
+                    
+    print(&#39;The number of tracks returned: &#39; + str(len(tracks_return)))
+    print()
+    return tuple(tracks_return)
+
+
+
+
+def remove_tracks_by_indices(tracks,
+                             selected_indices=[]):
+    &#34;&#34;&#34;Return tracks provided sans those whose number IDs are provided in &#39;selected_indices&#39; &#34;&#34;&#34;
+    
+    selected_indices.sort()
+
+    indices_to_keep = (list(set([*range(len(tracks))]).difference(selected_indices))) # find the indices to keep
+    indices_to_keep.sort()
+    
+    tracks_return = select_tracks_by_indices(tracks, indices_to_keep) # select and return the tracks whose IDs are not in &#39;selected_indices&#39; 
+
+    return tracks_return
+
+
+def select_tracks_by_indices(tracks,
+                             selected_indices=[]):
+    &#34;&#34;&#34;Return tracks whose number IDs are provided by &#39;selected_indices&#39; &#34;&#34;&#34;
+    
+    print()
+    print(&#39;The total number of tracks: &#39; + str(len(tracks)))
+    print()
+
+    tracks_return = {}
+    new_index = 0
+    # find all the track IDs provided by &#39;selected_indices&#39; and renumber new track array from 0
+    for i in range(0, len(tracks)):
+
+        if i in selected_indices:
+
+            tracks_return[new_index] = tracks[i]
+            new_index += 1
+
+    print(&#39;The number of tracks returned: &#39; + str(len(tracks_return)))       
+    print()
+    return tracks_return
+
+
+
+            
+def create_tp_tn_fp_fn_labels(test_labels, predicted_labels):
+    &#34;&#34;&#34;
+    Find indices for true positives, false negatives, false positives, and false negativess from ground truth and predicted labels
+    
+    Args:
+        test_labels (list): list of ground-truth labels
+        predicted_labels (list): list of predicted labels
+        
+    Returns:
+        predicted_labels (list of lists): lists (in order: tp, tn, fp, fn) of indices of prediction outcomes
+        
+    &#34;&#34;&#34;
+    
+    
+    if len(test_labels)!=len(predicted_labels):
+        raise Exception(&#39;arrays must be equal in size&#39;)
+    
+    tp = []
+    tn = []
+    fp = []
+    fn = []
+    
+    for i in range(len(test_labels)):
+        
+        if test_labels[i]==1 and predicted_labels[i]==1:
+            tp.append(i)
+        elif test_labels[i]==0 and predicted_labels[i]==0:
+            tn.append(i)
+        elif test_labels[i]==0 and predicted_labels[i]==1:
+            fp.append(i)
+        elif test_labels[i]==1 and predicted_labels[i]==0:
+            fn.append(i)
+
+    return [tp,tn,fp,fn]
+
+def plot_subplots_of_labels(tracks, track_indices, number_of_columns, num_plot,filename=&#39;&#39;, minimum_lifetime = 0, maximum_lifetime = np.Inf):    
+    &#34;&#34;&#34;
+    Plot a subplot grid of a subset of random samples from the designated tracks
+    
+    Args:
+        tracks (dictionary (with track indices as keys) or ndarray): tracks outputted by ProcessedTracks.mat
+        track_indices (list): indices of potential tracks for plotting
+        number_of_columns (int): number of columns in the subplot (number of rows determined automatically)
+        num_plot (int): number of tracks to plot 
+        filename (str, optional): pathname of figure to be saved as png
+        minimum_lifetime (int, optional): minimum lifetime of tracks to sample
+        maximum_lifetime (int, optional): maximum lifetime of tracks to sample 
+        
+    Returns:
+        None
+        
+    &#34;&#34;&#34;
+    
+    subplot_index = 1
+
+    num_rows = int(np.ceil(num_plot/number_of_columns))
+
+    f = figure(figsize=(3*number_of_columns+5,3*num_rows+5),dpi=100)
+    
+    tracks_to_plot = select_tracks_by_indices(tracks, track_indices)
+    tracks_to_plot = remove_tracks_by_criteria(tracks_to_plot, minimum_lifetime=minimum_lifetime, maximum_lifetime=maximum_lifetime)
+    
+    random_indices = list(range(len(tracks_to_plot)))
+    random.shuffle(random_indices)
+    track_indices = random_indices[:num_plot]
+    
+    tracks_to_plot = select_tracks_by_indices(tracks_to_plot, track_indices)
+    
+    lifetimes = []
+    for i in range(len(tracks_to_plot)):
+
+        lifetimes.append(return_track_lifetime(tracks_to_plot,i))
+        
+    sorted_lifetime_indices = sorted(range(len(lifetimes)), key=lambda k: lifetimes[k], reverse=True)
+    
+    tracks_to_plot_list = [tracks_to_plot[i] for i in sorted_lifetime_indices]
+
+    for i in range(len(tracks_to_plot_list)):
+        ax = f.add_subplot(number_of_columns,num_rows,subplot_index)
+        
+        display_intensity_subplot(ax,
+                                  tracks_to_plot_list,
+                                  i,
+                                  [&#39;m&#39;,&#39;g&#39;],
+                                  [0,1])
+        
+        subplot_index+=1
+        
+    if filename!=&#39;&#39;:
+        f.savefig(filename)
+    
+    plt.show()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="display_tracks.collect_plots_to_make_per_track"><code class="name flex">
+<span>def <span class="ident">collect_plots_to_make_per_track</span></span>(<span>display_intensity, display_movement, display_distance_traveled, display_separation)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Designate the plot(s) to make from user selection(s)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def collect_plots_to_make_per_track(display_intensity,
+                                    display_movement,
+                                    display_distance_traveled,
+                                    display_separation):
+    &#34;&#34;&#34;Designate the plot(s) to make from user selection(s)&#34;&#34;&#34;
+    display_attributes = []
+
+    if display_intensity:
+        
+        display_attributes.append(&#39;display_intensity&#39;)
+    
+    if display_movement:
+        
+        display_attributes.append(&#39;display_movement&#39;)
+        
+    if display_distance_traveled:
+        
+        display_attributes.append(&#39;display_distance_traveled&#39;)
+        
+    if display_separation:
+        
+        display_attributes.append(&#39;display_separation&#39;)
+
+    return display_attributes</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.create_tp_tn_fp_fn_labels"><code class="name flex">
+<span>def <span class="ident">create_tp_tn_fp_fn_labels</span></span>(<span>test_labels, predicted_labels)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Find indices for true positives, false negatives, false positives, and false negativess from ground truth and predicted labels</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>test_labels</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of ground-truth labels</dd>
+<dt><strong><code>predicted_labels</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of predicted labels</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>predicted_labels (list of lists): lists (in order: tp, tn, fp, fn) of indices of prediction outcomes</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_tp_tn_fp_fn_labels(test_labels, predicted_labels):
+    &#34;&#34;&#34;
+    Find indices for true positives, false negatives, false positives, and false negativess from ground truth and predicted labels
+    
+    Args:
+        test_labels (list): list of ground-truth labels
+        predicted_labels (list): list of predicted labels
+        
+    Returns:
+        predicted_labels (list of lists): lists (in order: tp, tn, fp, fn) of indices of prediction outcomes
+        
+    &#34;&#34;&#34;
+    
+    
+    if len(test_labels)!=len(predicted_labels):
+        raise Exception(&#39;arrays must be equal in size&#39;)
+    
+    tp = []
+    tn = []
+    fp = []
+    fn = []
+    
+    for i in range(len(test_labels)):
+        
+        if test_labels[i]==1 and predicted_labels[i]==1:
+            tp.append(i)
+        elif test_labels[i]==0 and predicted_labels[i]==0:
+            tn.append(i)
+        elif test_labels[i]==0 and predicted_labels[i]==1:
+            fp.append(i)
+        elif test_labels[i]==1 and predicted_labels[i]==0:
+            fn.append(i)
+
+    return [tp,tn,fp,fn]</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.display_intensity_subplot"><code class="name flex">
+<span>def <span class="ident">display_intensity_subplot</span></span>(<span>ax_current, tracks, track_number, channel_colors, display_channels)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot intensity over time for all channels in a track</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def display_intensity_subplot(ax_current,
+                              tracks,
+                              track_number,
+                              channel_colors,
+                              display_channels):
+    &#34;&#34;&#34;Plot intensity over time for all channels in a track&#34;&#34;&#34;
+    for channel_number in display_channels:
+
+        ax_current.plot(return_track_amplitude_one_channel(tracks,
+                                                    track_number,
+                                                    channel_number),
+                        color=channel_colors[channel_number],
+                        label=&#39;ch&#39; + str(channel_number))
+
+    ax_current.set(xlabel=&#39;frames&#39;, ylabel=&#39;au fluorescence intensity&#39;)
+    ax_current.legend()</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.display_movement_subplot"><code class="name flex">
+<span>def <span class="ident">display_movement_subplot</span></span>(<span>ax_current, tracks, track_number, channel_colors, display_channnels)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot x(t), y(t) in pixels for all designated channels in a track</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def display_movement_subplot(ax_current,
+                              tracks,
+                              track_number,
+                              channel_colors,
+                              display_channnels):
+    &#34;&#34;&#34;Plot x(t), y(t) in pixels for all designated channels in a track&#34;&#34;&#34;            
+    marker_channel = [&#39;v&#39;,&#39;^&#39;,&#39;&lt;&#39;,&#39;&gt;&#39;]
+    for channel_number in display_channnels:
+        # plot whole channel&#39;s trace
+        ax_current.plot(return_puncta_x_position_whole_track(tracks,
+                                                      track_number,
+                                                      channel_number),
+                        return_puncta_y_position_whole_track(tracks,
+                                                      track_number,
+                                                      channel_number),
+                        color=channel_colors[channel_number],
+                        label=&#39;ch&#39; + str(channel_number),
+                        alpha = 0.5)  
+        # signify the beginning of channel&#39;s track
+        ax_current.plot(return_puncta_x_position_whole_track(tracks,
+                                                      track_number,
+                                                      channel_number)[0],
+                        return_puncta_y_position_whole_track(tracks,
+                                                      track_number,
+                                                      channel_number)[0],
+                        color=channel_colors[channel_number],
+                        label=&#39;ch&#39; + str(channel_number) + &#39; start&#39;,
+                        marker=marker_channel[channel_number],
+                        markerSize = 10,
+                        alpha = 0.7)
+        # signify the end of a channel&#39;s track
+        ax_current.plot(return_puncta_x_position_whole_track(tracks,
+                                                      track_number,
+                                                      channel_number)[-1],
+                        return_puncta_y_position_whole_track(tracks,
+                                                      track_number,
+                                                      channel_number)[-1],
+                        color=channel_colors[channel_number],
+                        label=&#39;ch&#39; + str(channel_number) + &#39; end&#39;,
+                        marker=marker_channel[channel_number],
+                        markerSize = 20,
+                        alpha = 0.7)
+
+
+    ax_current.set(xlabel=&#39;x position (pixel)&#39;, ylabel=&#39;y position (pixel)&#39;)
+    ax_current.legend()</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.display_one_track"><code class="name flex">
+<span>def <span class="ident">display_one_track</span></span>(<span>tracks, track_number, dpi, fig_size, channel_colors, display_channels, display_intensity, display_movement, display_distance_traveled, display_separation, show_frames, create_gif, raw_frames, first_separation_channel, second_separation_channel)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Visualize a single track's designated features by user input</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>tracks (dictionary (with track indices as keys) or ndarray): tracks outputted by ProcessedTracks.mat</dt>
+<dt><strong><code>track_number</code></strong> :&ensp;<code>int</code></dt>
+<dd>index of track for display</dd>
+<dt><strong><code>dpi</code></strong> :&ensp;<code>int</code></dt>
+<dd>dpi for matplotlib figure</dd>
+<dt><strong><code>fig_size</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>size of matplotlib figure</dd>
+<dt><strong><code>channel_colors</code></strong> :&ensp;<code>list</code></dt>
+<dd>colors for plotting traces corresponding to each displayed channel</dd>
+<dt><strong><code>display_channels</code></strong> :&ensp;<code>list</code></dt>
+<dd>channels to display from tracks</dd>
+<dt><strong><code>display_intensity</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>display intensity vs. time </dd>
+<dt><strong><code>display_movement</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>display (x(t),y(t)) in pixels</dd>
+<dt><strong><code>display_distance_traveled</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>display distance traveled from origin of track</dd>
+<dt><strong><code>display_separation</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>display separation between two channels' fitted center vs. time </dd>
+<dt><strong><code>show_frames</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>show raw data centered around track</dd>
+<dt><strong><code>create_gif</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>create gif of raw data separated by channels and intensity vs. time for designated chnanels </dd>
+<dt><strong><code>raw_frames</code></strong> :&ensp;<code>list</code> of <code>strings</code></dt>
+<dd>list of strings of pathnames for raw data channels (must contain all channels for tracks)</dd>
+<dt><strong><code>first_separation_channel</code></strong> :&ensp;<code>int</code></dt>
+<dd>index of first channel for separation display</dd>
+<dt><strong><code>second_separation_channel</code></strong> :&ensp;<code>int</code></dt>
+<dd>index of second chnanel for separation display</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def display_one_track(tracks, 
+                      track_number, 
+                      dpi, 
+                      fig_size, 
+                      channel_colors, 
+                      display_channels,
+                      display_intensity,
+                      display_movement,
+                      display_distance_traveled,
+                      display_separation,
+                      show_frames,
+                      create_gif,
+                      raw_frames,
+                      first_separation_channel,
+                      second_separation_channel):
+    &#34;&#34;&#34;
+    Visualize a single track&#39;s designated features by user input
+    
+    Args:
+        tracks (dictionary (with track indices as keys) or ndarray): tracks outputted by ProcessedTracks.mat
+        track_number (int): index of track for display
+        dpi (int): dpi for matplotlib figure
+        fig_size (tuple): size of matplotlib figure
+        channel_colors (list): colors for plotting traces corresponding to each displayed channel
+        display_channels (list): channels to display from tracks
+        display_intensity (boolean): display intensity vs. time 
+        display_movement (boolean): display (x(t),y(t)) in pixels
+        display_distance_traveled (boolean): display distance traveled from origin of track
+        display_separation (boolean): display separation between two channels&#39; fitted center vs. time 
+        show_frames (boolean): show raw data centered around track
+        create_gif (boolean): create gif of raw data separated by channels and intensity vs. time for designated chnanels 
+        raw_frames (list of strings): list of strings of pathnames for raw data channels (must contain all channels for tracks)
+        first_separation_channel (int): index of first channel for separation display
+        second_separation_channel (int): index of second chnanel for separation display
+        
+    Returns:
+        None
+    
+    &#34;&#34;&#34;
+    fig=figure(num=None, figsize=fig_size, dpi=dpi, facecolor=&#39;w&#39;, edgecolor=&#39;k&#39;)
+
+    num_channels_in_track = len(return_track_amplitude(tracks,track_number))
+
+    print(&#39;The TrackID of the following track is: &#39; + str(track_number))
+
+    
+    display_attributes = collect_plots_to_make_per_track(display_intensity,
+                                                         display_movement,
+                                                         display_distance_traveled,
+                                                         display_separation)
+
+    marker_channel = [&#39;v&#39;,&#39;^&#39;,&#39;&lt;&#39;,&#39;&gt;&#39;]
+    
+    index_subplot = 1 # the index of the first subplot of plot size (1*n) where n = len(display_attributes)
+    number_channels_in_track = len(return_track_amplitude(tracks, track_number))
+    
+    for i in range(len(display_attributes)):
+        
+        ax_current = fig.add_subplot(1,len(display_attributes),index_subplot)
+        
+        if display_attributes[i]==&#39;display_intensity&#39;:
+            
+            display_intensity_subplot(ax_current,
+                              tracks,
+                              track_number,
+                              channel_colors,
+                              display_channels)
+            
+        elif display_attributes[i]==&#39;display_movement&#39;:    
+            
+            display_movement_subplot(ax_current,
+                                  tracks,
+                                  track_number,
+                                  channel_colors,
+                                  display_channels)    
+
+        elif display_attributes[i]==&#39;display_distance_traveled&#39;:
+            
+            distance_travelled_subplot(ax_current,
+                                       tracks,
+                                       track_number,
+                                       channel_colors,
+                                       display_channels)
+
+        elif display_attributes[i]==&#39;display_separation&#39;:   
+            
+            distance_separated_between_channels_subplot(ax_current,
+                                                    tracks,
+                                                    track_number,
+                                                    channel_colors,
+                                                    first_separation_channel,
+                                                    second_separation_channel,
+                                                    display_channels)
+        index_subplot+=1
+    
+    track_category=return_track_category(tracks, track_number)
+    track_is_ccp=return_is_CCP(tracks, track_number)
+    print(f&#39;The category of this track track is: {track_category}&#39;)   
+    if track_is_ccp:
+        print(&#39;This track was categorized as a CCP by cmeAnalysis&#39;)
+    else:
+        print(&#39;This track was not categorized as a CCP by cmeAnalysis&#39;)
+    plt.show()  
+    
+    if show_frames: # if user selects to see raw frames overlaid with puncta fits
+
+        interact_through_tracks_IDs(tracks,
+                                    raw_frames,
+                                    track_number,
+                                    channel_colors,
+                                    create_gif,
+                                    display_channels)</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.display_tracks"><code class="name flex">
+<span>def <span class="ident">display_tracks</span></span>(<span>tracks, minimum_lifetime=0, maximum_lifetime=inf, track_category=[1, 2, 3, 4, 5, 6, 7, 8], ch_min_int_threshold=[-inf], number_of_channels=2, display_channels=[0], interact_through_tracks=True, display_all=False, only_ccps=False, display_intensity=True, display_movement=False, display_distance_traveled=False, show_frames=False, create_gif=False, raw_frames=[], display_separation=False, first_separation_channel=0, second_separation_channel=0, constraints_overlap_ccps=False, dpi=300, fig_size=(3, 2), channel_colors=['g'])</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Display track features for all tracks in a Python-coverted ProcessedTracks.mat</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>tracks (dictionary (with track indices as keys) or ndarray): tracks outputted by ProcessedTracks.mat</dt>
+<dt><strong><code>minimum_lifetime</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>minimum lifetime of tracks to display</dd>
+<dt><strong><code>maximum_lifetime</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>maximum lifetime of tracks to display </dd>
+<dt><strong><code>track_category</code></strong> :&ensp;<code>list</code>, optional</dt>
+<dd>category of tracks to display as designated by ProcessedTracks.mat</dd>
+<dt><strong><code>ch_min_int_threshold</code></strong> :&ensp;<code>list, optiona</code></dt>
+<dd>minimum intensity threshold for each channel necessary to display</dd>
+<dt><strong><code>number_of_channels</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>number of channels in tracks</dd>
+<dt><strong><code>display_channels</code></strong> :&ensp;<code>list</code>, optional</dt>
+<dd>channels from tracks to display </dd>
+<dt><strong><code>interact_through_tracks</code></strong> :&ensp;<code>boolean</code>, optional</dt>
+<dd>display widgets for interactively loading tracks one at a time by track index</dd>
+<dt><strong><code>display_all</code></strong> :&ensp;<code>boolean</code>, optional</dt>
+<dd>display all tracks without any constraints applied</dd>
+<dt><strong><code>only_ccps</code></strong> :&ensp;<code>boolean</code>, optional</dt>
+<dd>display only tracks designated as 'CCPs' by cmeAnalysis</dd>
+<dt><strong><code>display_intensity</code></strong> :&ensp;<code>boolean</code>, optional</dt>
+<dd>display intensity vs. time </dd>
+<dt><strong><code>display_movement</code></strong> :&ensp;<code>boolean</code>, optional</dt>
+<dd>display (x(t),y(t)) in pixels</dd>
+<dt><strong><code>display_distance_traveled</code></strong> :&ensp;<code>boolean</code>, optional</dt>
+<dd>display distance traveled from origin of track</dd>
+<dt><strong><code>show_frames</code></strong> :&ensp;<code>boolean</code>, optional</dt>
+<dd>show raw data centered around track</dd>
+<dt><strong><code>create_gif</code></strong> :&ensp;<code>boolean</code>, optional</dt>
+<dd>create gif of raw data separated by channels and intensity vs. time for designated chnanels </dd>
+<dt><strong><code>raw_frames</code></strong> :&ensp;<code>list</code> of <code>strings</code>, optional</dt>
+<dd>list of strings of pathnames for raw data channels (must contain all channels for tracks)
+</dd>
+<dt><strong><code>display_separation</code></strong> :&ensp;<code>boolean</code>, optional</dt>
+<dd>display separation between two channels' fitted center vs. time </dd>
+<dt><strong><code>first_separation_channel</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>index of first channel for separation display</dd>
+<dt><strong><code>second_separation_channel</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>index of second chnanel for separation display</dd>
+<dt><strong><code>contraints_overlap_ccps</code></strong> :&ensp;<code>boolean</code>, optional</dt>
+<dd>display tracks designated as 'CCPs' and meet designated criteria</dd>
+<dt><strong><code>dpi</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>dpi for matplotlib figure</dd>
+<dt><strong><code>fig_size</code></strong> :&ensp;<code>tuple</code>, optional</dt>
+<dd>size of matplotlib figure</dd>
+<dt><strong><code>channel_colors</code></strong> :&ensp;<code>list</code>, optional</dt>
+<dd>colors for plotting traces corresponding to each displayed channel</dd>
+</dl>
+<p>Returns:
+None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def display_tracks(tracks, 
+                   minimum_lifetime=0, 
+                   maximum_lifetime=np.Inf, 
+                   track_category=[1, 2, 3, 4, 5, 6, 7, 8], 
+                   ch_min_int_threshold=[-np.Inf], 
+                   number_of_channels=2, 
+                   display_channels=[0],
+                   interact_through_tracks=True,
+                   display_all=False, 
+                   only_ccps=False, 
+                   display_intensity=True,
+                   display_movement=False,
+                   display_distance_traveled=False,
+                   show_frames=False,
+                   create_gif=False,
+                   raw_frames=[],
+                   display_separation=False,
+                   first_separation_channel=0,
+                   second_separation_channel=0,
+                   constraints_overlap_ccps=False, 
+                   dpi=300, 
+                   fig_size=(3, 2), 
+                   channel_colors=[&#39;g&#39;]):
+    
+    &#34;&#34;&#34;
+    Display track features for all tracks in a Python-coverted ProcessedTracks.mat
+    
+    Args:
+        tracks (dictionary (with track indices as keys) or ndarray): tracks outputted by ProcessedTracks.mat
+        minimum_lifetime (int, optional): minimum lifetime of tracks to display
+        maximum_lifetime (int, optional): maximum lifetime of tracks to display 
+        track_category (list, optional): category of tracks to display as designated by ProcessedTracks.mat
+        ch_min_int_threshold (list, optiona): minimum intensity threshold for each channel necessary to display
+        number_of_channels (int, optional): number of channels in tracks
+        display_channels (list, optional): channels from tracks to display 
+        interact_through_tracks (boolean, optional): display widgets for interactively loading tracks one at a time by track index
+        display_all (boolean, optional): display all tracks without any constraints applied
+        only_ccps (boolean, optional): display only tracks designated as &#39;CCPs&#39; by cmeAnalysis
+        display_intensity (boolean, optional): display intensity vs. time 
+        display_movement (boolean, optional): display (x(t),y(t)) in pixels
+        display_distance_traveled (boolean, optional): display distance traveled from origin of track
+        show_frames (boolean, optional): show raw data centered around track
+        create_gif (boolean, optional): create gif of raw data separated by channels and intensity vs. time for designated chnanels 
+        raw_frames (list of strings, optional): list of strings of pathnames for raw data channels (must contain all channels for tracks)        
+        display_separation (boolean, optional): display separation between two channels&#39; fitted center vs. time 
+        first_separation_channel (int, optional): index of first channel for separation display
+        second_separation_channel (int, optional): index of second chnanel for separation display
+        contraints_overlap_ccps (boolean, optional): display tracks designated as &#39;CCPs&#39; and meet designated criteria
+        dpi (int, optional): dpi for matplotlib figure
+        fig_size (tuple, optional): size of matplotlib figure
+        channel_colors (list, optional): colors for plotting traces corresponding to each displayed channel
+ 
+
+     Returns:
+         None
+
+    &#34;&#34;&#34;
+    
+    
+    number_of_tracks = len(tracks)
+
+    print()
+    print(&#39;The total number of tracks: &#39; + str(number_of_tracks))
+    print()
+
+    indices_to_display = []
+    number_of_ccps_total = 0
+    number_of_ccps_condition_bound = 0
+
+    for i in range(0, number_of_tracks):
+
+        if display_all:
+
+            indices_to_display.append(i)
+
+
+            number_of_ccps_condition_bound += 1
+
+
+        elif only_ccps:
+
+            if return_is_CCP(tracks, i):
+
+                number_of_ccps_condition_bound += 1
+
+                indices_to_display.append(i)
+
+        elif constraints_overlap_ccps:
+
+            if track_within_bounds(tracks, i, minimum_lifetime, maximum_lifetime, track_category, number_of_channels) and \
+               return_is_CCP(tracks, i):
+
+                number_of_ccps_condition_bound += 1
+
+                indices_to_display.append(i)
+
+
+#         check if current track is within defined bounds
+        elif track_within_bounds(tracks, i, minimum_lifetime, maximum_lifetime, track_category, number_of_channels):
+
+            num_channels_in_track = len(return_track_amplitude(tracks, i))
+
+            if num_channels_in_track &gt; len(channel_colors):
+
+                raise Exception(&#39;length of &#34;channel_colors&#34; must be equal to &#34;number_of_channels&#34;&#39;)
+
+            if len(ch_min_int_threshold) == 1:
+
+                temp = 0
+
+                for j in range(num_channels_in_track):
+
+                    if max(return_track_amplitude(tracks, i)[j]) &gt; ch_min_int_threshold[0]:
+
+                        temp += 1
+
+                if temp == num_channels_in_track:
+
+                    number_of_ccps_condition_bound += 1
+
+                    indices_to_display.append(i)
+
+            elif len(ch_min_int_threshold) == num_channels_in_track:
+
+                temp = 0
+
+                for j in range(num_channels_in_track):
+
+                    if max(return_track_amplitude(tracks, i)[j]) &gt; ch_min_int_threshold[j]:
+
+                        temp += 1
+
+                if temp == num_channels_in_track:
+
+                    number_of_ccps_condition_bound += 1
+
+                    indices_to_display.append(i)
+            else:
+
+                raise Exception(&#39;length of &#34;ch_min_int_threshold&#34; must be equal to maximum number of channels in experiment OR set to default ([0])&#39;)
+
+
+        if return_is_CCP(tracks, i) == 1:
+
+            number_of_ccps_total += 1
+
+    if not display_all:
+        print(&#39;The total number of ccps identified by cmeAnalysis: &#39; + str(number_of_ccps_total))
+        print()
+    print(&#39;The total number of tracks to be displayed within defined bounds: &#39; + str(number_of_ccps_condition_bound))
+    print()
+    print()
+
+    if interact_through_tracks:
+        
+        interact(display_one_track,
+             tracks=fixed(tracks),
+             track_number = widgets.SelectionSlider(description=&#39;Track ID:&#39;,   options=indices_to_display, value = indices_to_display[0]), 
+             dpi=fixed(dpi), 
+             fig_size=fixed(fig_size), 
+             channel_colors=fixed(channel_colors),
+             display_channels=fixed(display_channels),
+             display_intensity=fixed(display_intensity),
+             display_movement=fixed(display_movement),
+             display_distance_traveled=fixed(display_distance_traveled),
+             display_separation=fixed(display_separation),
+             show_frames=fixed(show_frames),
+             create_gif=fixed(create_gif),
+             raw_frames=fixed(raw_frames),
+             first_separation_channel=fixed(first_separation_channel),
+             second_separation_channel=fixed(second_separation_channel))
+            
+        
+    else:
+        for track_ID in indices_to_display:
+
+            display_one_track(tracks, 
+                              track_ID, 
+                              dpi, 
+                              fig_size, 
+                              display_channels,
+                              channel_colors, 
+                              display_intensity,
+                              display_movement,
+                              display_distance_traveled,
+                              display_separation,
+                              show_frames,
+                              create_gif,
+                              raw_frames,
+                              first_separation_channel,
+                              second_separation_channel)</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.display_tracks_for_selection"><code class="name flex">
+<span>def <span class="ident">display_tracks_for_selection</span></span>(<span>tracks)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Display shuffled tracks for manual user selection of tracks indices to keep for further analysis</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def display_tracks_for_selection(tracks):
+    &#34;&#34;&#34;Display shuffled tracks for manual user selection of tracks indices to keep for further analysis&#34;&#34;&#34;
+    indices = list(range(len(tracks)))
+    random.shuffle(indices)
+    print(&#39;Tracks have been randomly shuffled&#39;)
+    print()
+    print(&#39;The total number of tracks to sort through: &#39; + str(len(tracks)))
+    print()
+    
+    indices_to_keep = []    
+
+    
+    output_selection = interactive(select_track_option,
+                                   i=widgets.SelectionSlider(description=&#39;Track ID:&#39;,   options=indices, value = indices[0]),
+                                   tracks=fixed(tracks),
+                                   indices_to_keep=fixed(indices_to_keep))
+    display(output_selection)
+    
+    
+    return output_selection.result</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.distance_separated_between_channels_subplot"><code class="name flex">
+<span>def <span class="ident">distance_separated_between_channels_subplot</span></span>(<span>ax_current, tracks, track_number, channel_colors, first_separation_channel, second_separation_channel, display_channels)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot distance between (in pixels) the fitted centers of two designated channels in a track</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def distance_separated_between_channels_subplot(ax_current,
+                                                tracks,
+                                                track_number,
+                                                channel_colors,
+                                                first_separation_channel,
+                                                second_separation_channel,
+                                                display_channels):
+    &#34;&#34;&#34;Plot distance between (in pixels) the fitted centers of two designated channels in a track&#34;&#34;&#34;  
+    for channel_number in display_channels:
+                
+        ax_current.plot(return_distance_between_two_channel(tracks,
+                                                            track_number,
+                                                            first_separation_channel,
+                                                            second_separation_channel),
+                                                            color=channel_colors[channel_number])
+    
+    ax_current.set(xlabel=&#39;frames&#39;,ylabel=&#39;distance between designated channels (pixels)&#39;)    </code></pre>
+</details>
+</dd>
+<dt id="display_tracks.distance_travelled_subplot"><code class="name flex">
+<span>def <span class="ident">distance_travelled_subplot</span></span>(<span>ax_current, tracks, track_number, channel_colors, display_channels)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot distance travelled (in pixels) from origin of track for all channels in a track</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def distance_travelled_subplot(ax_current,
+                               tracks,
+                               track_number,
+                               channel_colors,
+                               display_channels):
+    
+    &#34;&#34;&#34;Plot distance travelled (in pixels) from origin of track for all channels in a track&#34;&#34;&#34;   
+    for channel_number in display_channels:
+        
+        ax_current.plot(return_distance_traveled_from_origin(tracks,
+                                                              track_number,
+                                                              channel_number),
+                                                              color=channel_colors[channel_number],
+                                                              label=&#39;ch&#39; + str(channel_number))   
+        
+    ax_current.set(xlabel=&#39;frames&#39;,ylabel=&#39;distance from channel origin (pixels)&#39;)
+    ax_current.legend()</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.fit_cohorts"><code class="name flex">
+<span>def <span class="ident">fit_cohorts</span></span>(<span>tracks, class_indices, figsize, plot_shape, num_stds=0.25, cohorts=[[0, 20], [21, 40], [41, 60], [61, 80], [81, 100], [101, 120], [121, 140], [141, 160], [161, 180], [181, 200], [201, 220], [221, 240]], filename='')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Display lifetime-binned cohorts of tracks separated by different class labels</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>tracks</code></strong> :&ensp;<code>ndarray</code></dt>
+<dd>numpy array of cmeAnalysis' ProcessedTracks.mat </dd>
+<dt><strong><code>class_indices</code></strong> :&ensp;<code>list</code> of <code>lists</code></dt>
+<dd>each internal list contains indices for tracks in a designated class</dd>
+<dt><strong><code>figsize</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>figure size for all subplots</dd>
+<dt><strong><code>plot_shape</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>size of each subplot</dd>
+<dt><strong><code>num_stds</code></strong> :&ensp;<code>float</code>, optional</dt>
+<dd>number of standard deviations of intensity for plotting intensity traces</dd>
+<dt><strong><code>cohorts</code></strong> :&ensp;<code>list</code> of <code>lists</code>, optional</dt>
+<dd>each internal list contains the upper and lower bounds of lifetimes for each cohort</dd>
+<dt><strong><code>filename</code></strong> :&ensp;<code>string</code>, optional</dt>
+<dd>location for plots to be saved</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fit_cohorts(tracks, 
+                class_indices, 
+                figsize, 
+                plot_shape, 
+                num_stds = 0.25, 
+                cohorts=[[0,20],[21,40],[41,60],[61,80],[81,100],[101,120],[121,140],[141,160],[161,180],[181,200],[201,220],[221,240]], 
+                filename = &#39;&#39;):
+    &#34;&#34;&#34;
+    Display lifetime-binned cohorts of tracks separated by different class labels
+    
+    Args:
+        tracks (ndarray): numpy array of cmeAnalysis&#39; ProcessedTracks.mat 
+        class_indices (list of lists): each internal list contains indices for tracks in a designated class
+        figsize (tuple): figure size for all subplots
+        plot_shape (tuple): size of each subplot
+        num_stds (float, optional): number of standard deviations of intensity for plotting intensity traces
+        cohorts (list of lists, optional): each internal list contains the upper and lower bounds of lifetimes for each cohort
+        filename (string, optional): location for plots to be saved
+        
+    Returns:
+        None
+        
+    &#34;&#34;&#34;
+    print(&#39;fitting to the following cohorts: &#39; + str(cohorts))
+    print()
+    f = figure(dpi=300,figsize=figsize)
+    subplot_index = 1
+    warnings.filterwarnings(&#34;ignore&#34;)
+
+    class_intensities = []
+    
+    for i,class_tmp in enumerate(class_indices): # iterate through each class of labels
+    
+        class_intensities_current = []
+        
+        ax = f.add_subplot(plot_shape[0], plot_shape[1], subplot_index)
+        ax.set_title(&#39;class: &#39; + str(i))
+        
+        for cohort in cohorts: # gather intensities for each cohort for all members of current class
+            
+            cohort_temp_class = []
+            
+            for j in range(len(tracks)):
+                
+                if j in class_tmp and return_track_attributes.return_track_lifetime(tracks,j) &gt;= cohort[0] and return_track_lifetime(tracks,j) &lt; cohort[1]: # find tracks within bounds
+
+                    ch0 = return_track_amplitude_one_channel(tracks, j, 0)
+                    ch1 = return_track_amplitude_one_channel(tracks, j, 1)
+
+                    t0, c0, k0 = interpolate.splrep(np.arange(len(ch0)), ch0, k=3) # cubic B-spline iterpolation of intensities
+                    t1, c1, k1 = interpolate.splrep(np.arange(len(ch1)), ch1, k=3)
+
+                    spline0 = interpolate.BSpline(t0, c0, k0, extrapolate=False)
+                    spline1 = interpolate.BSpline(t1, c1, k1, extrapolate=False)
+
+                    splined_amps_ch0 = spline0(np.linspace(0,len(ch0),cohort[1])) # interpolate intensity to match ceiling of lifetime cohort
+                    splined_amps_ch1 = spline1(np.linspace(0,len(ch1),cohort[1]))
+
+                    cohort_temp_class.append([splined_amps_ch0, splined_amps_ch1])
+            
+            if cohort_temp_class != []:
+                        
+                average_cohort_class = np.nan_to_num(np.nanmean(cohort_temp_class,axis=0,dtype=np.float64)) # calculate average and std of intensity in class cohort
+                std_cohort_class = num_stds*np.nan_to_num(np.nanstd(cohort_temp_class,axis=0,dtype=np.float64))
+                ax.plot(np.linspace(0,cohort[1],cohort[1]), 
+                        average_cohort_class[0,:],
+                        &#39;m&#39;, 
+                        label=str(&#39;Cohort: &#39; + str(cohort) + &#39; s members: &#39; + str(len(cohort_temp_class))))
+                ax.plot(np.linspace(0,cohort[1],cohort[1]), 
+                        average_cohort_class[1,:],
+                        &#39;g&#39;)
+                ax.fill_between(np.linspace(0,cohort[1],cohort[1]), 
+                                average_cohort_class[0,:]-std_cohort_class[0,:], 
+                                average_cohort_class[0,:]+std_cohort_class[0,:], 
+                                color=&#39;m&#39;, 
+                                alpha=0.2)
+                ax.fill_between(np.linspace(0,cohort[1],cohort[1]), 
+                                average_cohort_class[1,:]-std_cohort_class[1,:], 
+                                average_cohort_class[1,:]+std_cohort_class[1,:], 
+                                color=&#39;g&#39;, 
+                                alpha=0.2)
+                ax.title.set_text(&#39;number of members in class &#39; + str(i) + &#39;: &#39; + str(len(class_tmp)))
+                ax.set_xlabel(&#39;time (s)&#39;)
+                ax.set_ylabel(&#39;fluorescence intensity&#39;)
+                ax.legend()
+        
+        subplot_index += 1
+                
+                        
+    if filename != &#39;&#39;: # save the plot
+        
+        f.savefig(filename)
+        
+    plt.show()</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.interact_through_frames_of_track"><code class="name flex">
+<span>def <span class="ident">interact_through_frames_of_track</span></span>(<span>tracks, raw_images, track_number, frames, window_size, channel_colors, dpi, create_gif, display_channels, subplot_padding)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Interact through a track's frames and display raw data</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def interact_through_frames_of_track(tracks,
+                                     raw_images, 
+                                     track_number,
+                                     frames,
+                                     window_size, 
+                                     channel_colors, 
+                                     dpi, 
+                                     create_gif, 
+                                     display_channels,
+                                     subplot_padding):
+    &#34;&#34;&#34;Interact through a track&#39;s frames and display raw data&#34;&#34;&#34;
+    print(&#39;Current frame: &#39; + str(frames))
+    warnings.filterwarnings(&#34;ignore&#34;)
+    num_channels = len(return_track_amplitude(tracks,track_number))
+    fig, axes = plt.subplots(1, len(display_channels)+2, figsize=(subplot_padding,5),gridspec_kw = {&#39;wspace&#39;:0.1, &#39;hspace&#39;:0.1}, dpi=dpi)
+    index_subplot = 0
+    colors=[&#39;Reds&#39;,&#39;Greens&#39;,&#39;Blues&#39;]
+    color_puncta = channel_colors
+    track_x_positions = []
+    track_y_positions = []
+    frames_in_track = return_frames_in_track(tracks,track_number)-1
+    min_x = np.min(return_puncta_x_position_whole_track(tracks,track_number,0))
+    max_x = np.max(return_puncta_x_position_whole_track(tracks,track_number,0))
+    min_y = np.min(return_puncta_y_position_whole_track(tracks,track_number,0))
+    max_y = np.max(return_puncta_y_position_whole_track(tracks,track_number,0))
+    for i in range(num_channels):
+
+        track_x_positions.append(return_puncta_x_position_whole_track(tracks,track_number,i)-0.5)
+        track_y_positions.append(return_puncta_y_position_whole_track(tracks,track_number,i)-0.5)
+        if np.min(return_puncta_x_position_whole_track(tracks,track_number,i))&lt;min_x:
+            min_x = np.min(return_puncta_x_position_whole_track(tracks,track_number,i))
+        if np.max(return_puncta_x_position_whole_track(tracks,track_number,i))&gt;max_x:
+            max_x = np.max(return_puncta_x_position_whole_track(tracks,track_number,i))
+        if np.min(return_puncta_y_position_whole_track(tracks,track_number,i))&lt;min_y:
+            min_y = np.min(return_puncta_y_position_whole_track(tracks,track_number,i))
+        if np.max(return_puncta_y_position_whole_track(tracks,track_number,i))&gt;max_y:
+            max_y = np.max(return_puncta_y_position_whole_track(tracks,track_number,i))
+    diff_x = max_x-min_x
+    diff_y = max_y-min_y
+    avg_x = (max_x+min_x)/2
+    avg_y = (max_y+min_y)/2
+    diff_greatest = int(np.max([diff_x,diff_y])/2+window_size)
+
+    lower_x_lim = np.max([0,int(avg_x-diff_greatest)])
+    lower_y_lim = np.max([0,int(avg_y-diff_greatest)])
+    upper_x_lim = np.min([511,int(avg_x+diff_greatest)])
+    upper_y_lim = np.min([511,int(avg_y+diff_greatest)])
+    
+    
+    for i in display_channels:
+
+        frame = load_itk_image(raw_images[i])[frames_in_track[frames],:,:][lower_y_lim:upper_y_lim,lower_x_lim:upper_x_lim]
+
+        axes[index_subplot].imshow(frame,cmap=&#39;Greys&#39;)
+        axes[index_subplot].title.set_text(&#39;Ch&#39;+str(i))
+        axes[index_subplot].set_xlabel(&#39;pixels&#39;)
+        axes[index_subplot].set_ylabel(&#39;pixels&#39;)
+        for j in display_channels:
+            axes[index_subplot].plot(track_x_positions[j][frames]-lower_x_lim,track_y_positions[j][frames]-lower_y_lim,marker=&#39;X&#39;,markerSize=2,color=color_puncta[j],label=&#39;Ch&#39;+str(j))
+        
+        axes[index_subplot].legend()
+        index_subplot+=1 
+    
+    for i in display_channels:
+        frame = load_itk_image(raw_images[i])[frames_in_track[frames],:,:][lower_y_lim:upper_y_lim,lower_x_lim:upper_x_lim]
+
+        axes[index_subplot].imshow(frame,cmap=colors[i],alpha=0.6)
+        axes[index_subplot].plot(track_x_positions[i][frames]-lower_x_lim,track_y_positions[i][frames]-lower_y_lim,marker=&#39;x&#39;,markerSize=2,label=&#39;Ch&#39;+str(j),color=color_puncta[i])      
+
+    display_overlay_string=&#39;overlay, &#39;
+    for i in range(num_channels):
+        if i in display_channels:
+            display_overlay_string+=&#39;Ch&#39;+str(i)+&#39;:&#39;+str(colors[i])+&#39; &#39;
+    axes[index_subplot].title.set_text(display_overlay_string)
+    axes[index_subplot].set_xlabel(&#39;pixels&#39;)
+    axes[index_subplot].set_ylabel(&#39;pixels&#39;)
+    axes[index_subplot].legend()
+    index_subplot += 1
+    for i in display_channels:
+        
+        axes[index_subplot].plot(return_track_amplitude_one_channel(tracks,track_number,i),color=channel_colors[i],label=&#39;Ch&#39;+str(i))
+
+    axes[index_subplot].axvline(frames,label=&#39;current frame&#39;)
+    axes[index_subplot].legend(loc=1)
+    axes[index_subplot].set_xlabel(&#39;frames&#39;)
+    axes[index_subplot].set_ylabel(&#39;au fluorescence intensity&#39;)
+    axes[index_subplot].title.set_text(&#39;fluorescence intensity over time, frame = &#39; + str(frames))
+
+    fig.tight_layout()
+    fig.show()        
+    
+    if create_gif: # if user selects to turn frames into a saved gif
+        len_current_track = len(return_track_amplitude_one_channel(tracks,track_number,0))
+        w = widgets.Checkbox(value=False, description=&#39;Click to create GIF&#39;)
+        lower_bound=widgets.BoundedIntText(value=0,
+                                           min=0,
+                                           max=len(return_track_amplitude_one_channel(tracks,track_number,0))-2,
+                                           step=1,
+                                           description=&#39;lower:&#39;,
+                                           style={&#39;width&#39;: &#39;max-content&#39;},
+                                           disabled=False)
+
+        upper_bound=widgets.BoundedIntText(value=len(return_track_amplitude_one_channel(tracks,track_number,0)),
+                                           min=1,
+                                           max=len(return_track_amplitude_one_channel(tracks,track_number,0))-1,
+                                           step=1,
+                                           description=&#39;upper:&#39;,
+                                           style={&#39;width&#39;: &#39;max-content&#39;}, 
+                                           disabled=False)
+
+
+        frame_names=widgets.Textarea(value=&#39;frame_&#39;,
+                             placeholder=&#39;frame_&#39;,
+                             description=&#39;frame name prefix:&#39;,
+                             disabled=False)
+        gif_name=widgets.Textarea(value=&#39;gif&#39;,
+                             placeholder=&#39;gif&#39;,
+                             description=&#39;gif name:&#39;,
+                             disabled=False)
+
+        folder_name=widgets.Textarea(value=&#39;saved_pngs&#39;,
+                                  placeholder=&#39;saved_pngs&#39;,
+                                  description=&#39;Folder name:&#39;,
+                                  disabled=False)
+        interact(return_check_box_value,
+                 make_gif=w,
+                 lower_frame_bound=lower_bound,
+                 upper_frame_bound=upper_bound,
+                 frame_names=frame_names,
+                 gif_name=gif_name,
+                 folder_name=folder_name,
+                 window_size=fixed(window_size),
+                 tracks=fixed(tracks),
+                 raw_tiff_list=fixed(raw_images),
+                 track_number=fixed(track_number),
+                 channel_colors=fixed(channel_colors),
+                 display_channels=fixed(display_channels),
+                 dpi=fixed(dpi),
+                 subplot_padding=fixed(subplot_padding))   </code></pre>
+</details>
+</dd>
+<dt id="display_tracks.interact_through_frames_of_track_save_figure"><code class="name flex">
+<span>def <span class="ident">interact_through_frames_of_track_save_figure</span></span>(<span>tracks, raw_images, track_number, frames, window_size, channel_colors, dpi, display_channels, folder_name, frame_names, subplot_padding)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Display raw frames interactively and prompt user for gif-saving options</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def interact_through_frames_of_track_save_figure(tracks,
+                                                 raw_images, 
+                                                 track_number,
+                                                 frames,
+                                                 window_size, 
+                                                 channel_colors, 
+                                                 dpi, 
+                                                 display_channels,
+                                                 folder_name,
+                                                 frame_names,
+                                                 subplot_padding):
+    &#34;&#34;&#34;Display raw frames interactively and prompt user for gif-saving options&#34;&#34;&#34;
+    print(&#39;Current frame: &#39; + str(frames))
+    warnings.filterwarnings(&#34;ignore&#34;)
+    num_channels = len(return_track_amplitude(tracks,track_number))
+    fig, axes = plt.subplots(1, len(display_channels)+2, figsize=(40,5),gridspec_kw = {&#39;wspace&#39;:0.1, &#39;hspace&#39;:0.1}, dpi=dpi)
+    index_subplot = 0
+    colors=[&#39;Reds&#39;,&#39;Greens&#39;,&#39;Blues&#39;]
+    color_puncta = channel_colors
+    track_x_positions = []
+    track_y_positions = []
+    frames_in_track = return_frames_in_track(tracks,track_number)-1
+    min_x = np.min(return_puncta_x_position_whole_track(tracks,track_number,0))
+    max_x = np.max(return_puncta_x_position_whole_track(tracks,track_number,0))
+    min_y = np.min(return_puncta_y_position_whole_track(tracks,track_number,0))
+    max_y = np.max(return_puncta_y_position_whole_track(tracks,track_number,0))
+    for i in range(num_channels):
+
+        track_x_positions.append(return_puncta_x_position_whole_track(tracks,track_number,i)-0.5)
+        track_y_positions.append(return_puncta_y_position_whole_track(tracks,track_number,i)-0.5)
+        if np.min(return_puncta_x_position_whole_track(tracks,track_number,i))&lt;min_x:
+            min_x = np.min(return_puncta_x_position_whole_track(tracks,track_number,i))
+        if np.max(return_puncta_x_position_whole_track(tracks,track_number,i))&gt;max_x:
+            max_x = np.max(return_puncta_x_position_whole_track(tracks,track_number,i))
+        if np.min(return_puncta_y_position_whole_track(tracks,track_number,i))&lt;min_y:
+            min_y = np.min(return_puncta_y_position_whole_track(tracks,track_number,i))
+        if np.max(return_puncta_y_position_whole_track(tracks,track_number,i))&gt;max_y:
+            max_y = np.max(return_puncta_y_position_whole_track(tracks,track_number,i))
+    diff_x = max_x-min_x
+    diff_y = max_y-min_y
+    avg_x = (max_x+min_x)/2
+    avg_y = (max_y+min_y)/2
+    diff_greatest = int(np.max([diff_x,diff_y])/2+window_size)
+
+    lower_x_lim = np.max([0,int(avg_x-diff_greatest)])
+    lower_y_lim = np.max([0,int(avg_y-diff_greatest)])
+    upper_x_lim = np.min([511,int(avg_x+diff_greatest)])
+    upper_y_lim = np.min([511,int(avg_y+diff_greatest)])
+    
+    
+    for i in display_channels:
+
+        frame = load_itk_image(raw_images[i])[frames_in_track[frames],:,:][lower_y_lim:upper_y_lim,lower_x_lim:upper_x_lim]
+        
+        axes[index_subplot].imshow(frame,cmap=&#39;Greys&#39;)
+        axes[index_subplot].title.set_text(&#39;Ch&#39;+str(i))
+        axes[index_subplot].set_xlabel(&#39;pixels&#39;)
+        axes[index_subplot].set_ylabel(&#39;pixels&#39;)
+        for j in display_channels:
+
+            axes[index_subplot].plot(track_x_positions[j][frames]-lower_x_lim,track_y_positions[j][frames]-lower_y_lim,marker=&#39;X&#39;,markerSize=2,color=color_puncta[j],label=&#39;Ch&#39;+str(j))
+        
+        axes[index_subplot].legend()
+        index_subplot+=1 
+        
+
+    
+    for i in display_channels:
+        
+        frame = load_itk_image(raw_images[i])[frames_in_track[frames],:,:][lower_y_lim:upper_y_lim,lower_x_lim:upper_x_lim]
+
+        axes[index_subplot].imshow(frame,cmap=colors[i],alpha=0.6)
+        axes[index_subplot].plot(track_x_positions[i][frames]-lower_x_lim,track_y_positions[i][frames]-lower_y_lim,marker=&#39;x&#39;,markerSize=2,label=&#39;Ch&#39;+str(j),color=color_puncta[i])      
+
+
+    display_overlay_string=&#39;overlay, &#39;
+    for i in range(num_channels):
+        if i in display_channels:
+            display_overlay_string+=&#39;Ch&#39;+str(i)+&#39;:&#39;+str(colors[i])+&#39; &#39;
+    axes[index_subplot].title.set_text(display_overlay_string)
+    axes[index_subplot].set_xlabel(&#39;pixels&#39;)
+    axes[index_subplot].set_ylabel(&#39;pixels&#39;)
+    axes[index_subplot].legend()
+
+    index_subplot += 1
+
+    for i in display_channels:
+        
+        axes[index_subplot].plot(return_track_amplitude_one_channel(tracks,track_number,i),color=channel_colors[i],label=&#39;Ch&#39;+str(i))
+
+    axes[index_subplot].axvline(frames,label=&#39;current frame&#39;)
+    axes[index_subplot].legend(loc=1)
+    axes[index_subplot].set_xlabel(&#39;frames&#39;)
+    axes[index_subplot].set_ylabel(&#39;au fluorescence intensity&#39;)
+    axes[index_subplot].title.set_text(&#39;fluorescence intensity over time frame = &#39; + str(frames))
+
+    fig.tight_layout()
+    plt.savefig(folder_name + &#39;/&#39;+ frame_names +str(frames))</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.interact_through_tracks_IDs"><code class="name flex">
+<span>def <span class="ident">interact_through_tracks_IDs</span></span>(<span>tracks, raw_images, track_number, channel_colors, create_gif, display_channels)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Set up widgets to interact through a track's frames and display raw data</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def interact_through_tracks_IDs(tracks,raw_images,track_number,channel_colors, create_gif, display_channels):
+    &#34;&#34;&#34;Set up widgets to interact through a track&#39;s frames and display raw data&#34;&#34;&#34;
+    len_current_track = len(return_track_amplitude_one_channel(tracks,track_number,0))
+    print(&#39;The length of the current track: {}&#39;.format(len_current_track))
+
+    interact(interact_through_frames_of_track,
+             raw_images=fixed(raw_images),
+             track_number=fixed(track_number),
+             tracks=fixed(tracks),
+             frames=widgets.IntSlider(min=0,max=len_current_track-1,step=1,value=0,continuous_update=False),
+             window_size=widgets.IntSlider(min=-10,max=30,step=1,value=10),
+             subplot_padding=widgets.IntSlider(min=20,max=100,step=1,value=25),
+             channel_colors=fixed(channel_colors),
+             dpi=widgets.IntSlider(value=50,min=0,max=1000,step=1,description=&#39;dpi of raw images:&#39;,disabled=False),
+             create_gif=fixed(create_gif),
+             display_channels=fixed(display_channels))</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.iterate_through_selectable_tracks"><code class="name flex">
+<span>def <span class="ident">iterate_through_selectable_tracks</span></span>(<span>tracks, i, selection, deselection, indices_to_keep)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot each track for manual track selection</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def iterate_through_selectable_tracks(tracks, i, selection, deselection, indices_to_keep):
+    &#34;&#34;&#34;Plot each track for manual track selection&#34;&#34;&#34;
+    channel_colors = [&#39;m&#39;, &#39;g&#39;]
+    
+    for channel_number in [0,1]:
+
+        plt.plot(return_track_amplitude_one_channel(tracks,
+                                                    i,
+                                                    channel_number),
+                        color=channel_colors[channel_number],
+                        label=&#39;ch&#39; + str(channel_number))
+
+        plt.xlabel(&#39;frames&#39;)
+        plt.ylabel(&#39;au fluorescence intensity&#39;)
+        plt.legend()
+    
+    plt.show()
+
+    if selection:
+        
+        indices_to_keep.append(i)
+        
+    if deselection:
+        
+        indices_to_keep.remove(i)
+        
+    print(&#39;selected IDs:&#39; + str(indices_to_keep))
+    
+    return indices_to_keep</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.load_itk_image"><code class="name flex">
+<span>def <span class="ident">load_itk_image</span></span>(<span>image_path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Load a fluorescent multiframe image as an array</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_itk_image(image_path):
+    &#34;&#34;&#34;Load a fluorescent multiframe image as an array&#34;&#34;&#34;
+    image = itk.imread(image_path) # read an image
+
+    image = itk.array_view_from_image(image) # and convert it into an array
+    
+    return image</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.load_tracks"><code class="name flex">
+<span>def <span class="ident">load_tracks</span></span>(<span>track_path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return a Python structure of the tracks, sorted from decreasing lifetime, from the ProcessedTracks.mat output of cmeAnalysis, with keys designated track indices</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_tracks(track_path):
+    &#34;&#34;&#34;Return a Python structure of the tracks, sorted from decreasing lifetime, from the ProcessedTracks.mat output of cmeAnalysis, with keys designated track indices&#34;&#34;&#34;
+    return sort_tracks_descending_lifetimes(sio.loadmat(track_path)) # sort the tracks by descending lifetime order</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.load_tracks_no_sort"><code class="name flex">
+<span>def <span class="ident">load_tracks_no_sort</span></span>(<span>track_path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return a dictionary of the tracks from the ProcessedTracks.mat output of cmeAnalysis, with keys designated track indices</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_tracks_no_sort(track_path):
+    &#34;&#34;&#34;Return a dictionary of the tracks from the ProcessedTracks.mat output of cmeAnalysis, with keys designated track indices&#34;&#34;&#34;
+    return sio.loadmat(track_path)[&#39;tracks&#39;][0] # convert the MATLAB structure to a Python one</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.play_through_tracks"><code class="name flex">
+<span>def <span class="ident">play_through_tracks</span></span>(<span>tracks, raw_images, track_number, channel_colors, l, u, window_size, display_channels, frame_names, gif_name, folder_name, dpi, subplot_padding)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a folder for raw data gif frames and construct gif</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def play_through_tracks(tracks,raw_images,track_number,channel_colors,l,u,window_size,display_channels, frame_names, gif_name,folder_name,dpi, subplot_padding):
+    &#34;&#34;&#34;Create a folder for raw data gif frames and construct gif&#34;&#34;&#34;
+    
+    fig=plt.figure(num=None, figsize=(50,10), dpi=40, facecolor=&#39;w&#39;, edgecolor=&#39;k&#39;)   
+    folder_name = folder_name+&#39;_track_number_&#39;+str(track_number)+&#39;_frame_&#39;+str(l)+&#39;_to_&#39;+str(u)
+    list_of_frames = []
+
+    if not os.path.exists(folder_name):
+        os.mkdir(folder_name)
+    else:
+        raise Exception(&#39;Folder exists in current directory&#39;)
+
+    for frame in range(l,u+1):
+        
+        interact_through_frames_of_track_save_figure(tracks,
+                                                     raw_images,
+                                                     track_number,
+                                                     frame,
+                                                     window_size,
+                                                     channel_colors,
+                                                     dpi,
+                                                     display_channels,
+                                                     folder_name,
+                                                     frame_names,
+                                                     subplot_padding)
+
+    print(folder_name)
+
+    image_list = []
+    
+    for i in range(l,u+1):
+        
+        image_list.append(imageio.imread(folder_name+&#39;/&#39;+frame_names+str(i)+&#39;.png&#39;))
+
+    print(&#39;completed frame generation; building gif&#39;)
+    imageio.mimwrite(folder_name+&#39;/&#39;+gif_name + &#39;_track_number_&#39; + str(track_number)+&#39;_frame_&#39;+str(l)+&#39;_to_&#39;+str(u)+&#39;.gif&#39;, image_list,fps=3)
+    print(&#39;gif generation complete&#39;)</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.plot_subplots_of_labels"><code class="name flex">
+<span>def <span class="ident">plot_subplots_of_labels</span></span>(<span>tracks, track_indices, number_of_columns, num_plot, filename='', minimum_lifetime=0, maximum_lifetime=inf)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plot a subplot grid of a subset of random samples from the designated tracks</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>tracks (dictionary (with track indices as keys) or ndarray): tracks outputted by ProcessedTracks.mat</dt>
+<dt><strong><code>track_indices</code></strong> :&ensp;<code>list</code></dt>
+<dd>indices of potential tracks for plotting</dd>
+<dt><strong><code>number_of_columns</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of columns in the subplot (number of rows determined automatically)</dd>
+<dt><strong><code>num_plot</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of tracks to plot </dd>
+<dt><strong><code>filename</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>pathname of figure to be saved as png</dd>
+<dt><strong><code>minimum_lifetime</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>minimum lifetime of tracks to sample</dd>
+<dt><strong><code>maximum_lifetime</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>maximum lifetime of tracks to sample </dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>None</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_subplots_of_labels(tracks, track_indices, number_of_columns, num_plot,filename=&#39;&#39;, minimum_lifetime = 0, maximum_lifetime = np.Inf):    
+    &#34;&#34;&#34;
+    Plot a subplot grid of a subset of random samples from the designated tracks
+    
+    Args:
+        tracks (dictionary (with track indices as keys) or ndarray): tracks outputted by ProcessedTracks.mat
+        track_indices (list): indices of potential tracks for plotting
+        number_of_columns (int): number of columns in the subplot (number of rows determined automatically)
+        num_plot (int): number of tracks to plot 
+        filename (str, optional): pathname of figure to be saved as png
+        minimum_lifetime (int, optional): minimum lifetime of tracks to sample
+        maximum_lifetime (int, optional): maximum lifetime of tracks to sample 
+        
+    Returns:
+        None
+        
+    &#34;&#34;&#34;
+    
+    subplot_index = 1
+
+    num_rows = int(np.ceil(num_plot/number_of_columns))
+
+    f = figure(figsize=(3*number_of_columns+5,3*num_rows+5),dpi=100)
+    
+    tracks_to_plot = select_tracks_by_indices(tracks, track_indices)
+    tracks_to_plot = remove_tracks_by_criteria(tracks_to_plot, minimum_lifetime=minimum_lifetime, maximum_lifetime=maximum_lifetime)
+    
+    random_indices = list(range(len(tracks_to_plot)))
+    random.shuffle(random_indices)
+    track_indices = random_indices[:num_plot]
+    
+    tracks_to_plot = select_tracks_by_indices(tracks_to_plot, track_indices)
+    
+    lifetimes = []
+    for i in range(len(tracks_to_plot)):
+
+        lifetimes.append(return_track_lifetime(tracks_to_plot,i))
+        
+    sorted_lifetime_indices = sorted(range(len(lifetimes)), key=lambda k: lifetimes[k], reverse=True)
+    
+    tracks_to_plot_list = [tracks_to_plot[i] for i in sorted_lifetime_indices]
+
+    for i in range(len(tracks_to_plot_list)):
+        ax = f.add_subplot(number_of_columns,num_rows,subplot_index)
+        
+        display_intensity_subplot(ax,
+                                  tracks_to_plot_list,
+                                  i,
+                                  [&#39;m&#39;,&#39;g&#39;],
+                                  [0,1])
+        
+        subplot_index+=1
+        
+    if filename!=&#39;&#39;:
+        f.savefig(filename)
+    
+    plt.show()</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.remove_tracks_by_criteria"><code class="name flex">
+<span>def <span class="ident">remove_tracks_by_criteria</span></span>(<span>tracks, minimum_lifetime=0, maximum_lifetime=inf, track_category=[1, 2, 3, 4, 5, 6, 7, 8], ch_min_int_threshold=[-inf], number_of_channels=2, keep_all=False, only_ccps=False, constraints_overlap_ccps=False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_tracks_by_criteria(tracks, 
+                              minimum_lifetime=0, 
+                              maximum_lifetime=np.Inf, 
+                              track_category=[1, 2, 3, 4, 5, 6, 7, 8], 
+                              ch_min_int_threshold=[-np.Inf], 
+                              number_of_channels=2, 
+                              keep_all=False, 
+                              only_ccps=False, 
+                              constraints_overlap_ccps=False):    
+    tracks_return = []
+    new_index = 0
+    for i in range(0, len(tracks)):
+
+        if keep_all:
+            
+
+            tracks_return.append(tracks[i])
+    
+        elif only_ccps:
+
+            if return_is_CCP(tracks, i) == 1:
+
+                tracks_return.append(tracks[i])
+                
+        elif constraints_overlap_ccps:
+
+            if track_within_bounds(tracks, i, minimum_lifetime, maximum_lifetime, track_category, number_of_channels) and \
+               return_is_CCP(tracks, i) == 1:
+                
+                tracks_return.append(tracks[i])
+
+
+
+        elif track_within_bounds(tracks, i, minimum_lifetime, maximum_lifetime, track_category, number_of_channels):
+
+            num_channels_in_track = len(return_track_amplitude(tracks, i))
+
+
+            if len(ch_min_int_threshold) == 1:
+            
+                temp = 0
+
+                for j in range(num_channels_in_track):
+
+                    if max(return_track_amplitude_one_channel(tracks, i, j)) &gt; ch_min_int_threshold[0]:
+                        
+                        temp += 1
+
+                if temp == num_channels_in_track:
+
+                    tracks_return.append(tracks[i])
+    
+            elif len(ch_min_int_threshold) == num_channels_in_track:
+
+                temp = 0
+
+                for j in range(num_channels_in_track):
+
+                    if max(return_track_amplitude_one_channel(tracks, i, j)) &gt; ch_min_int_threshold[j]:
+
+                        temp += 1
+
+                if temp == num_channels_in_track:
+
+
+                    tracks_return.append(tracks[i])
+                    
+    print(&#39;The number of tracks returned: &#39; + str(len(tracks_return)))
+    print()
+    return tuple(tracks_return)</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.remove_tracks_by_indices"><code class="name flex">
+<span>def <span class="ident">remove_tracks_by_indices</span></span>(<span>tracks, selected_indices=[])</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return tracks provided sans those whose number IDs are provided in 'selected_indices'</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_tracks_by_indices(tracks,
+                             selected_indices=[]):
+    &#34;&#34;&#34;Return tracks provided sans those whose number IDs are provided in &#39;selected_indices&#39; &#34;&#34;&#34;
+    
+    selected_indices.sort()
+
+    indices_to_keep = (list(set([*range(len(tracks))]).difference(selected_indices))) # find the indices to keep
+    indices_to_keep.sort()
+    
+    tracks_return = select_tracks_by_indices(tracks, indices_to_keep) # select and return the tracks whose IDs are not in &#39;selected_indices&#39; 
+
+    return tracks_return</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.return_check_box_value"><code class="name flex">
+<span>def <span class="ident">return_check_box_value</span></span>(<span>make_gif, lower_frame_bound, upper_frame_bound, window_size, tracks, raw_tiff_list, track_number, channel_colors, display_channels, frame_names, gif_name, folder_name, dpi, subplot_padding)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Make a gif of the current visualized state</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def return_check_box_value(make_gif,
+                           lower_frame_bound,
+                           upper_frame_bound,
+                           window_size,
+                           tracks,
+                           raw_tiff_list,
+                           track_number,
+                           channel_colors,
+                           display_channels,
+                           frame_names,
+                           gif_name,
+                           folder_name,
+                           dpi,
+                           subplot_padding):
+    &#34;&#34;&#34;Make a gif of the current visualized state&#34;&#34;&#34;
+    print(&#39;Enter the upper and lower bounds of frames for the generated gif&#39;)
+    print(&#39;The folder name and gif name by default will be appended by &#34;track_number_frame_START_to_END&#34;&#39;)
+    if make_gif: # if the gif making checkbox is selected, make a gif
+        print(&#39;creating gif&#39;)
+        play_through_tracks(tracks,
+                            raw_tiff_list,
+                            track_number,
+                            channel_colors,
+                            lower_frame_bound,
+                            upper_frame_bound,
+                            window_size,
+                            display_channels,
+                            frame_names,
+                            gif_name,
+                            folder_name,
+                            dpi,
+                            subplot_padding)</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.select_track_option"><code class="name flex">
+<span>def <span class="ident">select_track_option</span></span>(<span>tracks, i, indices_to_keep)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Configure options for manual selection of tracks</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def select_track_option(tracks, i, indices_to_keep):
+    &#34;&#34;&#34;Configure options for manual selection of tracks&#34;&#34;&#34;
+    selection_widget = widgets.ToggleButton(
+                                            value=False,
+                                            description=&#39;Click to keep&#39;,
+                                            disabled=False,
+                                            button_style=&#39;&#39;, # &#39;success&#39;, &#39;info&#39;, &#39;warning&#39;, &#39;danger&#39; or &#39;&#39;
+                                            tooltip=&#39;Description&#39;,
+                                            icon=&#39;check&#39;
+                                            )
+    
+    deselection_widget = widgets.ToggleButton(
+                                            value=False,
+                                            description=&#39;Click to remove&#39;,
+                                            disabled=False,
+                                            button_style=&#39;&#39;, # &#39;success&#39;, &#39;info&#39;, &#39;warning&#39;, &#39;danger&#39; or &#39;&#39;
+                                            tooltip=&#39;Description&#39;,
+                                            icon=&#39;check&#39;
+                                            )
+    
+    output_selection = interactive(iterate_through_selectable_tracks,
+                                   selection=selection_widget,
+                                   deselection=deselection_widget,
+                                   i=fixed(i),
+                                   tracks=fixed(tracks),
+                                   indices_to_keep=fixed(indices_to_keep))
+    display(output_selection)
+    
+    return output_selection.result</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.select_tracks_by_indices"><code class="name flex">
+<span>def <span class="ident">select_tracks_by_indices</span></span>(<span>tracks, selected_indices=[])</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return tracks whose number IDs are provided by 'selected_indices'</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def select_tracks_by_indices(tracks,
+                             selected_indices=[]):
+    &#34;&#34;&#34;Return tracks whose number IDs are provided by &#39;selected_indices&#39; &#34;&#34;&#34;
+    
+    print()
+    print(&#39;The total number of tracks: &#39; + str(len(tracks)))
+    print()
+
+    tracks_return = {}
+    new_index = 0
+    # find all the track IDs provided by &#39;selected_indices&#39; and renumber new track array from 0
+    for i in range(0, len(tracks)):
+
+        if i in selected_indices:
+
+            tracks_return[new_index] = tracks[i]
+            new_index += 1
+
+    print(&#39;The number of tracks returned: &#39; + str(len(tracks_return)))       
+    print()
+    return tracks_return</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.sort_tracks_descending_lifetimes"><code class="name flex">
+<span>def <span class="ident">sort_tracks_descending_lifetimes</span></span>(<span>tracks)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sort tracks in descending lifetime order</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sort_tracks_descending_lifetimes(tracks):
+    &#34;&#34;&#34;Sort tracks in descending lifetime order&#34;&#34;&#34;
+    index_dictionary = return_index_dictionary()
+    
+    tracks = tracks[&#39;tracks&#39;][0] # get just the data for the tracks
+                                            
+    tracks = zip(tracks, range(len(tracks))) # save each track with its original index
+    # sort the tracks in descending lifetime, preserving each track&#39;s individual index
+    tracks = sorted(tracks, key=lambda track: track[0][index_dictionary[&#39;index_lifetime_s&#39;]][0][0], reverse=True) 
+    
+    (tracks, indices) = zip(*tracks) 
+    
+    return tracks</code></pre>
+</details>
+</dd>
+<dt id="display_tracks.track_within_bounds"><code class="name flex">
+<span>def <span class="ident">track_within_bounds</span></span>(<span>tracks, track_number, minimum_lifetime, maximum_lifetime, track_category, number_of_channels)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Check if a track satisfies the user-defined conditions</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def track_within_bounds(tracks, track_number, minimum_lifetime, maximum_lifetime, track_category, number_of_channels):
+    &#34;&#34;&#34;Check if a track satisfies the user-defined conditions&#34;&#34;&#34;
+    if return_track_category(tracks, track_number) in track_category and \
+       len(return_track_x_position(tracks, track_number)) == number_of_channels and \
+       return_track_lifetime(tracks, track_number) &gt;= minimum_lifetime and \
+       return_track_lifetime(tracks, track_number) &lt;= maximum_lifetime:
+
+        return True
+
+    else:
+
+        return False</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="display_tracks.collect_plots_to_make_per_track" href="#display_tracks.collect_plots_to_make_per_track">collect_plots_to_make_per_track</a></code></li>
+<li><code><a title="display_tracks.create_tp_tn_fp_fn_labels" href="#display_tracks.create_tp_tn_fp_fn_labels">create_tp_tn_fp_fn_labels</a></code></li>
+<li><code><a title="display_tracks.display_intensity_subplot" href="#display_tracks.display_intensity_subplot">display_intensity_subplot</a></code></li>
+<li><code><a title="display_tracks.display_movement_subplot" href="#display_tracks.display_movement_subplot">display_movement_subplot</a></code></li>
+<li><code><a title="display_tracks.display_one_track" href="#display_tracks.display_one_track">display_one_track</a></code></li>
+<li><code><a title="display_tracks.display_tracks" href="#display_tracks.display_tracks">display_tracks</a></code></li>
+<li><code><a title="display_tracks.display_tracks_for_selection" href="#display_tracks.display_tracks_for_selection">display_tracks_for_selection</a></code></li>
+<li><code><a title="display_tracks.distance_separated_between_channels_subplot" href="#display_tracks.distance_separated_between_channels_subplot">distance_separated_between_channels_subplot</a></code></li>
+<li><code><a title="display_tracks.distance_travelled_subplot" href="#display_tracks.distance_travelled_subplot">distance_travelled_subplot</a></code></li>
+<li><code><a title="display_tracks.fit_cohorts" href="#display_tracks.fit_cohorts">fit_cohorts</a></code></li>
+<li><code><a title="display_tracks.interact_through_frames_of_track" href="#display_tracks.interact_through_frames_of_track">interact_through_frames_of_track</a></code></li>
+<li><code><a title="display_tracks.interact_through_frames_of_track_save_figure" href="#display_tracks.interact_through_frames_of_track_save_figure">interact_through_frames_of_track_save_figure</a></code></li>
+<li><code><a title="display_tracks.interact_through_tracks_IDs" href="#display_tracks.interact_through_tracks_IDs">interact_through_tracks_IDs</a></code></li>
+<li><code><a title="display_tracks.iterate_through_selectable_tracks" href="#display_tracks.iterate_through_selectable_tracks">iterate_through_selectable_tracks</a></code></li>
+<li><code><a title="display_tracks.load_itk_image" href="#display_tracks.load_itk_image">load_itk_image</a></code></li>
+<li><code><a title="display_tracks.load_tracks" href="#display_tracks.load_tracks">load_tracks</a></code></li>
+<li><code><a title="display_tracks.load_tracks_no_sort" href="#display_tracks.load_tracks_no_sort">load_tracks_no_sort</a></code></li>
+<li><code><a title="display_tracks.play_through_tracks" href="#display_tracks.play_through_tracks">play_through_tracks</a></code></li>
+<li><code><a title="display_tracks.plot_subplots_of_labels" href="#display_tracks.plot_subplots_of_labels">plot_subplots_of_labels</a></code></li>
+<li><code><a title="display_tracks.remove_tracks_by_criteria" href="#display_tracks.remove_tracks_by_criteria">remove_tracks_by_criteria</a></code></li>
+<li><code><a title="display_tracks.remove_tracks_by_indices" href="#display_tracks.remove_tracks_by_indices">remove_tracks_by_indices</a></code></li>
+<li><code><a title="display_tracks.return_check_box_value" href="#display_tracks.return_check_box_value">return_check_box_value</a></code></li>
+<li><code><a title="display_tracks.select_track_option" href="#display_tracks.select_track_option">select_track_option</a></code></li>
+<li><code><a title="display_tracks.select_tracks_by_indices" href="#display_tracks.select_tracks_by_indices">select_tracks_by_indices</a></code></li>
+<li><code><a title="display_tracks.sort_tracks_descending_lifetimes" href="#display_tracks.sort_tracks_descending_lifetimes">sort_tracks_descending_lifetimes</a></code></li>
+<li><code><a title="display_tracks.track_within_bounds" href="#display_tracks.track_within_bounds">track_within_bounds</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.1</a>.</p>
+</footer>
+</body>
+</html>
