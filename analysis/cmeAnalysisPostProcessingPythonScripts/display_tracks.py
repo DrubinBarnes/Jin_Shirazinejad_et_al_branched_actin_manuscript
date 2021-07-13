@@ -1984,6 +1984,7 @@ def plot_subplots_of_labels(tracks,
     
 
 def pairgrid_heatmap(x, y, **kws):
+    'https://stackoverflow.com/questions/43924280/pair-plot-with-heat-maps-possibly-logarithmic'
     cmap = sns.light_palette(kws.pop("color"), as_cmap=True)
     plt.hist2d(x, y, cmap=cmap, cmin=1, **kws)
     
