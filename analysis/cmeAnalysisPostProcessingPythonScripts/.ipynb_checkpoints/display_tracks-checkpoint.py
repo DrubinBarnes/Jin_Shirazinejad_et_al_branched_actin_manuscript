@@ -50,6 +50,8 @@ def plot_separated_cohorts(axes,
                            line_cutoff_regions=[],
                            horizontal_shift_index=[],
                            horizontal_shift=[],
+                           line_removal_index=[],
+                           line_kept_regions=[],
                            framerate=1,
                            norm_intensity=False):
     
@@ -84,7 +86,7 @@ def plot_separated_cohorts(axes,
     max_cohort_indices = []
     
     amplitudes = np.array(vectors, dtype='object')[:,indices_first_axis]
-
+    print(offsets)
     for i in range(1,len(offsets)):
 
         plt.axvline(offsets[i], 0, 1, linestyle='--', color='black', alpha=0.9)
@@ -124,7 +126,9 @@ def plot_separated_cohorts(axes,
 
             average_cohort_class = np.nan_to_num(np.nanmean(cohort_temp_class,axis=0,dtype=np.float64)) # calculate average and std of intensity in class cohort
             std_cohort_class = num_stds*np.nan_to_num(np.nanstd(cohort_temp_class,axis=0,dtype=np.float64))
+            
 
+            
             for i in indices_first_axis:
 
                 ch_current = average_cohort_class[i,:]
@@ -135,8 +139,12 @@ def plot_separated_cohorts(axes,
 
                 splined_amps = spline(np.linspace(0, len(ch_current), cohort_bounds[offset_index][1]))
 
+                if offset_index in line_removal_index:
+                
+                    splined_amps = splined_amps[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
+                    
                 avg_intensities = splined_amps.copy()
-
+                
                 if i==alignment_channel:
 
                     max_cohort_indices.append(np.nanargmax(splined_amps))
@@ -158,7 +166,11 @@ def plot_separated_cohorts(axes,
                 else:
 
                     x_axis = np.linspace(0+offsets[offset_index],cohort_bounds[offset_index][1]+offsets[offset_index],cohort_bounds[offset_index][1])
-
+                    
+                if offset_index in line_removal_index:
+                
+                    x_axis = x_axis[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
+                
                 if norm_intensity:
                     norm_factor = 1/np.nanmax(splined_amps)
                 else:
@@ -175,7 +187,11 @@ def plot_separated_cohorts(axes,
                 spline = interpolate.BSpline(t, c, k, extrapolate=False)
 
                 splined_amps = spline(np.linspace(0, len(ch_current), cohort_bounds[offset_index][1]))
-
+                
+                if offset_index in line_removal_index:
+                
+                    splined_amps = splined_amps[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
+                    
                 if i in line_cutoff_index:
 
                     for regions in line_cutoff_regions[i]:
@@ -201,6 +217,10 @@ def plot_separated_cohorts(axes,
 
                 splined_amps = spline(np.linspace(0, len(ch_current), cohort_bounds[offset_index][1]))
 
+                if offset_index in line_removal_index:
+                
+                    splined_amps = splined_amps[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
+                    
                 avg_intensities = splined_amps.copy()
 
                 if offset_index != 0:
@@ -220,7 +240,12 @@ def plot_separated_cohorts(axes,
                 else:
 
                     x_axis = np.linspace(0+offsets[offset_index],cohort_bounds[offset_index][1]+offsets[offset_index],cohort_bounds[offset_index][1])
-
+                
+                if offset_index in line_removal_index:
+                
+                    x_axis = x_axis[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
+                
+                
                 axes[1].plot(x_axis, 
                          splined_amps,
                          colors[i], 
@@ -235,6 +260,11 @@ def plot_separated_cohorts(axes,
 
                 splined_amps = spline(np.linspace(0, len(ch_current), cohort_bounds[offset_index][1]))
 
+                if offset_index in line_removal_index:
+                
+                    splined_amps = splined_amps[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
+                    
+                
                 if i in line_cutoff_index:
 
                     for regions in line_cutoff_regions[i]:
