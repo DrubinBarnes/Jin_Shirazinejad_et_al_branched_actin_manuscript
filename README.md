@@ -1,7 +1,7 @@
 # Jin_Shirazinejad_et_al_branched_actin_manuscript
 code for "Asymmetric actin force production at stalled clathrin-mediated endocytosis sites", submitted
 
-The live-cell imaging data TIRF, tracked events, plots used for analysis, and arrays used throughout processing can be found at: https://tinyurl.com/z29zy93j
+The live-cell imaging data (TIRF), tracked events, plots used for analysis, and arrays used throughout our analysis can be found at: https://tinyurl.com/z29zy93j
 
 The repo for the code development can be found ony my personal Github page: https://github.com/cynashirazinejad/track_processing
 
