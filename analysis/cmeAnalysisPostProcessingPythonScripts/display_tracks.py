@@ -573,34 +573,7 @@ def fit_cohorts(tracks,
                     ax.set_xlabel('time (s)')
                     ax.set_ylabel('fluorescence intensity')
                     ax.legend()
-#                 cohort_temp_class.append([splined_amps_ch0, splined_amps_ch1])
-                
-#                 print(len(average_cohort_class[0]))
-#                 x_axis = np.linspace(cohort[1]-len(average_cohort_class[0]),cohort[1],len(average_cohort_class[0]))
-#                 print(len(x_axis))
-#                 print(len(average_cohort_class[0,:]))
-#                 ax.plot(x_axis, 
-#                         average_cohort_class[0,:],
-#                         'm', 
-#                         label=str('Cohort: ' + str(cohort) + ' s members: ' + str(len(cohort_temp_class))))
-#                 ax.plot(x_axis, 
-#                         average_cohort_class[1,:],
-#                         'g')
-#                 ax.fill_between(x_axis, 
-#                                 average_cohort_class[0,:]-std_cohort_class[0,:], 
-#                                 average_cohort_class[0,:]+std_cohort_class[0,:], 
-#                                 color='m', 
-#                                 alpha=0.2)
-#                 ax.fill_between(x_axis, 
-#                                 average_cohort_class[1,:]-std_cohort_class[1,:], 
-#                                 average_cohort_class[1,:]+std_cohort_class[1,:], 
-#                                 color='g', 
-#                                 alpha=0.2)
-#                 ax.title.set_text('number of members in class ' + str(i) + ': ' + str(len(class_tmp)))
-#                 ax.set_xlabel('time (s)')
-#                 ax.set_ylabel('fluorescence intensity')
-#                 ax.legend()        
-    
+
             elif alignment=='interpolate':   
 #                 print('test')
                 if cohort_temp_class != []:
