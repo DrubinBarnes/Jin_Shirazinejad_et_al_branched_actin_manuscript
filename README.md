@@ -7,6 +7,8 @@ The live-cell imaging data (TIRF), tracked events, plots used for analysis, and 
 
 The repo for the code development can be found ony my personal Github page: https://github.com/cynashirazinejad/track_processing
 
+Prior to running these notebooks, processed tracks from cmeAnalysis ("ProcessedTracks.mat" via https://github.com/DanuserLab/cmeAnalysis) can be generated using MATLAB. It is recommended that MATLAB 2018/2019 is used, since we have seen some slight differences in how fitted values are obtained in 2020/2021 versions.
+
 The principle routines that these notebooks perform are:
 1) visualizing the dynamics of tracked events out of cmeAnalysis**
 2) clustering these tracked events into groups of similarly-behaved events
