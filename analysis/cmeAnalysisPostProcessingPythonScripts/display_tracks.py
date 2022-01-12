@@ -37,7 +37,108 @@ import scipy.interpolate as interpolate
 import seaborn as sns
 import alignment
 
- 
+
+def upload_tracks_and_metadata(path_to_tracks,
+                               track_categories,
+                               identifier_string,
+                               features,
+                               labels,
+                               experiment_number_adjustment=0):
+    """
+    Format tracks contained in folders into a dataframe of extracted physical features 
+    as well as accompanying experimental metadata.
+    
+    Args:
+        path_to_tracks (string): path to the folder containing the enclosed tracking files
+        track_categories (list): a list of integers for the cmeAnalysis track categories to keep for further analysis
+        identifier_string (string): a label within all tracking head folders that uniquely identify relevant content
+        features (list): a list with string elements containing the features to be extracted from each track
+        labels (list): a list of string elements describing each features' designation in the dataframe output
+        experiment_number_adjustment (int): a number to offset the starting cout for experiment number, nonzero if data is to be 
+            appended to another existing dataset
+    
+    Returns:
+    
+        df (dataframe): a dataframe of features and metadata
+        merged_all_tracks (ndarray): 
+    """
+    all_track_paths = os.listdir(path_to_tracks)
+    all_track_paths = [exp for exp in all_track_paths if identifier_string in exp]
+    all_track_paths.sort()
+    print('\nfolders to mine:')
+    print(all_track_paths)
+    
+    tracks = []
+    dates = []
+    cell_line_tags = []
+    current_tracked_channels = []
+    number_of_tags = []
+    experiment = []
+    condition = []
+    experiment_number = []
+    framerate = []
+    
+    for exp_number, exp in enumerate(all_track_paths):
+        
+        current_tracks = display_tracks.load_tracks(path_to_tracks + '/' + exp + '/Ch1/Tracking/ProcessedTracks.mat')
+        current_tracks = display_tracks.remove_tracks_by_criteria(current_tracks, track_category=track_categories)
+        tracks.append(current_tracks)
+        
+        num_tracks = len(current_tracks)
+        
+        metadata = exp.split('_')
+        
+#         tracks += current_tracks
+        dates += [int(metadata[0])]*num_tracks
+        cell_line_tags += [metadata[1]]*num_tracks
+        current_tracked_channels += [metadata[2]]*num_tracks
+        number_of_tags += [len(metadata[1].split('-'))]*num_tracks
+        experiment += [metadata[3]]*num_tracks
+        condition += [metadata[4]]*num_tracks
+        experiment_number += [exp_number+experiment_number_adjustment]*num_tracks
+        framerate += [metadata[6]]
+        
+    print('\nfinished uploading tracks\n')
+    merged_all_tracks = merge_tools.merge_experiments(tracks,[list(range(len(track_set))) for track_set in tracks])
+    
+    # extract the output of cmeAnalysis' predictions on whether a track is DNM2 positive or negative
+    significant_dynamin2_cmeAnalysis_prediction = []
+
+    # an index map for ProcessedTracks.mat attributes for 2 color tracking experiments from cmeAnalysis
+    index_dictionary = generate_index_dictionary.return_index_dictionary()
+    
+    for track in merged_all_tracks: # iterate through all tracks
+#         print(track)
+        significant_dynamin2 = track[index_dictionary['index_significantSlave']][1]
+        significant_dynamin2_cmeAnalysis_prediction.append(significant_dynamin2)
+    print('extracting features...\n')
+    all_track_features = feature_extraction_with_buffer.TrackFeatures(merged_all_tracks) # an instance of a to-be feature matrix of tracks
+    all_track_features.add_features(features) # set the features to be extracted
+    all_track_features.extract_features() # extract all features
+    extracted_features = all_track_features.feature_matrix # feature matrix for all tracks
+    
+    # merge features with labels (experiment number, date, and number of channels)
+    extracted_features = np.array(extracted_features)
+
+    merged_features = np.concatenate((extracted_features,
+                                      np.array(experiment_number).reshape(extracted_features.shape[0],-1)), axis=-1)
+    merged_features = np.concatenate((merged_features,
+                                      np.array(number_of_tags).reshape(merged_features.shape[0],-1)), axis=-1)
+    merged_features = np.concatenate((merged_features,
+                                      np.array(dates).reshape(merged_features.shape[0],-1)), axis=-1)
+    merged_features = np.concatenate((merged_features,
+                                      np.array(condition).reshape(merged_features.shape[0],-1)), axis=-1)
+    merged_features = np.concatenate((merged_features,ZZZ
+                                      np.array(significant_dynamin2_cmeAnalysis_prediction).reshape(merged_features.shape[0],-1)), axis=-1)
+    print('creating dataframe...\n')
+
+    df = pd.DataFrame(data=merged_features, columns=labels+['experiment_number',
+                                                            'number_of_channels', 
+                                                            'date', 
+                                                            'cell_condition', 
+                                                            'cmeAnalysis_dynamin2_prediction'])
+    
+    return df, merged_all_tracks
 
 
 def fit_cohorts(tracks, 
