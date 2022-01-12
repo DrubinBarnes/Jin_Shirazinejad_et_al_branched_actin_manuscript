@@ -19,7 +19,11 @@ from return_track_attributes import (return_track_lifetime,
                                      return_track_x_position,
                                      return_track_amplitude_no_buffer_channel)
 import alignment as alignment_tools
-import return_track_attributes                                   
+import return_track_attributes 
+import generate_index_dictionary
+import feature_extraction_with_buffer
+import merge_tools
+import pandas as pd
 import numpy as np
 import scipy.io as sio
 import matplotlib.pyplot as plt
@@ -67,6 +71,7 @@ def upload_tracks_and_metadata(path_to_tracks,
     all_track_paths.sort()
     print('\nfolders to mine:')
     print(all_track_paths)
+    print('\n')
     
     tracks = []
     dates = []
@@ -80,8 +85,8 @@ def upload_tracks_and_metadata(path_to_tracks,
     
     for exp_number, exp in enumerate(all_track_paths):
         
-        current_tracks = display_tracks.load_tracks(path_to_tracks + '/' + exp + '/Ch1/Tracking/ProcessedTracks.mat')
-        current_tracks = display_tracks.remove_tracks_by_criteria(current_tracks, track_category=track_categories)
+        current_tracks = load_tracks(path_to_tracks + '/' + exp + '/Ch1/Tracking/ProcessedTracks.mat')
+        current_tracks = remove_tracks_by_criteria(current_tracks, track_category=track_categories)
         tracks.append(current_tracks)
         
         num_tracks = len(current_tracks)
@@ -116,7 +121,7 @@ def upload_tracks_and_metadata(path_to_tracks,
     all_track_features.add_features(features) # set the features to be extracted
     all_track_features.extract_features() # extract all features
     extracted_features = all_track_features.feature_matrix # feature matrix for all tracks
-    
+    print('completed feature extraction\n')
     # merge features with labels (experiment number, date, and number of channels)
     extracted_features = np.array(extracted_features)
 
@@ -128,7 +133,7 @@ def upload_tracks_and_metadata(path_to_tracks,
                                       np.array(dates).reshape(merged_features.shape[0],-1)), axis=-1)
     merged_features = np.concatenate((merged_features,
                                       np.array(condition).reshape(merged_features.shape[0],-1)), axis=-1)
-    merged_features = np.concatenate((merged_features,ZZZ
+    merged_features = np.concatenate((merged_features,
                                       np.array(significant_dynamin2_cmeAnalysis_prediction).reshape(merged_features.shape[0],-1)), axis=-1)
     print('creating dataframe...\n')
 
