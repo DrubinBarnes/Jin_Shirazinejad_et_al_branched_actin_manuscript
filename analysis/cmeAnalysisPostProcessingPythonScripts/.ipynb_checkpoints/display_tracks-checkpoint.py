@@ -313,6 +313,31 @@ def upload_tracks_and_metadata(path_to_tracks,
                                                             'framerate',
                                                             'date'])
     
+    print('saving dataframe...\n')
+    # save the dataframe for subsequent notebooks
+    compression_opts = dict(method='zip',
+                            archive_name=unique_user_saved_outputs+'/dataframes/df_merged_features.csv')  
+
+    df_merged_features.to_csv(unique_user_saved_outputs+'/dataframes/df_merged_features.zip', index=False,
+                                                              compression=compression_opts) 
+
+    
+    number_of_track_splits = 20
+    
+    analysis_metadata['number_of_track_splits'] = number_of_track_splits
+
+    np.save(analysis_metadata['path_outputs']+'/dataframes/analysis_metadata', analysis_metadata)
+    
+    print('saving tracks...\n')
+    # split tracks
+    split_valid_tracks = np.array_split(np.array(list(merged_all_valid_tracks)),number_of_track_splits)
+    # save each track array chunk
+    for i in range(len(split_valid_tracks)):
+
+        np.save(unique_user_saved_outputs+"/dataframes/merged_all_valid_tracks_"+str(i), np.array(split_valid_tracks[i]))
+        
+    print('done')
+    
     return df, merged_all_tracks
 
 
