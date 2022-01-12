@@ -38,390 +38,7 @@ import seaborn as sns
 import alignment
 
  
-def plot_separated_cohorts(axes, 
-                           vectors, 
-                           alignment_channel, 
-                           cohort_bounds, 
-                           indices_first_axis, 
-                           indices_second_axis, 
-                           labels,
-                           colors,
-                           line_cutoff_index=[],
-                           line_cutoff_regions=[],
-                           horizontal_shift_index=[],
-                           horizontal_shift=[],
-                           line_removal_index=[],
-                           line_kept_regions=[],
-                           framerate=1,
-                           norm_intensity=False):
-    
-    num_ticks = 0
-    x_labels = []
-    for cohort in cohort_bounds:
 
-        x_labels+=list(range(0,cohort[1]-10+1,10))
-
-        num_ticks += int(cohort[1]/10)+1
-
-    offsets = []
-    
-    cohort_samples = cohort_bounds.copy()
-    
-    cohort_samples[-1] = [cohort_samples[-1][0], cohort_samples[-1][1]+1]
-    
-    for i in range(len(cohort_samples)):
-        
-        if i==0:
-            offsets.append(0)
-        else:
-            offsets.append(cohort_samples[i][0])
-
-        if i > 0:
-
-            offsets[i]+=offsets[i-1]
-            
-            
-    num_stds = 0.25
-    num_in_cohort = []
-    max_cohort_indices = []
-    
-    amplitudes = np.array(vectors, dtype='object')[:,indices_first_axis]
-    print(offsets)
-    for i in range(1,len(offsets)):
-
-        plt.axvline(offsets[i], 0, 1, linestyle='--', color='black', alpha=0.9)
-
-    for offset_index, cohort in enumerate(cohort_samples):
-
-        class_intensities = []
-
-        cohort_temp_class = []
-
-        for i in range(len(amplitudes)):
-
-            lifetime = len(amplitudes[i][0])*framerate
-
-            if lifetime >= cohort[0] and lifetime < cohort[1]:
-
-                cohort_temp_class.append(vectors[i])
-
-        num_in_cohort.append(len(cohort_temp_class))
-        frames_before_alignment = []
-        frames_after_alignment = []
-
-        if cohort_temp_class!=[]:
-        
-            for track_index in range(len(cohort_temp_class)):
-
-                frames_before_alignment.append(np.argmax(cohort_temp_class[track_index][alignment_channel]))
-                frames_after_alignment.append(len(cohort_temp_class[track_index][alignment_channel]) - np.argmax(cohort_temp_class[track_index][alignment_channel]) - 1)
-
-            padding_amount = np.max([np.max(frames_before_alignment), np.max(frames_after_alignment)])
-
-            cohort_temp_class = alignment.return_shifted_amplitudes(cohort_temp_class, 
-                                                                    frames_before_alignment, 
-                                                                    frames_after_alignment, 
-                                                                    padding_amount, 
-                                                                    True)
-
-            average_cohort_class = np.nan_to_num(np.nanmean(cohort_temp_class,axis=0,dtype=np.float64)) # calculate average and std of intensity in class cohort
-            std_cohort_class = num_stds*np.nan_to_num(np.nanstd(cohort_temp_class,axis=0,dtype=np.float64))
-            
-
-            
-            for i in indices_first_axis:
-
-                ch_current = average_cohort_class[i,:]
-
-                t, c, k = interpolate.splrep(np.arange(len(ch_current)), ch_current, k=3)
-
-                spline = interpolate.BSpline(t, c, k, extrapolate=False)
-
-                splined_amps = spline(np.linspace(0, len(ch_current), cohort_bounds[offset_index][1]))
-
-                if offset_index in line_removal_index:
-                
-                    splined_amps = splined_amps[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
-                    
-                avg_intensities = splined_amps.copy()
-                
-                if i==alignment_channel:
-
-                    max_cohort_indices.append(np.nanargmax(splined_amps))
-
-                if offset_index != 0:
-
-                    labels = [None]*average_cohort_class.shape[0]
-
-                if i in line_cutoff_index:
-
-                    for regions in line_cutoff_regions[i]:
-
-                        splined_amps[regions[0]:regions[1]] = np.NaN
-
-                if i in horizontal_shift_index:
-
-                    x_axis = horizontal_shift[i]+np.linspace(0+offsets[offset_index],cohort_bounds[offset_index][1]+offsets[offset_index],cohort_bounds[offset_index][1])
-
-                else:
-
-                    x_axis = np.linspace(0+offsets[offset_index],cohort_bounds[offset_index][1]+offsets[offset_index],cohort_bounds[offset_index][1])
-                    
-                if offset_index in line_removal_index:
-                
-                    x_axis = x_axis[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
-                
-                if norm_intensity:
-                    norm_factor = 1/np.nanmax(splined_amps)
-                else:
-                    norm_factor = 1
-                axes[0].plot(x_axis, 
-                         norm_factor*splined_amps,
-                         colors[i], 
-                         label=labels[i])
-
-                ch_current = std_cohort_class[i,:]
-
-                t, c, k = interpolate.splrep(np.arange(len(ch_current)), ch_current, k=3)
-
-                spline = interpolate.BSpline(t, c, k, extrapolate=False)
-
-                splined_amps = spline(np.linspace(0, len(ch_current), cohort_bounds[offset_index][1]))
-                
-                if offset_index in line_removal_index:
-                
-                    splined_amps = splined_amps[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
-                    
-                if i in line_cutoff_index:
-
-                    for regions in line_cutoff_regions[i]:
-
-                        splined_amps[regions[0]:regions[1]] = np.NaN
-                        avg_intensities[regions[0]:regions[1]] = np.NaN
-
-                axes[0].fill_between(x_axis, 
-                                 norm_factor*avg_intensities-norm_factor*splined_amps, 
-                                 norm_factor*avg_intensities+norm_factor*splined_amps, 
-                                 color=colors[i], 
-                                 alpha=0.2)       
-
-
-
-            for i in indices_second_axis:
-
-                ch_current = average_cohort_class[i,:]
-
-                t, c, k = interpolate.splrep(np.arange(len(ch_current)), ch_current, k=3)
-
-                spline = interpolate.BSpline(t, c, k, extrapolate=False)
-
-                splined_amps = spline(np.linspace(0, len(ch_current), cohort_bounds[offset_index][1]))
-
-                if offset_index in line_removal_index:
-                
-                    splined_amps = splined_amps[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
-                    
-                avg_intensities = splined_amps.copy()
-
-                if offset_index != 0:
-
-                    labels = [None]*average_cohort_class.shape[0]
-
-                if i in line_cutoff_index:
-
-                    for regions in line_cutoff_regions[i]:
-
-                        splined_amps[regions[0]:regions[1]] = np.NaN
-
-                if i in horizontal_shift_index:
-
-                    x_axis = horizontal_shift[i]+np.linspace(0+offsets[offset_index],cohort_bounds[offset_index][1]+offsets[offset_index],cohort_bounds[offset_index][1])
-
-                else:
-
-                    x_axis = np.linspace(0+offsets[offset_index],cohort_bounds[offset_index][1]+offsets[offset_index],cohort_bounds[offset_index][1])
-                
-                if offset_index in line_removal_index:
-                
-                    x_axis = x_axis[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
-                
-                
-                axes[1].plot(x_axis, 
-                         splined_amps,
-                         colors[i], 
-                         label=labels[i],
-                         linestyle='--')
-
-                ch_current = std_cohort_class[i,:]
-
-                t, c, k = interpolate.splrep(np.arange(len(ch_current)), ch_current, k=3)
-
-                spline = interpolate.BSpline(t, c, k, extrapolate=False)
-
-                splined_amps = spline(np.linspace(0, len(ch_current), cohort_bounds[offset_index][1]))
-
-                if offset_index in line_removal_index:
-                
-                    splined_amps = splined_amps[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
-                    
-                
-                if i in line_cutoff_index:
-
-                    for regions in line_cutoff_regions[i]:
-
-                        splined_amps[regions[0]:regions[1]] = np.NaN
-                        avg_intensities[regions[0]:regions[1]] = np.NaN
-
-                axes[1].fill_between(x_axis, 
-                                 avg_intensities-splined_amps, 
-                                 avg_intensities+splined_amps, 
-                                 color=colors[i], 
-                                 alpha=0.2) 
-            
-    return offsets, num_in_cohort, max_cohort_indices
-
-
-def plot_cohorts_centered_on_aligned_channel(axes, 
-                                             vectors, 
-                                             alignment_channel, 
-                                             cohort_bounds, 
-                                             indices_first_axis, 
-                                             indices_second_axis, 
-                                             labels,
-                                             colors,
-                                             line_cutoff_index=[],
-                                             line_cutoff_regions=[],
-                                             horizontal_shift_index=[],
-                                             horizontal_shift=[]):
-
-    
-    num_ticks = 0
-    x_labels = []
-    for cohort in cohort_bounds:
-
-        x_labels+=list(range(0,cohort[1]-10+1,10))
-
-        num_ticks += int(cohort[1]/10)+1
-
-    offsets = []
-    
-    cohort_samples = cohort_bounds.copy()
-    
-    cohort_samples[-1] = [cohort_samples[-1][0], cohort_samples[-1][1]+1]
-    
-    for i in range(len(cohort_samples)):
-        
-        if i==0:
-            offsets.append(0)
-        else:
-            offsets.append(cohort_samples[i][0])
-
-        if i > 0:
-
-            offsets[i]+=offsets[i-1]
-            
-            
-    num_stds = 0.25
-    num_in_cohort = []
-    
-    amplitudes = np.array(vectors, dtype='object')[:,indices_first_axis]
-
-
-
-    for offset_index, cohort in enumerate(cohort_samples):
-
-        class_intensities = []
-
-        cohort_temp_class = []
-
-        for i in range(len(amplitudes)):
-
-            lifetime = len(amplitudes[i][0])
-
-            if lifetime >= cohort[0] and lifetime < cohort[1]:
-
-                cohort_temp_class.append(vectors[i])
-
-        num_in_cohort.append(len(cohort_temp_class))
-        frames_before_alignment = []
-        frames_after_alignment = []
-
-        for track_index in range(len(cohort_temp_class)):
-
-            frames_before_alignment.append(np.argmax(cohort_temp_class[track_index][alignment_channel]))
-            frames_after_alignment.append(len(cohort_temp_class[track_index][alignment_channel]) - np.argmax(cohort_temp_class[track_index][alignment_channel]) - 1)
-
-        padding_amount = np.max([np.max(frames_before_alignment), np.max(frames_after_alignment)])
-
-        cohort_temp_class = alignment.return_shifted_amplitudes(cohort_temp_class, 
-                                                                frames_before_alignment, 
-                                                                frames_after_alignment, 
-                                                                padding_amount, 
-                                                                True)
-
-        average_cohort_class = np.nan_to_num(np.nanmean(cohort_temp_class,axis=0,dtype=np.float64)) # calculate average and std of intensity in class cohort
-        std_cohort_class = num_stds*np.nan_to_num(np.nanstd(cohort_temp_class,axis=0,dtype=np.float64))
-        
-        ch_align = average_cohort_class[alignment_channel, :]
-        
-        t, c, k = interpolate.splrep(np.arange(len(ch_align)), ch_align, k=3)
-
-        spline = interpolate.BSpline(t, c, k, extrapolate=False)
-
-        splined_amps = spline(np.linspace(0, len(ch_align), cohort_bounds[offset_index][1])) 
-        
-        horizontal_alignment = np.nanargmax(splined_amps)
-        
-        for i in indices_first_axis:
-            
-            ch_current = average_cohort_class[i,:]
-            
-            t, c, k = interpolate.splrep(np.arange(len(ch_current)), ch_current, k=3)
-            
-            spline = interpolate.BSpline(t, c, k, extrapolate=False)
-            
-            splined_amps = spline(np.linspace(0, len(ch_current), cohort_bounds[offset_index][1]))
-            
-            avg_intensities = splined_amps.copy()
-
-            if offset_index != 0:
-                
-                labels = [None]*average_cohort_class.shape[0]
-            
-            if i in line_cutoff_index:
-                
-                for regions in line_cutoff_regions[i]:
-                    
-                    splined_amps[regions[0]:regions[1]] = np.NaN
-            
-             
-            x_axis = -horizontal_alignment + np.linspace(0,cohort_bounds[offset_index][1],cohort_bounds[offset_index][1])
-                
-            axes[0].plot(x_axis, 
-                     splined_amps,
-                     colors[i], 
-                     label=labels[i])
-
-            ch_current = std_cohort_class[i,:]
-            
-            t, c, k = interpolate.splrep(np.arange(len(ch_current)), ch_current, k=3)
-            
-            spline = interpolate.BSpline(t, c, k, extrapolate=False)
-            
-            splined_amps = spline(np.linspace(0, len(ch_current), cohort_bounds[offset_index][1]))
-            
-            if i in line_cutoff_index:
-                
-                for regions in line_cutoff_regions[i]:
-                    
-                    splined_amps[regions[0]:regions[1]] = np.NaN
-                    avg_intensities[regions[0]:regions[1]] = np.NaN
-                    
-            axes[0].fill_between(x_axis, 
-                             avg_intensities-splined_amps, 
-                             avg_intensities+splined_amps, 
-                             color=colors[i], 
-                             alpha=0.2)  
 
 def fit_cohorts(tracks, 
                 class_indices, 
@@ -573,34 +190,7 @@ def fit_cohorts(tracks,
                     ax.set_xlabel('time (s)')
                     ax.set_ylabel('fluorescence intensity')
                     ax.legend()
-#                 cohort_temp_class.append([splined_amps_ch0, splined_amps_ch1])
-                
-#                 print(len(average_cohort_class[0]))
-#                 x_axis = np.linspace(cohort[1]-len(average_cohort_class[0]),cohort[1],len(average_cohort_class[0]))
-#                 print(len(x_axis))
-#                 print(len(average_cohort_class[0,:]))
-#                 ax.plot(x_axis, 
-#                         average_cohort_class[0,:],
-#                         'm', 
-#                         label=str('Cohort: ' + str(cohort) + ' s members: ' + str(len(cohort_temp_class))))
-#                 ax.plot(x_axis, 
-#                         average_cohort_class[1,:],
-#                         'g')
-#                 ax.fill_between(x_axis, 
-#                                 average_cohort_class[0,:]-std_cohort_class[0,:], 
-#                                 average_cohort_class[0,:]+std_cohort_class[0,:], 
-#                                 color='m', 
-#                                 alpha=0.2)
-#                 ax.fill_between(x_axis, 
-#                                 average_cohort_class[1,:]-std_cohort_class[1,:], 
-#                                 average_cohort_class[1,:]+std_cohort_class[1,:], 
-#                                 color='g', 
-#                                 alpha=0.2)
-#                 ax.title.set_text('number of members in class ' + str(i) + ': ' + str(len(class_tmp)))
-#                 ax.set_xlabel('time (s)')
-#                 ax.set_ylabel('fluorescence intensity')
-#                 ax.legend()        
-    
+
             elif alignment=='interpolate':   
 #                 print('test')
                 if cohort_temp_class != []:
@@ -1989,3 +1579,387 @@ def pairgrid_heatmap(x, y, **kws):
     plt.hist2d(x, y, cmap=cmap, cmin=1, **kws)
     
     
+def plot_separated_cohorts(axes, 
+                           vectors, 
+                           alignment_channel, 
+                           cohort_bounds, 
+                           indices_first_axis, 
+                           indices_second_axis, 
+                           labels,
+                           colors,
+                           line_cutoff_index=[],
+                           line_cutoff_regions=[],
+                           horizontal_shift_index=[],
+                           horizontal_shift=[],
+                           line_removal_index=[],
+                           line_kept_regions=[],
+                           framerate=1,
+                           norm_intensity=False):
+    
+    num_ticks = 0
+    x_labels = []
+    for cohort in cohort_bounds:
+
+        x_labels+=list(range(0,cohort[1]-10+1,10))
+
+        num_ticks += int(cohort[1]/10)+1
+
+    offsets = []
+    
+    cohort_samples = cohort_bounds.copy()
+    
+    cohort_samples[-1] = [cohort_samples[-1][0], cohort_samples[-1][1]+1]
+    
+    for i in range(len(cohort_samples)):
+        
+        if i==0:
+            offsets.append(0)
+        else:
+            offsets.append(cohort_samples[i][0])
+
+        if i > 0:
+
+            offsets[i]+=offsets[i-1]
+            
+            
+    num_stds = 0.25
+    num_in_cohort = []
+    max_cohort_indices = []
+    
+    amplitudes = np.array(vectors, dtype='object')[:,indices_first_axis]
+    print(offsets)
+    for i in range(1,len(offsets)):
+
+        plt.axvline(offsets[i], 0, 1, linestyle='--', color='black', alpha=0.9)
+
+    for offset_index, cohort in enumerate(cohort_samples):
+
+        class_intensities = []
+
+        cohort_temp_class = []
+
+        for i in range(len(amplitudes)):
+
+            lifetime = len(amplitudes[i][0])*framerate
+
+            if lifetime >= cohort[0] and lifetime < cohort[1]:
+
+                cohort_temp_class.append(vectors[i])
+
+        num_in_cohort.append(len(cohort_temp_class))
+        frames_before_alignment = []
+        frames_after_alignment = []
+
+        if cohort_temp_class!=[]:
+        
+            for track_index in range(len(cohort_temp_class)):
+
+                frames_before_alignment.append(np.argmax(cohort_temp_class[track_index][alignment_channel]))
+                frames_after_alignment.append(len(cohort_temp_class[track_index][alignment_channel]) - np.argmax(cohort_temp_class[track_index][alignment_channel]) - 1)
+
+            padding_amount = np.max([np.max(frames_before_alignment), np.max(frames_after_alignment)])
+
+            cohort_temp_class = alignment.return_shifted_amplitudes(cohort_temp_class, 
+                                                                    frames_before_alignment, 
+                                                                    frames_after_alignment, 
+                                                                    padding_amount, 
+                                                                    True)
+
+            average_cohort_class = np.nan_to_num(np.nanmean(cohort_temp_class,axis=0,dtype=np.float64)) # calculate average and std of intensity in class cohort
+            std_cohort_class = num_stds*np.nan_to_num(np.nanstd(cohort_temp_class,axis=0,dtype=np.float64))
+            
+
+            
+            for i in indices_first_axis:
+
+                ch_current = average_cohort_class[i,:]
+
+                t, c, k = interpolate.splrep(np.arange(len(ch_current)), ch_current, k=3)
+
+                spline = interpolate.BSpline(t, c, k, extrapolate=False)
+
+                splined_amps = spline(np.linspace(0, len(ch_current), cohort_bounds[offset_index][1]))
+
+                if offset_index in line_removal_index:
+                
+                    splined_amps = splined_amps[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
+                    
+                avg_intensities = splined_amps.copy()
+                
+                if i==alignment_channel:
+
+                    max_cohort_indices.append(np.nanargmax(splined_amps))
+
+                if offset_index != 0:
+
+                    labels = [None]*average_cohort_class.shape[0]
+
+                if i in line_cutoff_index:
+
+                    for regions in line_cutoff_regions[i]:
+
+                        splined_amps[regions[0]:regions[1]] = np.NaN
+
+                if i in horizontal_shift_index:
+
+                    x_axis = horizontal_shift[i]+np.linspace(0+offsets[offset_index],cohort_bounds[offset_index][1]+offsets[offset_index],cohort_bounds[offset_index][1])
+
+                else:
+
+                    x_axis = np.linspace(0+offsets[offset_index],cohort_bounds[offset_index][1]+offsets[offset_index],cohort_bounds[offset_index][1])
+                    
+                if offset_index in line_removal_index:
+                
+                    x_axis = x_axis[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
+                
+                if norm_intensity:
+                    norm_factor = 1/np.nanmax(splined_amps)
+                else:
+                    norm_factor = 1
+                axes[0].plot(x_axis, 
+                         norm_factor*splined_amps,
+                         colors[i], 
+                         label=labels[i])
+
+                ch_current = std_cohort_class[i,:]
+
+                t, c, k = interpolate.splrep(np.arange(len(ch_current)), ch_current, k=3)
+
+                spline = interpolate.BSpline(t, c, k, extrapolate=False)
+
+                splined_amps = spline(np.linspace(0, len(ch_current), cohort_bounds[offset_index][1]))
+                
+                if offset_index in line_removal_index:
+                
+                    splined_amps = splined_amps[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
+                    
+                if i in line_cutoff_index:
+
+                    for regions in line_cutoff_regions[i]:
+
+                        splined_amps[regions[0]:regions[1]] = np.NaN
+                        avg_intensities[regions[0]:regions[1]] = np.NaN
+
+                axes[0].fill_between(x_axis, 
+                                 norm_factor*avg_intensities-norm_factor*splined_amps, 
+                                 norm_factor*avg_intensities+norm_factor*splined_amps, 
+                                 color=colors[i], 
+                                 alpha=0.2)       
+
+
+
+            for i in indices_second_axis:
+
+                ch_current = average_cohort_class[i,:]
+
+                t, c, k = interpolate.splrep(np.arange(len(ch_current)), ch_current, k=3)
+
+                spline = interpolate.BSpline(t, c, k, extrapolate=False)
+
+                splined_amps = spline(np.linspace(0, len(ch_current), cohort_bounds[offset_index][1]))
+
+                if offset_index in line_removal_index:
+                
+                    splined_amps = splined_amps[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
+                    
+                avg_intensities = splined_amps.copy()
+
+                if offset_index != 0:
+
+                    labels = [None]*average_cohort_class.shape[0]
+
+                if i in line_cutoff_index:
+
+                    for regions in line_cutoff_regions[i]:
+
+                        splined_amps[regions[0]:regions[1]] = np.NaN
+
+                if i in horizontal_shift_index:
+
+                    x_axis = horizontal_shift[i]+np.linspace(0+offsets[offset_index],cohort_bounds[offset_index][1]+offsets[offset_index],cohort_bounds[offset_index][1])
+
+                else:
+
+                    x_axis = np.linspace(0+offsets[offset_index],cohort_bounds[offset_index][1]+offsets[offset_index],cohort_bounds[offset_index][1])
+                
+                if offset_index in line_removal_index:
+                
+                    x_axis = x_axis[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
+                
+                
+                axes[1].plot(x_axis, 
+                         splined_amps,
+                         colors[i], 
+                         label=labels[i],
+                         linestyle='--')
+
+                ch_current = std_cohort_class[i,:]
+
+                t, c, k = interpolate.splrep(np.arange(len(ch_current)), ch_current, k=3)
+
+                spline = interpolate.BSpline(t, c, k, extrapolate=False)
+
+                splined_amps = spline(np.linspace(0, len(ch_current), cohort_bounds[offset_index][1]))
+
+                if offset_index in line_removal_index:
+                
+                    splined_amps = splined_amps[line_kept_regions[offset_index][0]:line_kept_regions[offset_index][1]]
+                    
+                
+                if i in line_cutoff_index:
+
+                    for regions in line_cutoff_regions[i]:
+
+                        splined_amps[regions[0]:regions[1]] = np.NaN
+                        avg_intensities[regions[0]:regions[1]] = np.NaN
+
+                axes[1].fill_between(x_axis, 
+                                 avg_intensities-splined_amps, 
+                                 avg_intensities+splined_amps, 
+                                 color=colors[i], 
+                                 alpha=0.2) 
+            
+    return offsets, num_in_cohort, max_cohort_indices
+
+
+def plot_cohorts_centered_on_aligned_channel(axes, 
+                                             vectors, 
+                                             alignment_channel, 
+                                             cohort_bounds, 
+                                             indices_first_axis, 
+                                             indices_second_axis, 
+                                             labels,
+                                             colors,
+                                             line_cutoff_index=[],
+                                             line_cutoff_regions=[],
+                                             horizontal_shift_index=[],
+                                             horizontal_shift=[]):
+
+    
+    num_ticks = 0
+    x_labels = []
+    for cohort in cohort_bounds:
+
+        x_labels+=list(range(0,cohort[1]-10+1,10))
+
+        num_ticks += int(cohort[1]/10)+1
+
+    offsets = []
+    
+    cohort_samples = cohort_bounds.copy()
+    
+    cohort_samples[-1] = [cohort_samples[-1][0], cohort_samples[-1][1]+1]
+    
+    for i in range(len(cohort_samples)):
+        
+        if i==0:
+            offsets.append(0)
+        else:
+            offsets.append(cohort_samples[i][0])
+
+        if i > 0:
+
+            offsets[i]+=offsets[i-1]
+            
+            
+    num_stds = 0.25
+    num_in_cohort = []
+    
+    amplitudes = np.array(vectors, dtype='object')[:,indices_first_axis]
+
+
+
+    for offset_index, cohort in enumerate(cohort_samples):
+
+        class_intensities = []
+
+        cohort_temp_class = []
+
+        for i in range(len(amplitudes)):
+
+            lifetime = len(amplitudes[i][0])
+
+            if lifetime >= cohort[0] and lifetime < cohort[1]:
+
+                cohort_temp_class.append(vectors[i])
+
+        num_in_cohort.append(len(cohort_temp_class))
+        frames_before_alignment = []
+        frames_after_alignment = []
+
+        for track_index in range(len(cohort_temp_class)):
+
+            frames_before_alignment.append(np.argmax(cohort_temp_class[track_index][alignment_channel]))
+            frames_after_alignment.append(len(cohort_temp_class[track_index][alignment_channel]) - np.argmax(cohort_temp_class[track_index][alignment_channel]) - 1)
+
+        padding_amount = np.max([np.max(frames_before_alignment), np.max(frames_after_alignment)])
+
+        cohort_temp_class = alignment.return_shifted_amplitudes(cohort_temp_class, 
+                                                                frames_before_alignment, 
+                                                                frames_after_alignment, 
+                                                                padding_amount, 
+                                                                True)
+
+        average_cohort_class = np.nan_to_num(np.nanmean(cohort_temp_class,axis=0,dtype=np.float64)) # calculate average and std of intensity in class cohort
+        std_cohort_class = num_stds*np.nan_to_num(np.nanstd(cohort_temp_class,axis=0,dtype=np.float64))
+        
+        ch_align = average_cohort_class[alignment_channel, :]
+        
+        t, c, k = interpolate.splrep(np.arange(len(ch_align)), ch_align, k=3)
+
+        spline = interpolate.BSpline(t, c, k, extrapolate=False)
+
+        splined_amps = spline(np.linspace(0, len(ch_align), cohort_bounds[offset_index][1])) 
+        
+        horizontal_alignment = np.nanargmax(splined_amps)
+        
+        for i in indices_first_axis:
+            
+            ch_current = average_cohort_class[i,:]
+            
+            t, c, k = interpolate.splrep(np.arange(len(ch_current)), ch_current, k=3)
+            
+            spline = interpolate.BSpline(t, c, k, extrapolate=False)
+            
+            splined_amps = spline(np.linspace(0, len(ch_current), cohort_bounds[offset_index][1]))
+            
+            avg_intensities = splined_amps.copy()
+
+            if offset_index != 0:
+                
+                labels = [None]*average_cohort_class.shape[0]
+            
+            if i in line_cutoff_index:
+                
+                for regions in line_cutoff_regions[i]:
+                    
+                    splined_amps[regions[0]:regions[1]] = np.NaN
+            
+             
+            x_axis = -horizontal_alignment + np.linspace(0,cohort_bounds[offset_index][1],cohort_bounds[offset_index][1])
+                
+            axes[0].plot(x_axis, 
+                     splined_amps,
+                     colors[i], 
+                     label=labels[i])
+
+            ch_current = std_cohort_class[i,:]
+            
+            t, c, k = interpolate.splrep(np.arange(len(ch_current)), ch_current, k=3)
+            
+            spline = interpolate.BSpline(t, c, k, extrapolate=False)
+            
+            splined_amps = spline(np.linspace(0, len(ch_current), cohort_bounds[offset_index][1]))
+            
+            if i in line_cutoff_index:
+                
+                for regions in line_cutoff_regions[i]:
+                    
+                    splined_amps[regions[0]:regions[1]] = np.NaN
+                    avg_intensities[regions[0]:regions[1]] = np.NaN
+                    
+            axes[0].fill_between(x_axis, 
+                             avg_intensities-splined_amps, 
+                             avg_intensities+splined_amps, 
+                             color=colors[i], 
+                             alpha=0.2)  
