@@ -42,6 +42,164 @@ import seaborn as sns
 import alignment
 
 
+def display_experiment_variability(path_outputs):
+    
+    analysis_meta = np.load(path_outputs+'/dataframes/analysis_metadata.npy', allow_pickle=True)
+
+    df_merged_features = pd.read_csv(path_outputs+'/dataframes/df_merged_features.zip')
+    feature_units = analysis_meta.item().get('feature_units')
+    
+    num_columns = 5
+    num_rows = np.ceil(len(feature_units)/num_columns)
+
+    plt.style.use('default')
+
+    plot_position = 1 
+    print('raw data features of all merged valid tracks')
+
+    f = plt.figure(dpi=500, figsize=(30,30))
+
+    for i in range(len(feature_units)): # plot log-scale histogram of all features
+
+        ax = f.add_subplot(num_rows, num_columns, plot_position)
+
+        plot_position+=1
+
+        ax.hist(df_merged_features.values[:,i], bins='doane', log=True)
+
+        ax.set_xlabel(df_merged_features.columns[i]+' ('+feature_units[i]+')',fontsize=5)
+        ax.set_ylabel('counts',fontsize=5)
+        ax.tick_params(axis='both', which='major', labelsize=3)
+        ax.tick_params(axis='both', which='minor', labelsize=3)
+
+    f.suptitle('individual track features pooled from all experimenets')
+    f.savefig(path_outputs+'/plots/all_features_merged_tracks_histograms.png', bbox_inches='tight')
+    plt.show()
+    
+    print('\n\n\n\n\n')
+    print('overlay of features separated by imaging experiment')
+    
+    plt.style.use('default')
+    colors = ['blue', 'orange', 'green', 'red', 'purple', 'brown', 'magenta', 'grey']
+    plot_position = 1 
+    f = plt.figure(dpi=500, figsize=(30,30))
+
+    for i in range(len(feature_units)):
+
+        ax = f.add_subplot(num_rows, num_columns, plot_position)
+        plot_position+=1
+
+        min_vals = []
+        max_vals = []
+
+        for exp_number in range(0,len(set(df_merged_features['experiment_number']))):
+
+            features_in_experiment = df_merged_features.loc[df_merged_features['experiment_number'] == exp_number, df_merged_features.columns[i]]
+
+            min_vals.append(np.min(features_in_experiment))
+            max_vals.append(np.max(features_in_experiment))
+
+            ax.hist(features_in_experiment, bins='auto', density=True, histtype='step', cumulative=True, color=colors[exp_number])
+
+        ax.set_xlim([np.max(min_vals),np.min(max_vals)])
+        ax.set_xlabel(df_merged_features.columns[i]+' ('+feature_units[i]+')',fontsize=5)
+        ax.set_ylabel('cumulative frequency',fontsize=5)
+
+        ax.tick_params(axis='both', which='major', labelsize=3)
+        ax.tick_params(axis='both', which='minor', labelsize=3)
+
+        plt.grid()
+
+    f.suptitle('track features, comparing imaging experimenets')
+    f.savefig(path_outputs+'/plots/all_features_cdf_split_by_experiments.png', bbox_inches='tight')
+    plt.show()
+    
+    print('\n\n\n\n\n')
+    print('overlay of features separated by date')
+    
+    plt.style.use('default')
+
+    plot_position = 1 
+
+    f = plt.figure(dpi=500, figsize=(30,30))
+
+    for i in range(len(feature_units)):
+
+        ax = f.add_subplot(num_rows, num_columns, plot_position)
+        plot_position+=1
+
+        min_vals = []
+        max_vals = []
+
+        for date in list(set(df_merged_features['date'])):
+
+            features_in_experiment = df_merged_features.loc[df_merged_features['date'] == date, df_merged_features.columns[i]]
+
+            min_vals.append(np.min(features_in_experiment))
+            max_vals.append(np.max(features_in_experiment))
+
+            ax.hist(features_in_experiment, bins='auto', density=True, histtype='step', cumulative=True)
+
+        ax.set_xlim([np.max(min_vals),np.min(max_vals)])
+        ax.set_xlabel(df_merged_features.columns[i]+' ('+feature_units[i]+')',fontsize=5)
+        ax.set_ylabel('counts',fontsize=5)
+
+        ax.tick_params(axis='both', which='major', labelsize=3)
+        ax.tick_params(axis='both', which='minor', labelsize=3)
+
+        plt.grid()
+
+    f.suptitle('track features, comparing imaging dates')
+    f.savefig(path_outputs+'/plots/all_features_cdf_split_by_dates.png', bbox_inches='tight')
+    plt.show()
+    
+    print('\n\n\n\n\n')
+    print('overlay of features separated by cmeAnalysis DNM2 selection')
+
+    plt.style.use('default')
+
+    plot_position = 1 
+
+    f = plt.figure(dpi=500, figsize=(30,30))
+
+    for i in range(len(feature_units)):
+
+        ax = f.add_subplot(num_rows, num_columns, plot_position)
+        plot_position+=1
+
+        min_vals = []
+        max_vals = []
+
+        for prediction in list(set(df_merged_features['cmeAnalysis_dynamin2_prediction'])):
+
+            features_in_experiment = df_merged_features.loc[df_merged_features['cmeAnalysis_dynamin2_prediction'] == prediction, df_merged_features.columns[i]]
+
+            min_vals.append(np.min(features_in_experiment))
+            max_vals.append(np.max(features_in_experiment))
+
+            if prediction==1.0:
+
+                label = 'DNM2-positive'
+
+            else:
+
+                label = 'DNM2-negative'
+
+            ax.hist(features_in_experiment, bins='auto', density=True, histtype='step', cumulative=True, label=label)
+
+        ax.set_xlim([np.max(min_vals),np.min(max_vals)])
+        ax.set_xlabel(df_merged_features.columns[i]+' ('+feature_units[i]+')',fontsize=5)
+        ax.set_ylabel('cumulative frequency',fontsize=5)
+        ax.legend()
+        ax.tick_params(axis='both', which='major', labelsize=3)
+        ax.tick_params(axis='both', which='minor', labelsize=3)
+
+        plt.grid()
+
+    f.suptitle('track features, comparing imaging experimenets')
+    f.savefig(path_outputs+'/plots/all_features_cdf_split_by_cmeAnalysis_prediction.png', bbox_inches='tight')
+    plt.show()
+
 def upload_tracks_and_metadata(path_to_tracks,
                                track_categories,
                                identifier_string,
@@ -81,7 +239,7 @@ def upload_tracks_and_metadata(path_to_tracks,
     experiment = []
     condition = []
     experiment_number = []
-    framerate = []
+    framerates = []
     
     for exp_number, exp in enumerate(all_track_paths):
         
@@ -101,7 +259,7 @@ def upload_tracks_and_metadata(path_to_tracks,
         experiment += [metadata[3]]*num_tracks
         condition += [metadata[4]]*num_tracks
         experiment_number += [exp_number+experiment_number_adjustment]*num_tracks
-        framerate += [metadata[6]]
+        framerates += [metadata[6]]*num_tracks
         
     print('\nfinished uploading tracks\n')
     merged_all_tracks = merge_tools.merge_experiments(tracks,[list(range(len(track_set))) for track_set in tracks])
@@ -124,24 +282,36 @@ def upload_tracks_and_metadata(path_to_tracks,
     print('completed feature extraction\n')
     # merge features with labels (experiment number, date, and number of channels)
     extracted_features = np.array(extracted_features)
-
     merged_features = np.concatenate((extracted_features,
-                                      np.array(experiment_number).reshape(extracted_features.shape[0],-1)), axis=-1)
+                                      np.array(significant_dynamin2_cmeAnalysis_prediction).reshape(extracted_features.shape[0],-1)), axis=-1)
+    merged_features = np.concatenate((merged_features,
+                                      np.array(experiment_number).reshape(merged_features.shape[0],-1)), axis=-1)
     merged_features = np.concatenate((merged_features,
                                       np.array(number_of_tags).reshape(merged_features.shape[0],-1)), axis=-1)
     merged_features = np.concatenate((merged_features,
-                                      np.array(dates).reshape(merged_features.shape[0],-1)), axis=-1)
+                                      np.array(cell_line_tags).reshape(merged_features.shape[0],-1)), axis=-1)
+    merged_features = np.concatenate((merged_features,
+                                      np.array(current_tracked_channels).reshape(merged_features.shape[0],-1)), axis=-1)
+    merged_features = np.concatenate((merged_features,
+                                      np.array(experiment).reshape(merged_features.shape[0],-1)), axis=-1)
     merged_features = np.concatenate((merged_features,
                                       np.array(condition).reshape(merged_features.shape[0],-1)), axis=-1)
     merged_features = np.concatenate((merged_features,
-                                      np.array(significant_dynamin2_cmeAnalysis_prediction).reshape(merged_features.shape[0],-1)), axis=-1)
+                                      np.array(framerates).reshape(merged_features.shape[0],-1)), axis=-1)
+    merged_features = np.concatenate((merged_features,
+                                      np.array(dates).reshape(merged_features.shape[0],-1)), axis=-1)
+    
     print('creating dataframe...\n')
 
-    df = pd.DataFrame(data=merged_features, columns=labels+['experiment_number',
-                                                            'number_of_channels', 
-                                                            'date', 
+    df = pd.DataFrame(data=merged_features, columns=labels+['cmeAnalysis_dynamin2_prediction',
+                                                            'experiment_number',
+                                                            'number_of_tags', 
+                                                            'cell_line_tags',
+                                                            'current_tracked_channels',
+                                                            'experiment_type', 
                                                             'cell_condition', 
-                                                            'cmeAnalysis_dynamin2_prediction'])
+                                                            'framerate',
+                                                            'date'])
     
     return df, merged_all_tracks
 
