@@ -25,6 +25,11 @@ import feature_extraction_with_buffer
 import merge_tools
 import pandas as pd
 import numpy as np
+import matplotlib as mpl
+
+import sklearn.preprocessing as preprocessing
+from sklearn.decomposition import PCA
+from sklearn.mixture import GaussianMixture as GMM
 import scipy.io as sio
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
@@ -40,6 +45,181 @@ import random
 import scipy.interpolate as interpolate
 import seaborn as sns
 import alignment
+
+def cluster_tracks(path_outputs):
+    
+    analysis_meta = np.load(path_outputs+'/dataframes/analysis_metadata.npy', allow_pickle=True)
+    df_merged_features = pd.read_csv(path_outputs+'/dataframes/df_merged_features.zip')
+    feature_units = analysis_meta.item().get('feature_units')
+    
+    X_all_valid_track_features = df_merged_features.values[:,:len(feature_units)]
+    print('scaling data...\n')
+    normal_scaler = preprocessing.QuantileTransformer(output_distribution='normal', random_state=817)
+    normal_scaled_data = normal_scaler.fit_transform(X_all_valid_track_features)
+
+    pc_model = PCA(n_components=2, random_state=817)
+    reduced_data = pc_model.fit_transform(normal_scaled_data)
+    print('projecting data...\n')
+    gmm = GMM(n_components=5, random_state=817)
+    print('clustering data...\n')
+    gmm_prediction = gmm.fit_predict(reduced_data)
+    df_merged_features['PC-0'] = reduced_data[:,0]
+    df_merged_features['PC-1'] = reduced_data[:,1]
+    df_merged_features['gmm_predictions'] = gmm_prediction
+    
+    
+    plt.style.use('default')
+    fig, ax = plt.subplots(1,1, constrained_layout=True, figsize=(5,5), dpi=500)
+    sc = ax.hist2d(df_merged_features['PC-0'],
+                df_merged_features['PC-1'], 
+                bins=100,
+                 norm=mpl.colors.LogNorm(),
+                 alpha=1,
+                 density=True,
+                 cmap='jet')
+    cba = fig.colorbar(sc[3], ax=ax, location='bottom')
+    cba.set_label('event density', rotation=0)
+
+
+    ax.set_xlabel('PC-0')
+    ax.set_ylabel('PC-1')
+
+    ax.set_ylim([-7, 11])
+    ax.set_xlim([-9, 13])
+    ax.set_xticks([-5, 0, 5, 10])
+    ax.set_xticklabels([-5, 0, 5, 10])
+    ax.set_yticks([-5, 0, 5, 10])
+    ax.set_yticklabels([-5, 0, 5, 10])
+
+    for i, cluster in enumerate(gmm.means_):
+        ax.plot(cluster[0], cluster[1], marker='X', markersize=10, color='black')
+        ax.text(cluster[0]+0.8, 
+                cluster[1], 
+                'cluster ' + str(i), 
+                color='black', 
+                fontsize=14,
+                bbox=dict(boxstyle="square",
+                          color='red',
+                          ec=(0.5, 0.5, 1),
+                          fc=(0.8, 0.8, 1),
+                           ))
+
+    ax.set_title('principal components of valid tracks\nmapped to feature-space')
+    plt.savefig(path_outputs+'/plots/first_two_principal_components.png', bbox_inches='tight')
+    plt.show()
+    
+    plt.style.use('default')
+    plt.figure(dpi=500, figsize=(5,5))
+    for i, cluster in enumerate(gmm.means_):
+        plt.plot(cluster[0], cluster[1], marker='X', markersize=10)
+        plt.text(cluster[0]+0.5, cluster[1], 'cluster ' + str(i), color='black', fontsize=10)
+    plt.scatter(df_merged_features['PC-0'],
+                df_merged_features['PC-1'], 
+                alpha=0.1, 
+                s=0.5, 
+                c='blue')
+    plt.xlabel('PC-0')
+    plt.ylabel('PC-1')
+
+    plt.ylim([-7, 11])
+    plt.xlim([-9, 13])
+    plt.xticks([-5, 0, 5, 10], labels=[-5, 0, 5, 10])
+    plt.yticks([-5, 0, 5, 10], labels=[-5, 0, 5, 10])
+    plt.title('principal components of valid tracks\nmapped to feature-space')
+    plt.tight_layout()
+    plt.savefig(path_outputs+'/plots/compenents_overlaid_clusters.png', bbox_inches='tight')
+    plt.show()
+    
+    plt.style.use('default')
+
+    cmeDNM2Predictions = df_merged_features['cmeAnalysis_dynamin2_prediction'].values
+
+    indices_dnm2_positive = []
+    indices_dnm2_negative = []
+
+    for i in range(len(cmeDNM2Predictions)):
+
+        if cmeDNM2Predictions[i]==1:
+
+            indices_dnm2_positive.append(i)
+
+        else:
+
+            indices_dnm2_negative.append(i)
+
+    plt.figure(dpi=500, figsize=(5,5))
+
+    plt.scatter(df_merged_features['PC-0'].values[indices_dnm2_negative],
+                df_merged_features['PC-1'].values[indices_dnm2_negative], 
+                alpha=0.5, 
+                s=0.5, 
+                c='purple')
+
+    plt.scatter(df_merged_features['PC-0'].values[indices_dnm2_positive],
+                df_merged_features['PC-1'].values[indices_dnm2_positive], 
+                alpha=0.5, 
+                s=1, 
+                c='yellow')
+
+    plt.xlabel('PC-0')
+    plt.ylabel('PC-1')
+    plt.title('PCs overlaid with cmeAnalysis DNM2 predictions'+
+              '\nyellow: positive, purple: negative'+
+              '\npercentage DNM2 positive: ' + str(100*np.around(len(indices_dnm2_positive)/len(cmeDNM2Predictions),4))+
+              '%\ntotal number of valid tracks: ' + "{:,}".format(len(cmeDNM2Predictions))
+    )
+
+    plt.ylim([-7, 11])
+    plt.xlim([-9, 13])
+    plt.xticks([-5, 0, 5, 10], labels=[-5, 0, 5, 10])
+    plt.yticks([-5, 0, 5, 10], labels=[-5, 0, 5, 10])
+    plt.savefig(path_outputs+'/plots/PC_overlay_with_cmeAnalysis_DNM2_predictions.png', bbox_inches='tight')
+    plt.show()
+    
+    num_columns = 5
+    num_rows = np.ceil(len(feature_units)/num_columns)
+
+    plt.style.use('default')
+
+    plot_position = 1 
+    f = plt.figure(dpi=500, figsize=(30,30))
+
+    for i in range(len(feature_units)): # plot log-scale histogram of all features
+
+        ax = f.add_subplot(num_rows, num_columns, plot_position)
+
+        plot_position+=1
+
+
+        sc = ax.scatter(df_merged_features['PC-0'],
+                        df_merged_features['PC-1'], 
+                        alpha=0.5, 
+                        s=1, 
+                        c=df_merged_features.values[:,i],
+                        cmap='jet')
+
+        cba = f.colorbar(sc, ax=ax)
+        cba.set_label('feature value', rotation=270, labelpad=25)
+
+        ax.set_title('colored by: ' + df_merged_features.columns.values[i] + ' (' + str(feature_units[i]) + ')')
+        plt.xlabel('PC-0')
+        plt.ylabel('PC-1')
+
+    plt.tight_layout()
+    f.savefig(path_outputs+'/plots/all_features_overlaid_pc_individual.png', bbox_inches='tight')
+    plt.show()
+    
+    print('saving dataframe...\n')
+    # save the dataframe for subsequent notebooks
+    compression_opts = dict(method='zip',
+                            archive_name=path_outputs+'/dataframes/df_merged_features.csv')  
+
+    df_merged_features.to_csv(path_outputs+'/dataframes/df_merged_features.zip', index=False,
+                                                              compression=compression_opts) 
+    
+    print('done\n')
+    
+    return df_merged_features
 
 
 def display_experiment_variability(path_outputs):
@@ -200,7 +380,7 @@ def display_experiment_variability(path_outputs):
     f.savefig(path_outputs+'/plots/all_features_cdf_split_by_cmeAnalysis_prediction.png', bbox_inches='tight')
     plt.show()
 
-def upload_tracks_and_metadata(path_to_tracks,
+def upload_tracks_and_metadata(analysis_metadata,
                                track_categories,
                                identifier_string,
                                features,
@@ -211,7 +391,7 @@ def upload_tracks_and_metadata(path_to_tracks,
     as well as accompanying experimental metadata.
     
     Args:
-        path_to_tracks (string): path to the folder containing the enclosed tracking files
+        analysis_metadata (dictionary): contains path to the folder containing the enclosed tracking files and output files
         track_categories (list): a list of integers for the cmeAnalysis track categories to keep for further analysis
         identifier_string (string): a label within all tracking head folders that uniquely identify relevant content
         features (list): a list with string elements containing the features to be extracted from each track
@@ -224,7 +404,7 @@ def upload_tracks_and_metadata(path_to_tracks,
         df (dataframe): a dataframe of features and metadata
         merged_all_tracks (ndarray): 
     """
-    all_track_paths = os.listdir(path_to_tracks)
+    all_track_paths = os.listdir(analysis_metadata['path_tracks'])
     all_track_paths = [exp for exp in all_track_paths if identifier_string in exp]
     all_track_paths.sort()
     print('\nfolders to mine:')
@@ -243,7 +423,7 @@ def upload_tracks_and_metadata(path_to_tracks,
     
     for exp_number, exp in enumerate(all_track_paths):
         
-        current_tracks = load_tracks(path_to_tracks + '/' + exp + '/Ch1/Tracking/ProcessedTracks.mat')
+        current_tracks = load_tracks(analysis_metadata['path_tracks'] + '/' + exp + '/Ch1/Tracking/ProcessedTracks.mat')
         current_tracks = remove_tracks_by_criteria(current_tracks, track_category=track_categories)
         tracks.append(current_tracks)
         
@@ -303,7 +483,7 @@ def upload_tracks_and_metadata(path_to_tracks,
     
     print('creating dataframe...\n')
 
-    df = pd.DataFrame(data=merged_features, columns=labels+['cmeAnalysis_dynamin2_prediction',
+    df_merged_features = pd.DataFrame(data=merged_features, columns=labels+['cmeAnalysis_dynamin2_prediction',
                                                             'experiment_number',
                                                             'number_of_tags', 
                                                             'cell_line_tags',
@@ -316,9 +496,9 @@ def upload_tracks_and_metadata(path_to_tracks,
     print('saving dataframe...\n')
     # save the dataframe for subsequent notebooks
     compression_opts = dict(method='zip',
-                            archive_name=unique_user_saved_outputs+'/dataframes/df_merged_features.csv')  
+                            archive_name=analysis_metadata['path_outputs']+'/dataframes/df_merged_features.csv')  
 
-    df_merged_features.to_csv(unique_user_saved_outputs+'/dataframes/df_merged_features.zip', index=False,
+    df_merged_features.to_csv(analysis_metadata['path_outputs']+'/dataframes/df_merged_features.zip', index=False,
                                                               compression=compression_opts) 
 
     
@@ -330,15 +510,15 @@ def upload_tracks_and_metadata(path_to_tracks,
     
     print('saving tracks...\n')
     # split tracks
-    split_valid_tracks = np.array_split(np.array(list(merged_all_valid_tracks)),number_of_track_splits)
+    split_valid_tracks = np.array_split(np.array(list(merged_all_tracks)),number_of_track_splits)
     # save each track array chunk
     for i in range(len(split_valid_tracks)):
 
-        np.save(unique_user_saved_outputs+"/dataframes/merged_all_valid_tracks_"+str(i), np.array(split_valid_tracks[i]))
+        np.save(analysis_metadata['path_outputs']+"/dataframes/merged_all_valid_tracks_"+str(i), np.array(split_valid_tracks[i]))
         
     print('done')
     
-    return df, merged_all_tracks
+    return df_merged_features, merged_all_tracks
 
 
 def fit_cohorts(tracks, 
