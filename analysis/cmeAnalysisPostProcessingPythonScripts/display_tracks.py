@@ -46,11 +46,12 @@ import scipy.interpolate as interpolate
 import seaborn as sns
 import alignment
 
-def cluster_tracks(path_outputs):
+def cluster_tracks(path_outputs,
+                   number_of_clusters=5):
     
-    analysis_meta = np.load(path_outputs+'/dataframes/analysis_metadata.npy', allow_pickle=True)
+    analysis_metadata = np.load(path_outputs+'/dataframes/analysis_metadata.npy', allow_pickle=True)
     df_merged_features = pd.read_csv(path_outputs+'/dataframes/df_merged_features.zip')
-    feature_units = analysis_meta.item().get('feature_units')
+    feature_units = analysis_metadata.item().get('feature_units')
     
     X_all_valid_track_features = df_merged_features.values[:,:len(feature_units)]
     print('scaling data...\n')
@@ -60,12 +61,29 @@ def cluster_tracks(path_outputs):
     pc_model = PCA(n_components=2, random_state=817)
     reduced_data = pc_model.fit_transform(normal_scaled_data)
     print('projecting data...\n')
-    gmm = GMM(n_components=5, random_state=817)
+    gmm = GMM(n_components=number_of_clusters, random_state=817)
     print('clustering data...\n')
     gmm_prediction = gmm.fit_predict(reduced_data)
     df_merged_features['PC-0'] = reduced_data[:,0]
     df_merged_features['PC-1'] = reduced_data[:,1]
     df_merged_features['gmm_predictions'] = gmm_prediction
+    
+    
+    
+    mean_dnm2_cluster = []
+
+    for i in range(number_of_clusters):
+
+        max_dnm2_clusters = df_merged_features['max_int_dnm2'][np.where(gmm_prediction==i)[0]]
+
+        mean_dnm2_cluster.append(np.mean(max_dnm2_clusters))
+
+    cluster_max_dnm2 = np.argmax(mean_dnm2_cluster)
+    
+    print('cluster with highest DNM2 signal:', cluster_max_dnm2)
+    analysis_metadata.item()['index_DNM2positive'] = cluster_max_dnm2
+    analysis_metadata.item()['number_of_clusters'] = number_of_clusters
+    np.save(analysis_metadata.item().get('path_outputs')+'/dataframes/analysis_metadata', analysis_metadata)
     
     
     plt.style.use('default')
