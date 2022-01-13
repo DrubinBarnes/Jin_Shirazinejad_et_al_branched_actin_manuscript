@@ -408,7 +408,8 @@ def upload_tracks_and_metadata(analysis_metadata,
     all_track_paths = [exp for exp in all_track_paths if identifier_string in exp]
     all_track_paths.sort()
     print('\nfolders to mine:')
-    print(all_track_paths)
+    for exp_name in all_track_paths:    
+        print(exp_name)
     print('\n')
     
     tracks = []
