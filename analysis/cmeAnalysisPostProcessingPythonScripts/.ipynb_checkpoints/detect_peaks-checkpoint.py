@@ -6,6 +6,90 @@ from scipy import signal
 from scipy import stats
 from statsmodels.stats.diagnostic import anderson_statistic
 
+def find_single_peaks_using_existing_model(path_outputs,
+                                           dataframe_name,
+                                           track_name):
+    
+    analysis_metadata = np.load(path_outputs+'/dataframes/analysis_metadata.npy', allow_pickle=True)    
+
+    df_merged_features = pd.read_csv(path_outputs+'/dataframes/'+dataframe_name+'.zip')
+    df = df_merged_features
+    index_DNM2positive = analysis_metadata.item().get('index_DNM2positive')
+    number_of_track_splits = analysis_metadata.item().get('number_of_track_splits')
+    number_of_clusters = analysis_metadata.item().get('number_of_clusters')
+
+    merged_all_valid_tracks = np.load(path_outputs+
+                                      '/dataframes/'+track_name+'_'+str(0)+'.npy', allow_pickle=True)
+
+    for i in range(1,number_of_track_splits):
+
+        merged_all_valid_tracks = np.concatenate((merged_all_valid_tracks,
+                                                 np.load(path_outputs+
+                                                         '/dataframes/'+track_name+'_'+
+                                                         str(i)+'.npy', 
+                                                 allow_pickle=True)))
+        
+    gmm_class_indices = []
+
+    for i in range(number_of_clusters):
+
+        gmm_class_indices.append(df[df['gmm_predictions']==i].index.values)    
+
+    print('done')
+    
+    # keep candidate ccp class mixed with hot-spots
+    tracks_dnm2_positive = merged_all_valid_tracks[gmm_class_indices[index_DNM2positive]]
+
+    all_dnm2_signal = []
+
+    for i in range(len(tracks_dnm2_positive)): # stack all DNM2 intensities
+
+        raw_dnm2_intensity = list(return_track_attributes.
+                                  return_track_amplitude_no_buffer_channel
+                                  (tracks_dnm2_positive,i,1))
+
+        all_dnm2_signal += raw_dnm2_intensity    
+        
+        
+    dt = 1 # sampling interval
+
+    FFT = rfft(all_dnm2_signal) # real FFT of DNM2 signals
+
+    # Getting the related frequencies
+    freqs = rfftfreq(len(all_dnm2_signal), dt)
+    
+    sos = signal.butter(4, 0.2, 'lp', fs=1, output='sos') # low-pass 4-th order Butterworth filter
+
+    filtered_amplitudes = [] # filtered DNM2 traces per track of interest
+
+    for i in range(len(tracks_dnm2_positive)):
+
+        raw_intensity = return_track_attributes.return_track_amplitude_no_buffer_channel(tracks_dnm2_positive,i,1)
+
+        # add zeros to end to account for phase shift of near-track-end peaks
+        filtered_amplitudes.append(list(list(signal.sosfilt(sos, raw_intensity)) + [0, 0, 0, 0, 0])) 
+
+    current_param_outputs = [] # one-hot encoding of indices of tracks with a single peak (0: multiple peaks)
+
+
+    for i in range(len(filtered_amplitudes)): # iterate through all filtered amplitudes
+
+        pvals_dnm2 = return_track_attributes.return_pvals_detection_no_buffer(dnm2_positive_events, i, 1)
+
+        # measure whether there is 1 peak with the specified peak-finding parameters
+        if len(signal.find_peaks(filtered_amplitudes[i], 
+                                 distance=best_fit_peak_params[0], 
+                                 height=best_fit_peak_params[1],
+                                 width=best_fit_peak_params[2])[0])==1 and len(np.where(np.array(pvals_dnm2)<0.01)[0])>0:
+
+            current_param_outputs.append(1)
+
+        else:
+
+            current_param_outputs.append(0)
+            
+            
+    
 def identify_single_peaked_dnm2_events(path_outputs):
     
     analysis_metadata = np.load(path_outputs+'/dataframes/analysis_metadata.npy', allow_pickle=True)
@@ -144,7 +228,7 @@ def identify_single_peaked_dnm2_events(path_outputs):
                                                               compression=compression_opts) 
     
     print('done\n')
-    np.save(analysis_metadata.item().get('path_outputs')+'/dataframes/analysis_metadata', analysis_metadata)
+    np.save(analysis_metasdata.item().get('path_outputs')+'/dataframes/analysis_metadata', analysis_metadata)
     
     return distance_best_fit, height_best_fit, width_best_fit, peak_predictions_best_model
 

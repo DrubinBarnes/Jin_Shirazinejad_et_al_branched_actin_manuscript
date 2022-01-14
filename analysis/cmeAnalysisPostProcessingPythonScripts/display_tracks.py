@@ -26,7 +26,7 @@ import merge_tools
 import pandas as pd
 import numpy as np
 import matplotlib as mpl
-
+import pickle
 import sklearn.preprocessing as preprocessing
 from sklearn.decomposition import PCA
 from sklearn.mixture import GaussianMixture as GMM
@@ -46,10 +46,52 @@ import scipy.interpolate as interpolate
 import seaborn as sns
 import alignment
 
+
+
+def cluster_with_existing_model(path_outputs,
+                                dataframe_name):
+    
+    analysis_metadata = np.load(path_outputs+'/dataframes/analysis_metadata.npy', allow_pickle=True)
+    
+    feature_units = analysis_metadata.item().get('feature_units')
+    
+    df_merged_features = pd.read_csv(path_outputs+'/dataframes/'+dataframe_name+'.zip')
+
+    with open(path_outputs+'/dataframes/normal_scaler_model', 'rb') as f:
+        scaler = pickle.load(f)      
+    
+    with open(path_outputs+'/dataframes/pca_model_fit', 'rb') as f:
+        pca_model = pickle.load(f)              
+    
+    with open(path_outputs+'/dataframes/gmm_trained', 'rb') as f:
+        gmm_model = pickle.load(f)   
+        
+    scaled_features_new_data = scaler.transform(df_merged_features.values[:,:len(feature_units)]) # scale features to normal distribution, taking into account all previously scaled data
+    pcs_new_data = pca_model.transform(scaled_features_new_data) # find projections of newly scaled data on previous PC axes
+    gmm_predictions_new_data = gmm_model.predict(pcs_new_data) # find gmm cluster assignments using previously fit model
+    
+    df_merged_features['PC-0'] = pcs_new_data[:,0]
+    df_merged_features['PC-1'] = pcs_new_data[:,1]
+    df_merged_features['gmm_predictions'] = gmm_predictions_new_data
+    
+    print('saving dataframe...\n')
+    # save the dataframe for subsequent notebooks
+    compression_opts = dict(method='zip',
+                            archive_name=path_outputs+'/dataframes/'+dataframe_name+'.csv')  
+
+    df_merged_features.to_csv(path_outputs+'/dataframes/'+dataframe_name+'.zip', index=False,
+                                                              compression=compression_opts) 
+    
+    print('done\n')
+    
+    return df_merged_features
 def cluster_tracks(path_outputs,
                    number_of_clusters=5):
     
     analysis_metadata = np.load(path_outputs+'/dataframes/analysis_metadata.npy', allow_pickle=True)
+    
+    
+    
     df_merged_features = pd.read_csv(path_outputs+'/dataframes/df_merged_features.zip')
     feature_units = analysis_metadata.item().get('feature_units')
     
@@ -68,7 +110,15 @@ def cluster_tracks(path_outputs,
     df_merged_features['PC-1'] = reduced_data[:,1]
     df_merged_features['gmm_predictions'] = gmm_prediction
     
-    
+    print('saving models...\n')
+    with open(path_outputs+'/dataframes/normal_scaler_model', 'wb') as f:
+        pickle.dump(normal_scaler, f)                
+
+    with open(path_outputs+'/dataframes/pca_model_fit', 'wb') as f:
+        pickle.dump(pc_model, f)                
+
+    with open(path_outputs+'/dataframes/gmm_trained', 'wb') as f:
+        pickle.dump(gmm, f)                
     
     mean_dnm2_cluster = []
 
@@ -83,7 +133,7 @@ def cluster_tracks(path_outputs,
     print('cluster with highest DNM2 signal:', cluster_max_dnm2)
     analysis_metadata.item()['index_DNM2positive'] = cluster_max_dnm2
     analysis_metadata.item()['number_of_clusters'] = number_of_clusters
-    np.save(analysis_metadata.item().get('path_outputs')+'/dataframes/analysis_metadata', analysis_metadata)
+    np.save(path_outputs+'/dataframes/analysis_metadata', analysis_metadata)
     
     
     plt.style.use('default')
@@ -398,11 +448,15 @@ def display_experiment_variability(path_outputs):
     f.savefig(path_outputs+'/plots/all_features_cdf_split_by_cmeAnalysis_prediction.png', bbox_inches='tight')
     plt.show()
 
-def upload_tracks_and_metadata(analysis_metadata,
+def upload_tracks_and_metadata(path_tracks,
+                               path_outputs,
+                               analysis_metadata,
                                track_categories,
                                identifier_string,
                                features,
                                labels,
+                               dataframe_name,
+                               track_name,
                                experiment_number_adjustment=0):
     """
     Format tracks contained in folders into a dataframe of extracted physical features 
@@ -422,7 +476,7 @@ def upload_tracks_and_metadata(analysis_metadata,
         df (dataframe): a dataframe of features and metadata
         merged_all_tracks (ndarray): 
     """
-    all_track_paths = os.listdir(analysis_metadata['path_tracks'])
+    all_track_paths = os.listdir(path_tracks)
     all_track_paths = [exp for exp in all_track_paths if identifier_string in exp]
     all_track_paths.sort()
     print('\nfolders to mine:')
@@ -442,7 +496,7 @@ def upload_tracks_and_metadata(analysis_metadata,
     
     for exp_number, exp in enumerate(all_track_paths):
         
-        current_tracks = load_tracks(analysis_metadata['path_tracks'] + '/' + exp + '/Ch1/Tracking/ProcessedTracks.mat')
+        current_tracks = load_tracks(path_tracks + '/' + exp + '/Ch1/Tracking/ProcessedTracks.mat')
         current_tracks = remove_tracks_by_criteria(current_tracks, track_category=track_categories)
         tracks.append(current_tracks)
         
@@ -515,17 +569,17 @@ def upload_tracks_and_metadata(analysis_metadata,
     print('saving dataframe...\n')
     # save the dataframe for subsequent notebooks
     compression_opts = dict(method='zip',
-                            archive_name=analysis_metadata['path_outputs']+'/dataframes/df_merged_features.csv')  
+                            archive_name=path_outputs+'/dataframes/'+dataframe_name+'.csv')  
 
-    df_merged_features.to_csv(analysis_metadata['path_outputs']+'/dataframes/df_merged_features.zip', index=False,
+    df_merged_features.to_csv(path_outputs+'/dataframes/'+dataframe_name+'.zip', index=False,
                                                               compression=compression_opts) 
 
     
     number_of_track_splits = 20
     
-    analysis_metadata['number_of_track_splits'] = number_of_track_splits
+    analysis_metadata.item()['number_of_track_splits'] = number_of_track_splits
 
-    np.save(analysis_metadata['path_outputs']+'/dataframes/analysis_metadata', analysis_metadata)
+    np.save(path_outputs+'/dataframes/analysis_metadata', analysis_metadata)
     
     print('saving tracks...\n')
     # split tracks
@@ -533,7 +587,7 @@ def upload_tracks_and_metadata(analysis_metadata,
     # save each track array chunk
     for i in range(len(split_valid_tracks)):
 
-        np.save(analysis_metadata['path_outputs']+"/dataframes/merged_all_valid_tracks_"+str(i), np.array(split_valid_tracks[i]))
+        np.save(path_outputs+"/dataframes/"+track_name+"_"+str(i), np.array(split_valid_tracks[i]))
         
     print('done')
     
