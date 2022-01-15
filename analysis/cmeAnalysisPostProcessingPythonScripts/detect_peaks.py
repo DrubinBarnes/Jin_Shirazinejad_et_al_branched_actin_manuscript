@@ -18,6 +18,11 @@ def find_single_peaks_using_existing_model(path_outputs,
     number_of_track_splits = analysis_metadata.item().get('number_of_track_splits')
     number_of_clusters = analysis_metadata.item().get('number_of_clusters')
 
+    
+    
+    
+    
+    
     merged_all_valid_tracks = np.load(path_outputs+
                                       '/dataframes/'+track_name+'_'+str(0)+'.npy', allow_pickle=True)
 
@@ -74,13 +79,13 @@ def find_single_peaks_using_existing_model(path_outputs,
 
     for i in range(len(filtered_amplitudes)): # iterate through all filtered amplitudes
 
-        pvals_dnm2 = return_track_attributes.return_pvals_detection_no_buffer(dnm2_positive_events, i, 1)
+        pvals_dnm2 = return_track_attributes.return_pvals_detection_no_buffer(tracks_dnm2_positive, i, 1)
 
         # measure whether there is 1 peak with the specified peak-finding parameters
         if len(signal.find_peaks(filtered_amplitudes[i], 
-                                 distance=best_fit_peak_params[0], 
-                                 height=best_fit_peak_params[1],
-                                 width=best_fit_peak_params[2])[0])==1 and len(np.where(np.array(pvals_dnm2)<0.01)[0])>0:
+                                 distance=analysis_metadata.item()['distance_best_fit'], 
+                                 height=analysis_metadata.item()['height_best_fit'],
+                                 width=analysis_metadata.item()['width_best_fit'])[0])==1 and len(np.where(np.array(pvals_dnm2)<0.01)[0])>0:
 
             current_param_outputs.append(1)
 
@@ -88,7 +93,24 @@ def find_single_peaks_using_existing_model(path_outputs,
 
             current_param_outputs.append(0)
             
-            
+    indices_dnm2_positive = gmm_class_indices[index_DNM2positive]
+    
+    indices_dnm2_positive_and_ccp = indices_dnm2_positive[np.where(np.array(current_param_outputs)==1)[0]]
+    
+    ccp_status_all_tracks = np.zeros(len(merged_all_valid_tracks))
+    ccp_status_all_tracks[indices_dnm2_positive_and_ccp] = 1
+    df['ccp_status'] = ccp_status_all_tracks
+    print('saving dataframe...\n')
+    # save the dataframe for subsequent notebooks
+    compression_opts = dict(method='zip',
+                            archive_name=path_outputs+'/dataframes/'+dataframe_name+'.csv')  
+
+    df.to_csv(path_outputs+'/dataframes/'+dataframe_name+'.zip', index=False,
+                                                              compression=compression_opts) 
+    
+    print('done\n')
+    
+    return df
     
 def identify_single_peaked_dnm2_events(path_outputs):
     

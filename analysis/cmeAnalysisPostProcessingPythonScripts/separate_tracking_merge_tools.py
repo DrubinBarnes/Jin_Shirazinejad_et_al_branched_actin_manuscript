@@ -6,6 +6,7 @@ import sys
 sys.path.append(os.getcwd())
 from generate_index_dictionary import return_index_dictionary
 import numpy as np
+import pickle
 from sklearn.neighbors import KDTree
 from collections import Counter
 from scipy.stats import mode
@@ -17,9 +18,57 @@ from return_track_attributes import (return_track_category, return_track_lifetim
                                      return_distance_traveled_from_origin, return_frames_in_track_no_buffer,
                                      return_distance_between_two_channel)
 
+from display_tracks import (load_tracks,
+                            remove_tracks_by_criteria)
 
 
 
+def build_trees_from_directory(path_outputs,
+                               path_tracks,
+                               identifier_string,
+                               track_categories,
+                               channel_for_trees,
+                               length_of_movie,
+                               name_tracks,
+                               name_trees):
+    
+    analysis_metadata = np.load(path_outputs+'/dataframes/analysis_metadata.npy', allow_pickle=True)   
+    all_track_paths = os.listdir(path_tracks)
+    all_track_paths = [exp for exp in all_track_paths if identifier_string in exp]
+    all_track_paths.sort()
+    print('\nfolders to mine:')
+    for exp_name in all_track_paths:    
+        print(exp_name)
+    print('\n')
+    
+    tracks = []
+    print('creating trees from tracks')
+    for exp_number, exp in enumerate(all_track_paths):
+        print('experiment:', exp_number)
+        current_tracks = load_tracks(path_tracks + '/' + exp + '/Ch1/Tracking/ProcessedTracks.mat')
+        current_tracks = remove_tracks_by_criteria(current_tracks, track_category=track_categories)
+        tracks.append(current_tracks)
+
+        kd_tree_experiment, vals_tree = build_kd_tree_channel(current_tracks,
+                                                              channel_for_trees,
+                                                              length_of_movie)
+        with open(path_outputs+'/dataframes/'+name_trees+'_kdtree_'+str(exp_number), 'wb') as f:
+            pickle.dump(kd_tree_experiment, f)                
+
+        np.save(path_outputs+'/dataframes/'+name_trees+'_kdtree_index_matrix_'+str(exp_number), vals_tree)
+
+    print('saving tracks...\n')
+    # split tracks
+    merged_all_tracks = merge_tools.merge_experiments(tracks,[list(range(len(track_set))) for track_set in tracks])
+    number_of_track_splits = analysis_metadata.item().get('number_of_track_splits')
+    split_valid_tracks = np.array_split(np.array(list(merged_all_tracks)), number_of_track_splits)
+    # save each track array chunk
+    for i in range(len(split_valid_tracks)):
+
+        np.save(path_outputs+"/dataframes/"+track_name+"_"+str(i), np.array(split_valid_tracks[i]))
+        
+    print('done')
+    
 def associate_tracks(primary_track_set,
                      primary_channel,
                      candidate_neighbor_track_set,
