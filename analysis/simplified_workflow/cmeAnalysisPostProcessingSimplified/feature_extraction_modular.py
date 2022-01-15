@@ -26,7 +26,7 @@ class TrackFeatures:
     
     def __init__(self, 
                  tracks, 
-                 framerate=1,
+                 time_between_frames=1,
                  buffer='on',
                  significant_pval_cutoff = 0.01):
         
@@ -39,7 +39,7 @@ class TrackFeatures:
         
         self.significant_pval_cutoff = significant_pval_cutoff
         
-        self.framerate = framerate
+        self.time_between_frames = time_between_frames
         
         self.feature_options = ['lifetime',
                                 'max_int_chA',
@@ -81,7 +81,7 @@ class TrackFeatures:
             
             # call the function with the designated feature
 
-            if 'ch' in feature.split('_')[-1]:
+            if 'ch' in feature.split('_')[-1] and len(feature.split('_')[-1])>1:
                 
                 split_feature = feature.split('_')
                 channels = split_feature[-1]
@@ -310,13 +310,13 @@ class TrackFeatures:
 
             self.feature_matrix.append(len(np.where(pvals<self.significant_pval_cutoff)[0]))
     
-    def max_consecutive_significant_chA(self):
-        """Extract the maximum number (counts) of consecutive significant detections below the designated p-value in the second channel."""        
+    def max_consecutive_significant_chA(self, channel):
+        """Extract the maximum number (counts) of consecutive significant detections below the designated p-value in the channel."""        
         for i,track in enumerate(self.tracks):
 
             pvals = return_track_attributes.return_pvals_detection(self.tracks,
                                            i,
-                                           1)
+                                           channel)
 
             significant_pval_indices = [1 if pval < self.significant_pval_cutoff else 0 for pval in pvals]
 
@@ -331,22 +331,22 @@ class TrackFeatures:
 
             self.feature_matrix.append(max_1s)
             
-    def fraction_significant_chA(self):
-        """Extract the fraction (unitless) of the second channel's lifetime that contains significant detections below the designated p-value."""
+    def fraction_significant_chA(self, channel):
+        """Extract the fraction (unitless) of the channel's lifetime that contains significant detections below the designated p-value."""
         for i,track in enumerate(self.tracks):
 
             pvals = return_track_attributes.return_pvals_detection(self.tracks,
                                        i,
-                                       1)
+                                       channel)
 
             self.feature_matrix.append((pvals < self.significant_pval_cutoff).sum()/len(pvals))
 
                 
-    def fraction_peak_chA(self):
-        """Extract the fraction of the whole event for the intensity of first channel to reach peak value."""
+    def fraction_peak_chA(self, channel):
+        """Extract the fraction of the whole event for the intensity of channel to reach peak value."""
         for i,track in enumerate(self.tracks):
 
-            ch0_amplitudes = return_track_attributes.return_track_amplitude_one_channel(self.tracks, i, 0)
+            chA_amplitudes = return_track_attributes.return_track_amplitude_one_channel(self.tracks, i, channel)
 
-            self.feature_matrix.append(np.argmax(ch0_amplitudes)/len(ch0_amplitudes))
+            self.feature_matrix.append(np.argmax(chA_amplitudes)/len(chA_amplitudes))
  
