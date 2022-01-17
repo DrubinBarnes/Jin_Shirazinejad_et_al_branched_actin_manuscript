@@ -44,15 +44,15 @@ class TrackFeatures:
         self.feature_options = ['lifetime',
                                 'max_int_chA',
                                 'dist_traveled_chA',
-                                'max_dist_between_chA-B',
+                                'max_dist_between_chA_B',
                                 'md_chA',
                                 'time_to_peak_chA',
                                 'time_after_peak_chA',
-                                'time_between_peaks_chA-B',
+                                'time_between_peaks_chA_B',
                                 'avg_int_change_to_peak_chA',
                                 'avg_int_change_after_peak_chA',
-                                'peak_int_diff_chA-B',
-                                'ratio_max_int_chA-B',
+                                'peak_int_diff_chA_B',
+                                'ratio_max_int_chA_B',
                                 'mean_chA',
                                 'variation_chA',
                                 'skewness_chA',
@@ -79,20 +79,29 @@ class TrackFeatures:
         
         for feature in self.current_features:
             
-            # call the function with the designated feature
+            # call the function with the designated feature if there a specific channel involved
 
-            if 'ch' in feature.split('_')[-1] and len(feature.split('_')[-1])>1:
+            if 'ch' in feature.split('_')[-1]:
                 
                 split_feature = feature.split('_')
                 channels = split_feature[-1]
                 
                 # if there is more than one channel involved:
-                if len(channels.split('-'))>1:
+                if len(channels)>3:
                     
-                    print('placeholder')
-                
-                else:
+                    feature_function = ''
                     
+                    for feature_name_fragment in split_feature[:-1]:
+                        
+                        feature_function += feature_name_fragment + '_'
+                    
+                    feature_function += 'chA_B'
+                            
+                    channels = [int(channels[2]), int(channels[-1])]
+                    getattr(TrackFeatures, feature_function)(self, channels)
+                    
+                else: # if there is only one channel involved in the feature
+                     
                     feature_function = ''
                     
                     for feature_name_fragment in split_feature[:-1]:
@@ -103,7 +112,8 @@ class TrackFeatures:
                             
                     channel = int(channels[-1])
                     getattr(TrackFeatures, feature_function)(self, channel)
-            else:
+
+            else: # if there is no specific channel involved in the feature
                 
                 getattr(TrackFeatures, feature)(self)
         
@@ -275,7 +285,7 @@ class TrackFeatures:
 
             self.feature_matrix.append(np.mean(chA_amplitudes))
                                     
-    def variation_chA(self):
+    def variation_chA(self, channel):
         """Extract the variation in intensity (a.u. fluorescence^2) of the channel."""
         for i,track in enumerate(self.tracks):
                             
