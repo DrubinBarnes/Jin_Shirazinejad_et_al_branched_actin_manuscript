@@ -163,21 +163,21 @@ def upload_tracks_and_metadata(path_tracks,
                                                               compression=compression_opts) 
 
     
-#     number_of_track_splits = 20
+    number_of_track_splits = len(tracks)
     
-#     analysis_metadata.item()['number_of_track_splits'] = number_of_track_splits
+    analysis_metadata.item()['number_of_track_splits_'+track_name] = number_of_track_splits
 
-#     np.save(path_outputs+'/dataframes/analysis_metadata', analysis_metadata)
+    np.save(path_outputs+'/dataframes/analysis_metadata', analysis_metadata)
     
-#     print('saving tracks...\n')
-#     # split tracks
-#     split_valid_tracks = np.array_split(np.array(list(merged_all_tracks)),number_of_track_splits)
-#     # save each track array chunk
-#     for i in range(len(split_valid_tracks)):
+    print('saving tracks...\n')
+    # split tracks
+    split_valid_tracks = np.array_split(np.array(list(merged_all_tracks)),number_of_track_splits)
+    # save each track array chunk
+    for i in range(len(split_valid_tracks)):
 
-#         np.save(path_outputs+"/dataframes/"+track_name+"_"+str(i), np.array(split_valid_tracks[i]))
+        np.save(path_outputs+"/dataframes/"+track_name+"_"+str(i), np.array(split_valid_tracks[i]))
         
-#     print('done')
+    print('done')
     
     return df_merged_features, merged_all_tracks
 

@@ -15,7 +15,7 @@ def find_single_peaks_using_existing_model(path_outputs,
     df_merged_features = pd.read_csv(path_outputs+'/dataframes/'+dataframe_name+'.zip')
     df = df_merged_features
     index_DNM2positive = analysis_metadata.item().get('index_DNM2positive')
-    number_of_track_splits = analysis_metadata.item().get('number_of_track_splits')
+    number_of_track_splits = analysis_metadata.item().get('number_of_track_splits_'+track_name)
     number_of_clusters = analysis_metadata.item().get('number_of_clusters')
 
     
@@ -112,6 +112,7 @@ def find_single_peaks_using_existing_model(path_outputs,
     return df
     
 def identify_single_peaked_dnm2_events(path_outputs,
+                                       track_name,
                                        distances_sweep = np.arange(1,20,1),
                                        heights_sweep = np.arange(50,300,25),
                                        widths_sweep = np.arange(1,10,1)):
@@ -120,20 +121,21 @@ def identify_single_peaked_dnm2_events(path_outputs,
     df_merged_features = pd.read_csv(path_outputs+'/dataframes/df_merged_features.zip')
     feature_units = analysis_metadata.item().get('feature_units')
     index_DNM2positive = analysis_metadata.item().get('index_DNM2positive')
-    number_of_track_splits = analysis_metadata.item().get('number_of_track_splits')
+    
     number_of_clusters = analysis_metadata.item().get('number_of_clusters')
     
+    number_of_track_splits = analysis_metadata.item().get('number_of_track_splits_'+track_name)
     df = df_merged_features
     
     # load all valid tracks
     merged_all_valid_tracks = np.load(path_outputs+
-                                      '/dataframes/merged_all_valid_tracks_0.npy', allow_pickle=True)
+                                      '/dataframes/'+track_name+'_0.npy', allow_pickle=True)
 
     for i in range(1,number_of_track_splits):
 
         merged_all_valid_tracks = np.concatenate((merged_all_valid_tracks,
                                                  np.load(path_outputs+
-                                                         '/dataframes/merged_all_valid_tracks_'+
+                                                         '/dataframes/'+ track_name+'_'+
                                                          str(i)+'.npy', 
                                                  allow_pickle=True)))
         
@@ -235,7 +237,7 @@ def identify_single_peaked_dnm2_events(path_outputs,
                                                               compression=compression_opts) 
     
     print('done\n')
-    np.save(analysis_metasdata.item().get('path_outputs')+'/dataframes/analysis_metadata', analysis_metadata)
+    np.save(analysis_metadata.item().get('path_outputs')+'/dataframes/analysis_metadata', analysis_metadata)
     
     return distance_best_fit, height_best_fit, width_best_fit, peak_predictions_best_model
 
