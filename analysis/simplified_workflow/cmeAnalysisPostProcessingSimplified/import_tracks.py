@@ -36,7 +36,7 @@ def upload_tracks_and_metadata(path_tracks,
                                path_outputs,
                                analysis_metadata,
                                track_categories,
-                               identifier_string,
+                               identifier_strings,
                                features,
                                labels,
                                dataframe_name,
@@ -59,9 +59,19 @@ def upload_tracks_and_metadata(path_tracks,
         df (dataframe): a dataframe of features and metadata
         merged_all_tracks (ndarray): 
     """
-    all_track_paths = os.listdir(path_tracks)
-    all_track_paths = [exp for exp in all_track_paths if identifier_string in exp]
-    all_track_paths.sort()
+    temp_paths = os.listdir(path_tracks)
+    all_track_paths = []
+    for exp in temp_paths:
+        num_matches = 0
+        for identifier in identifier_strings:
+            if identifier in exp:
+                num_matches+=1
+        if num_matches==len(identifier_strings):
+            all_track_paths.append(exp)
+            
+    exp_num_index = [int(exp.split('_')[0]) for exp in all_track_paths]
+    all_track_paths = [all_track_paths[idx] for idx in np.argsort(exp_num_index)]
+        
     print('\nfolders to mine:')
     for exp_name in all_track_paths:    
         print(exp_name)
@@ -95,9 +105,9 @@ def upload_tracks_and_metadata(path_tracks,
         dates += [int(metadata[1])]*num_tracks
         cell_line_tags += [metadata[2]]*num_tracks
         current_tracked_channels += [metadata[3]]*num_tracks
-        number_of_tags += [len(metadata[4].split('-'))]*num_tracks
-        experiment += [metadata[5]]*num_tracks
-        condition += [metadata[6]]*num_tracks
+        number_of_tags += [len(metadata[3].split('-'))]*num_tracks
+        experiment += [metadata[4]]*num_tracks
+        condition += [metadata[5]]*num_tracks
         framerates += [metadata[-1]]*num_tracks
         
     print('\nfinished uploading tracks\n')
@@ -169,11 +179,11 @@ def upload_tracks_and_metadata(path_tracks,
     
     print('saving tracks...\n')
     # split tracks
-    split_valid_tracks = np.array_split(np.array(list(merged_all_tracks)),number_of_track_splits)
+#     split_valid_tracks = np.array_split(np.array(list(merged_all_tracks)),number_of_track_splits)
     # save each track array chunk
-    for i in range(len(split_valid_tracks)):
+    for i in range(len(tracks)):
 
-        np.save(path_outputs+"/dataframes/"+track_name+"_"+str(i), np.array(split_valid_tracks[i]))
+        np.save(path_outputs+"/dataframes/"+track_name+"_"+str(i), np.array(list(tracks[i])))
         
     print('done')
     
