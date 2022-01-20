@@ -70,13 +70,20 @@ def build_trees_from_directory(path_outputs,
 
     print('saving tracks...\n')
     # split tracks
-    merged_all_tracks = merge_tools.merge_experiments(tracks,[list(range(len(track_set))) for track_set in tracks])
-    number_of_track_splits = analysis_metadata.item().get('number_of_track_splits')
-    split_valid_tracks = np.array_split(np.array(list(merged_all_tracks)), number_of_track_splits)
-    # save each track array chunk
-    for i in range(len(split_valid_tracks)):
+    number_of_track_splits = len(tracks)
+    
+    analysis_metadata.item()['number_of_track_splits_'+name_tracks] = number_of_track_splits
 
-        np.save(path_outputs+"/dataframes/"+track_name+"_"+str(i), np.array(split_valid_tracks[i]))
+    np.save(path_outputs+'/dataframes/analysis_metadata', analysis_metadata)
+    
+    print('saving tracks...\n')
+    # split tracks
+#     split_valid_tracks = np.array_split(np.array(list(merged_all_tracks)),number_of_track_splits)
+    # save each track array chunk
+    for i in range(len(tracks)):
+
+        np.save(path_outputs+"/dataframes/"+name_tracks+"_"+str(i), np.array(list(tracks[i])))
+        
         
     print('done')
     
