@@ -101,7 +101,9 @@ def compare_components_between_conditions(path_outputs,
             for comp_number in range(number_of_clusters):
                 
                 num_in_comp = len(np.where(gmm_predictions_exp==comp_number)[0])
+                
                 fraction = num_in_comp/len(gmm_predictions_exp)
+                print(fraction)
                 fraction_cluster_label.append(fraction)
                 rates.append(num_in_comp/fraction_areas[condition_number][exp_index]/normalization_factor)
                 

@@ -56,7 +56,7 @@ def build_trees_from_directory(path_outputs,
     print('creating trees from tracks')
     for exp_number, exp in enumerate(all_track_paths):
         print('experiment:', exp_number)
-        current_tracks = load_tracks(path_tracks + '/' + exp + '/Ch1/Tracking/ProcessedTracks.mat')
+        current_tracks = load_tracks(path_tracks + '/' + exp + '/Ch3/Tracking/ProcessedTracks.mat')
         current_tracks = remove_tracks_by_criteria(current_tracks, track_category=track_categories)
         tracks.append(current_tracks)
 
