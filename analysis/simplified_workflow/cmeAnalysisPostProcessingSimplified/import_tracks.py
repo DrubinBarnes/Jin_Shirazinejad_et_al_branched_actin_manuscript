@@ -402,8 +402,8 @@ def remove_tracks_by_criteria(tracks,
 
                     tracks_return.append(tracks[i])
                     
-    print('The number of tracks returned: ' + str(len(tracks_return)))
-    print()
+#     print('The number of tracks returned: ' + str(len(tracks_return)))
+#     print()
     return tuple(tracks_return)
 
 def track_within_bounds(tracks, track_number, minimum_lifetime, maximum_lifetime, track_category):

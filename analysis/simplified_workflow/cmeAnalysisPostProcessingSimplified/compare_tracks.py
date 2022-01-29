@@ -7,6 +7,8 @@ from skimage.morphology import disk
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd 
+import import_tracks
+import generate_index_dictionary
 
 def calculate_fraction_area_occupied_by_cells(path_tracks,
                                               identifier_strings,
@@ -126,3 +128,89 @@ def compare_components_between_conditions(path_outputs,
     
     return df_fraction_comps_between_experiments
     
+    
+def compare_frequencies_all_track_categories(list_tracks,
+                                             list_identifier_strings):
+    
+                
+#     f = plt.figure(dpi=200, figsize=(10,10))
+#     ax = f.add_subplot(1, 1, 1)
+        
+    index_dictionary = generate_index_dictionary.return_index_dictionary() # get indices of features in ProcessedTracks
+
+    category_frequencies = []
+    num_events_category = []
+    categories = []
+    track_set_identity = []
+    
+    for track_set_num, path_tracks in enumerate(list_tracks):
+        
+        temp_paths = os.listdir(path_tracks)
+        all_track_paths = []
+        for exp in temp_paths:
+            num_matches = 0
+            for identifier in list_identifier_strings[track_set_num]:
+                if identifier in exp:
+                    num_matches+=1
+            if num_matches==len(list_identifier_strings[track_set_num]):
+                all_track_paths.append(exp)
+
+        exp_num_index = [int(exp.split('_')[0]) for exp in all_track_paths]
+        all_track_paths = [all_track_paths[idx] for idx in np.argsort(exp_num_index)]
+                
+        print('\nfolders to mine for track set {}:'.format(track_set_num+1))
+        for exp_name in all_track_paths:    
+            print(exp_name)
+        print('\n')
+        
+        
+
+        print('loading tracks in set..')
+        
+        all_tracks = []
+        
+        for track_num, tracks in enumerate(all_track_paths):
+            print('tracks in set {} of {}'.format(track_num+1, len(all_track_paths)))
+            current_tracks = import_tracks.load_tracks(path_tracks+'/'+tracks + '/' + '/Ch1/Tracking/ProcessedTracks.mat')
+        
+            all_tracks.append(current_tracks)
+            
+        # gather the event category (1-8) frequencies
+
+        
+#         x_std = [[] for i in range(len(all_tracks))]
+        
+        for track_set in all_tracks:
+
+            num_tracks_exp = len(track_set)
+            
+            for category in range(1,9): # track categories available
+
+                tracks_category_i_exp = import_tracks.remove_tracks_by_criteria(track_set, track_category=[category])
+                
+                num = len(tracks_category_i_exp)
+                num_events_category.append(num)
+                category_frequencies.append(num/num_tracks_exp)
+                categories.append(category)
+                track_set_identity.append(track_set_num)
+                
+        
+        print('\n\n\n')
+    num_events_category = np.array(num_events_category).reshape(len(num_events_category), -1).astype('float')
+    category_frequencies = np.array(category_frequencies).reshape(len(category_frequencies), -1).astype('float')
+    categories = np.array(categories).reshape(len(categories), -1).astype('float')
+    track_set_identity = np.array(track_set_identity).reshape(len(track_set_identity), -1).astype('float')
+    
+    data_df = np.hstack((num_events_category,
+                         category_frequencies, 
+                         categories,
+                         track_set_identity))
+    
+    df = pd.DataFrame(data=data_df, columns=['counts',
+                                             'frequency', 
+                                             'category',
+                                             'condition'])        
+    
+    
+    return df
+
