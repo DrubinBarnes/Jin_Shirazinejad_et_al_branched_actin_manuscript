@@ -129,8 +129,9 @@ def compare_components_between_conditions(analysis_metadata,
     
     
 def compare_frequencies_all_track_categories(list_tracks,
-                                             list_identifier_strings):
-    
+                                             list_identifier_strings,
+                                             channel_number=1):
+    print('tests')
                 
 #     f = plt.figure(dpi=200, figsize=(10,10))
 #     ax = f.add_subplot(1, 1, 1)
@@ -172,7 +173,13 @@ def compare_frequencies_all_track_categories(list_tracks,
         
         for track_num, tracks in enumerate(all_track_paths):
             print('tracks in set {} of {}'.format(track_num+1, len(all_track_paths)))
-            current_tracks = import_tracks.load_tracks(path_tracks+'/'+tracks + '/' + '/Ch1/Tracking/ProcessedTracks.mat')
+            current_tracks = import_tracks.load_tracks(path_tracks+
+                                                       '/'+
+                                                       tracks+ 
+                                                       '/' +
+                                                       '/Ch'+
+                                                       str(channel_number)+
+                                                       '/Tracking/ProcessedTracks.mat')
         
             all_tracks.append(current_tracks)
             
