@@ -190,7 +190,7 @@ class TrackFeatures:
 
             else:
 
-                self.feature_matrix.append(time_between_frames*np.argmax(chA_amplitudes))
+                self.feature_matrix.append(self.time_between_frames*np.argmax(chA_amplitudes))
 
                                            
     def time_after_peak_chA(self, channel):
@@ -205,7 +205,7 @@ class TrackFeatures:
 
             else:
 
-                self.feature_matrix.append(time_between_frames*(len(chA_amplitudes) - 1 - np.argmax(chA_amplitudes)))
+                self.feature_matrix.append(self.time_between_frames*(len(chA_amplitudes) - 1 - np.argmax(chA_amplitudes)))
           
 
     def time_between_peaks_chA_B(self, channels):
@@ -215,7 +215,7 @@ class TrackFeatures:
             chA_amplitudes = return_track_attributes.return_track_amplitude_one_channel(self.tracks, i, channels[0])                            
             chB_amplitudes = return_track_attributes.return_track_amplitude_one_channel(self.tracks, i, channels[1])
 
-            self.feature_matrix.append(time_between_frames(np.argmax(chA_amplitudes) - np.argmax(chB_amplitudes)))
+            self.feature_matrix.append(self.time_between_frames*(np.argmax(chA_amplitudes) - np.argmax(chB_amplitudes)))
 
                         
     def avg_int_change_to_peak_chA(self, channel):

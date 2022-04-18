@@ -2158,7 +2158,8 @@ def plot_separated_cohorts(axes,
                            line_removal_index=[],
                            line_kept_regions=[],
                            framerate=1,
-                           norm_intensity=False):
+                           norm_intensity=False,
+                           linestyle='solid'):
     
     num_ticks = 0
     x_labels = []
@@ -2283,7 +2284,8 @@ def plot_separated_cohorts(axes,
                 axes[0].plot(x_axis, 
                          norm_factor*splined_amps,
                          colors[i], 
-                         label=labels[i])
+                         label=labels[i],
+                         linestyle=linestyle)
 
                 ch_current = std_cohort_class[i,:]
 
