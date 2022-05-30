@@ -1,0 +1,9 @@
+cff-version: 1.1.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Shirazinejad
+    given-names: Cyna
+    orcid: https://orcid.org/0000-0003-1006-5775
+title: DrubinBarnes/Jin_Shirazinejad_et_al_branched_actin_manuscript: v1.0.0
+version: v1.0.0
+date-released: 2022-05-23

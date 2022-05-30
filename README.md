@@ -1,7 +1,11 @@
 # Jin_Shirazinejad_et_al_branched_actin_manuscript
 code for "Asymmetric actin force production at stalled clathrin-mediated endocytosis sites", submitted
 
-bioRxiv link: https://www.biorxiv.org/content/10.1101/2021.07.16.452693v1
+bioRxiv link: 
+
+first version: https://www.biorxiv.org/content/10.1101/2021.07.16.452693v1
+
+second version: https://www.biorxiv.org/content/10.1101/2021.07.16.452693v2
 
 The live-cell imaging data (TIRF), tracked events, plots used for analysis, and arrays used throughout our analysis can be found at: https://tinyurl.com/z29zy93j
 
