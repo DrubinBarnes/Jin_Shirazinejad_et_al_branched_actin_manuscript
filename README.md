@@ -7,6 +7,9 @@ first version: https://www.biorxiv.org/content/10.1101/2021.07.16.452693v1
 
 second version: https://www.biorxiv.org/content/10.1101/2021.07.16.452693v2
 
+publication: https://www.nature.com/articles/s41467-022-31207-5
+https://doi.org/10.1038/s41467-022-31207-5
+
 The live-cell imaging data (TIRF), tracked events, plots used for analysis, and arrays used throughout our analysis can be found at: https://tinyurl.com/z29zy93j
 
 The repo for the code development can be found ony my personal Github page: https://github.com/cynashirazinejad/track_processing
